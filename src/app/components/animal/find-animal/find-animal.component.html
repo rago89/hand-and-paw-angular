@@ -1,0 +1,31 @@
+<section class="page-intro">
+  <div class="container">
+    <article>
+      <h2>Find your perfect companion</h2>
+      <p>
+        Each animal has their own personality. It may take some time to find a
+        perfect match, but it totally worth. Don't rush to make a choice. Click
+        on the animal if you would like to read more about it.
+      </p>
+    </article>
+  </div>
+</section>
+
+<div *ngIf="isFetching" class="loading-image">
+  <img src="../../../../assets/gif/loading_animation.gif" alt="loading image" />
+</div>
+<div *ngIf="error">
+  <h2 [ngStyle]="{ color: 'red', textAlign: 'center' }">
+    An error has occurred try again later
+  </h2>
+</div>
+<div *ngIf="!isFetching && animalsList.length !== 0">
+  <section id="animals-list" class="animal-search-results">
+    <div class="container search-results">
+      <app-animal-card
+        *ngFor="let animalEl of animalsList"
+        [animal]="animalEl"
+      ></app-animal-card>
+    </div>
+  </section>
+</div>

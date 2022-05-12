@@ -1,0 +1,42 @@
+<footer class="footer-content">
+  <div class="logo">
+    <a class="logo" [routerLink]="['']"
+      ><img
+        src="../../../../assets/images/ui/logo-footer.svg"
+        alt="Hand and paw logo"
+    /></a>
+  </div>
+  <div class="pages-menu">
+    <a
+      class="pages-menu-item"
+      [routerLink]="['animal', 'find']"
+      routerLinkActive="active"
+      >Find animal</a
+    >
+    <a routerLink="animal/register">Register animal</a>
+    <a routerLink="about-adoption" routerLinkActive="active">About adoption</a>
+  </div>
+  <div class="about-project">
+    <p>Created by students of</p>
+    <p>HackYourFuture Belgium</p>
+    <a href="http://www.hackyourfuture.be"> hackyourfuture.be</a>
+  </div>
+  <div class="contact">
+    <div>
+      <img
+        src="../../../../assets/icons/footer/ant-design_up-circle-outlined.svg"
+        alt="Arrow up logo"
+      />
+      <p (click)="renderContactUs()" id="contact-us">Contact us</p>
+      <a
+        class="githubrepo"
+        href="https://github.com/Hand-And-Paw/hand-and-paw"
+        target="blank"
+        ><img
+          class="github-icon"
+          src="../../../../assets/icons/footer/akar-icons_github-fill.svg"
+          alt="GitHub logo"
+      /></a>
+    </div>
+  </div>
+</footer>

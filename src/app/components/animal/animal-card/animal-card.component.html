@@ -1,0 +1,27 @@
+<div id="{animal._id}" class="animal search-result-card">
+  <div class="card-photo">
+    <img *ngIf="pictureHex" src="data:image/jpeg;base64,{{ pictureHex }}" />
+    <img *ngIf="!pictureHex" [src]="anonymousImage" />
+  </div>
+  <div class="{infoClass}">
+    <div class="animal-name">
+      <h3>{{ animal.name }}</h3>
+    </div>
+    <br />
+    Type: <span>{{ animal.type }}</span> <br />
+    Breed: <span>{{ animal.breed }}</span> <br />
+    Gender: <span>{{ animal.gender }}</span>
+    <br />
+    Character: <span>{{ animal.character }}</span>
+    <br />
+    Age:
+    <span>{{ age }}</span>
+    <br />
+    City: <span>{{ animal.location }}</span> <br />
+    Province:
+    <span>
+      {{ animal.province }}
+    </span>
+    <br />
+  </div>
+</div>

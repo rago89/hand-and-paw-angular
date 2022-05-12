@@ -1,0 +1,179 @@
+<section class="welcome">
+  <div class="welcome-container grid-image-article container">
+    <div class="welcome-image">
+      <img
+        class="welcome-image-dog"
+        src="../../../assets/images/ui/home/raw-images/welcome.jpg"
+        alt="A dog with a placard'Adopt me' on it's neck."
+      />
+    </div>
+    <div class="welcome-shift">
+      <div class="article welcome-article">
+        <h1>
+          Welcome!
+          <hr />
+        </h1>
+        <br />
+        <p>
+          Dear animal lovers! If you want to adopt a new best friend or if you
+          have a homeless animal, you've come to the right place!
+          <br />
+          <br />
+          This platform allows you to find a pet from shelters and directly from
+          hands. You will see all kinds of animals waiting for loving family!
+          <br />
+          If you have an animal who lost their owner, here you can find a new
+          one for them!
+        </p>
+      </div>
+      <div class="call-to-action">
+        <a
+          [routerLink]="['animal', 'find']"
+          routerLinkActive="active"
+          class="button call-to-action1"
+        >
+          Find an animal
+        </a>
+        <a
+          [routerLink]="['animal', 'register']"
+          routerLinkActive="active"
+          class="button call-to-action2"
+        >
+          Register an animal
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- the rest -->
+<div class="main">
+  <!-- first section -->
+  <section class="adoption-is-important">
+    <div class="container adoption-article grid-image-article">
+      <div class="article">
+        <h2>Why adoption is important?</h2>
+        <p>
+          <strong>You give the animal a better life</strong>
+          <br />
+          All homeless animals have been lost, given up or abandoned. You are
+          giving them a new life in a loving home.
+          <br />
+          <br />
+          <strong>You help break the cycle of pet overpopulation</strong>
+          <br />
+          There are not enough homes for all the animals that are born every
+          year. You confront irresponsible owners who don't sterilize or neuter
+          their pets.
+          <br />
+          <br />
+          <strong>
+            If you adopt, you won't be supporting puppy mills and pet stores
+          </strong>
+          <br />
+          Most animals raised for sale are housed in poor conditions: in cages
+          and without human companionship. Puppy mills will continue to operate
+          until people stop purchasing from them.
+          <br />
+          <br />
+          <strong>You encourage others to adopt animals</strong>
+          <br />
+          When your friends ask where you got your amazing pet, you can tell
+          them “He is adopted.” Your happy companionship will help to break
+          stereotype that you can't bond with adopted animal.
+        </p>
+      </div>
+      <div class="call-to-action">
+        <a href="#" class="button call-to-action1"> Find an animal </a>
+      </div>
+      <!-- article image start -->
+      <div class="article-image">
+        <div class="image card-images">
+          <div class="image1">
+            <img
+              class="image-rotate-left"
+              src="../../../assets/images/ui/home/raw-images/why1.jpg"
+              alt="A man holding a puppy."
+            />
+            <div class="image-background bgr-rotate-left"></div>
+          </div>
+
+          <div class="image2">
+            <img
+              class="image-rotate-right"
+              src="../../../assets/images/ui/home/raw-images/why2.jpg"
+              alt="A woman hugging a dog."
+            />
+            <div class="image-background bgr-rotate-right"></div>
+          </div>
+        </div>
+      </div>
+      <!-- tilted images end -->
+    </div>
+  </section>
+  <!-- first section end -->
+  <!-- second section start -->
+  <section class="lonely-animals-need-help">
+    <div class="container help-article grid-image-article">
+      <div class="article-image">
+        <div class="image card-images">
+          <div class="image1">
+            <img
+              src="../../../assets/images/ui/home/raw-images/when1.jpg"
+              class="image-rotate-left"
+              alt="A puppy watching into camera."
+            />
+            <div class="image-background bgr-rotate-left"></div>
+          </div>
+          <div class="image2">
+            <img
+              src="../../../assets/images/ui/home/raw-images/when2.jpg"
+              class="image-rotate-right"
+              alt="A siting kitten watching
+              sideways."
+            />
+            <div class="image-background bgr-rotate-right"></div>
+          </div>
+        </div>
+      </div>
+      <div class="article">
+        <h2>When a lonely animal needs our help?</h2>
+        <p>
+          The main reasons animals are in shelters: owners give them up, owners
+          passed away or somebody finds them on the street.
+          <br />
+          <br />
+          Many strays are lost pets that were not kept properly indoors or
+          provided with identification.
+          <br />
+          <br />
+          Don't be afraid of the stray animal and try to help them to find a new
+          home, avoiding stress of being in overcrowded shelter or being
+          euthanized.
+        </p>
+      </div>
+      <div class="call-to-action">
+        <a
+          [routerLink]="['animal', 'register']"
+          routerLinkActive="active"
+          class="button call-to-action2"
+        >
+          Register an animal
+        </a>
+      </div>
+    </div>
+  </section>
+  <div class="video container" id="video">
+    <div class="video_wrapper">
+      <div class="video_item">
+        <iframe
+          class="video_element"
+          src="https://www.youtube.com/embed/EWjyvFeLtOY"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</div>

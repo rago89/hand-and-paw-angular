@@ -1,0 +1,38 @@
+<div class="header-navbar-wrapper">
+  <header id="top">
+    <div id="menu">
+      <nav id="top-navbar">
+        <a routerLink="" routerLinkActive="active"></a>
+        <div class="pages-menu">
+          <div class="logo">
+            <a routerLink="" routerLinkActive="active">
+              <img
+                src="../../../assets/images/ui/logo-header.svg"
+                alt="Hand and paw logo"
+              />
+            </a>
+          </div>
+          <a routerLink="/animal/find" routerLinkActive="active"
+            >Find an Animal</a
+          >
+          <a routerLink="/animal/register" routerLinkActive="active"
+            >Register an animal</a
+          >
+          <a routerLink="about-adoption" routerLinkActive="active"
+            >About adoption</a
+          >
+          <div *ngIf="!isLogged">
+            <a routerLink="login" routerLinkActive="active">Login / Sing up</a>
+          </div>
+          <div *ngIf="isLogged">
+            <a routerLink="" routerLinkActive="active">Logout</a>
+          </div>
+          <div class="responsive-menu_close">
+            <span class="pages-menu-close-line"></span>
+            <span class="pages-menu-close-line"></span>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+</div>

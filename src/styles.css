@@ -1,1 +1,121 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary1: #fcc521;
+  --primary2: #793093;
+  --primaryHover1: #e9af01;
+  --primaryHover2: #63197d;
+  --secondary1: #fdf1ff;
+  --secondary2: #f3f3f3;
+  --footerText: #fff8dc;
+  --mainText: #0b040e;
+  --regularBtn: #f5d7ff;
+  --linkBtn: #006def;
+  --shadow: 0px 4px 6px rgba(121, 48, 147, 0.25);
+  --borderRadius: 30px;
+  --successColor: #2ecc71;
+  --errorColor: #e74c3c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  /* font-size: 1.125rem; */
+  font-size: 1.125rem;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  /* height: 100vh; */
+}
+
+h1 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--primary2);
+}
+
+h2 {
+  font-size: 2.188rem;
+  font-weight: 600;
+  /* padding-top: 2.5rem; */
+  color: var(--primary2);
+  margin-bottom: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+  /* padding-top: 1.5rem; */
+  color: var(--primary2);
+  margin-bottom: 2rem;
+}
+
+h4 {
+  font-size: 1.438rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.main {
+  width: 100%;
+  margin: auto;
+}
+
+.grid-image-article {
+  display: grid;
+  column-gap: 3rem;
+  /* gap: 30px; */
+  grid-template-columns: 50% 50%;
+}
+
+.menu {
+  background-color: var(--primary1);
+  padding: 0 10rem 0 10rem;
+}
+
+.container {
+  align-content: center;
+  justify-content: center;
+  width: 80%;
+  padding: 1rem;
+  margin: 0 auto 1rem auto;
+}
+
+.page-intro .container {
+  text-align: center;
+  padding: 1rem;
+}
+
+.page-intro article {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.call-to-action {
+  padding: 2em 0;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+}
+
+.section-header {
+  text-align: center;
+  padding-top: 2.5rem;
+}
+
+@media screen and (max-width: 700px) {
+  .menu {
+    padding: 0 16px 0 16px;
+  }
+
+  .main-navbar {
+    margin-left: 0px;
+  }
+}
