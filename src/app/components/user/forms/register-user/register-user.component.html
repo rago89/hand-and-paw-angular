@@ -1,1 +1,158 @@
-<p>register-user works!</p>
+<app-modal>
+  <form
+    [formGroup]="myForm"
+    (ngSubmit)="onSubmit()"
+    class="modal-form needs-validation"
+  >
+    <h1>Register an account</h1>
+    <div class="form-input-container">
+      <label for="name"> Name:</label><br />
+      <input type="name" id="name" name="name" formControlName="name" />
+      <div
+        *ngIf="myForm.get('name').valid && myForm.get('name').touched"
+        class="valid-input"
+      >
+        Looks good!
+      </div>
+      <div
+        *ngIf="!myForm.get('name').value && myForm.get('name').touched"
+        class="valid-input"
+        class="invalid-input"
+      >
+        Name cannot be empty!
+      </div>
+      <div
+        *ngIf="
+          myForm.get('name').value &&
+          myForm.get('name').value.length < 3 &&
+          myForm.get('name').touched
+        "
+        class="invalid-input"
+      >
+        Name must have at least 3 characters!
+      </div>
+    </div>
+    <div class="form-input-container">
+      <label for="email">Email:</label><br />
+      <input type="email" id="email" name="email" formControlName="email" />
+      <div
+        *ngIf="myForm.get('email').valid && myForm.get('email').touched"
+        class="valid-input"
+      >
+        Looks good!
+      </div>
+      <div
+        *ngIf="!myForm.get('email').value && myForm.get('email').touched"
+        class="valid-input"
+        class="invalid-input"
+      >
+        Email cannot be empty!
+      </div>
+      <div
+        *ngIf="
+          myForm.get('email').value &&
+          myForm.get('email').value.length !== 0 &&
+          !myForm.get('email').valid &&
+          myForm.get('email').touched
+        "
+        class="invalid-input"
+      >
+        Invalid email!
+      </div>
+    </div>
+    <div class="form-input-container">
+      <label for="password">Password:</label><br />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        autocomplete="new-password"
+        formControlName="password"
+      />
+      <div
+        *ngIf="
+          myForm.get('password').errors?.required &&
+          myForm.get('password').touched
+        "
+        class="invalid-input"
+      >
+        This field is required!
+      </div>
+      <div
+        *ngIf="
+          myForm.get('password').value &&
+          myForm.get('password').errors?.invalidInput &&
+          myForm.get('password').touched
+        "
+        class="invalid-input"
+      >
+        Password must contain at least 1 symbol, character and the length
+        between 7-15 characters
+      </div>
+    </div>
+    <div class="form-input-container">
+      <label for="repeat-password">Repeat password:</label><br />
+      <input
+        type="password"
+        id="repeat-password"
+        name="repeatPassword"
+        autocomplete="new-password"
+        formControlName="repeatPassword"
+      />
+      <div
+        *ngIf="
+          myForm.get('repeatPassword').valid &&
+          myForm.get('repeatPassword').touched
+        "
+        class="valid-input"
+      >
+        Looks good!
+      </div>
+      <div
+        *ngIf="
+          myForm.get('repeatPassword').errors?.required &&
+          myForm.get('repeatPassword').touched
+        "
+        class="invalid-input"
+      >
+        This field is required!
+      </div>
+      <div
+        *ngIf="
+          myForm.get('repeatPassword').value &&
+          myForm.get('repeatPassword').errors?.inputsNotMatch &&
+          myForm.get('repeatPassword').touched
+        "
+        class="invalid-input"
+      >
+        Passwords do not match!
+      </div>
+      <div
+        *ngIf="
+          myForm.get('repeatPassword').value &&
+          myForm.get('repeatPassword').errors?.invalidInput &&
+          myForm.get('repeatPassword').touched
+        "
+        class="invalid-input"
+      >
+        Password must contain at least 1 symbol, character and the length
+        between 7-15 characters
+      </div>
+    </div>
+    <button
+      [disabled]="!myForm.valid"
+      id="submit-register-form"
+      type="submit"
+      [ngClass]="{ 'disable-reg-btn': !myForm.valid }"
+      class="button regular-button"
+    >
+      Register
+    </button>
+    <div *ngIf="registrationError" class="invalid-input">
+      {{ registrationError }}
+    </div>
+  </form>
+</app-modal>
+<app-modal-message *ngIf="successRegistration">
+  <h2>You're successfully registered</h2>
+</app-modal-message>

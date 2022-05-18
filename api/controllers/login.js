@@ -45,6 +45,7 @@ const loginController = {
         userId: userRegistered[0]._id,
         userName: userRegistered[0].name,
         userEmail: userRegistered[0].email,
+        userAvatar: userRegistered[0].avatar,
       };
       const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
       // send cookie

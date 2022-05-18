@@ -21,7 +21,7 @@ const userRoute = express.Router();
 userRoute.post("/register", upload.single(""), userController.postUser);
 
 userRoute.use("/uploads", express.static(uploadAvatarPath));
-userRoute.get("/", tokenChecker, userController.getAllUsers);
+userRoute.get("/", userController.getAllUsers);
 userRoute.patch(
   "/delete-animal/:id",
   tokenChecker,

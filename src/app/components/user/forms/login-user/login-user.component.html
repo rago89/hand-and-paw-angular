@@ -1,1 +1,96 @@
-<p>login-user works!</p>
+<app-modal>
+  <form
+    *ngIf="!loadRegisterForm; else loadRegister"
+    class="modal-form"
+    [formGroup]="myForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <h1>Log in</h1>
+    <p class="error-message" id="login-error">Incorrect email or password.</p>
+    <div class="form-input-container">
+      <label for="email">Email</label><br />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Enter your e-mail"
+        autocomplete="email"
+        formControlName="email"
+      />
+      <div
+        *ngIf="myForm.get('email').valid && myForm.get('email').touched"
+        class="valid-input"
+      >
+        Looks good!
+      </div>
+      <div
+        *ngIf="!myForm.get('email').value && myForm.get('email').touched"
+        class="valid-input"
+        class="invalid-input"
+      >
+        Email cannot be empty!
+      </div>
+      <div
+        *ngIf="
+          myForm.get('email').value &&
+          myForm.get('email').value.length !== 0 &&
+          !myForm.get('email').valid &&
+          myForm.get('email').touched
+        "
+        class="invalid-input"
+      >
+        Invalid email!
+      </div>
+      <br />
+      <img src="/assets/icons/login-email-avatar.svg" />
+    </div>
+    <div class="form-input-container">
+      <label for="password">Password</label><br />
+      <input
+        type="password"
+        name="password"
+        id="password"
+        autocomplete="current-password"
+        placeholder="Enter your password"
+        formControlName="password"
+      />
+      <div
+        *ngIf="myForm.get('password').valid && myForm.get('password').touched"
+        class="valid-input"
+      >
+        Looks good!
+      </div>
+      <div
+        *ngIf="!myForm.get('password').value && myForm.get('password').touched"
+        class="valid-input"
+        class="invalid-input"
+      >
+        Password cannot be empty!
+      </div>
+      <br />
+      <img src="/assets/icons/login-password-lock.svg" />
+      <button
+        (click)="onLoadRegisterForm()"
+        id="open-register-form"
+        class="link-button"
+      >
+        Create an account
+      </button>
+      <br />
+      <button
+        [disabled]="!myForm.valid"
+        [ngClass]="{ 'disable-reg-btn': !myForm.valid }"
+        id="login-submit-btn"
+        class="button regular-button"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+  <ng-template #loadRegister>
+    <app-register-user></app-register-user>
+  </ng-template>
+</app-modal>
+<app-modal-message *ngIf="successLogin">
+  <h2>Welcome {{ userName }}</h2>
+</app-modal-message>

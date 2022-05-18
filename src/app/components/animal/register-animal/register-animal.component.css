@@ -5,14 +5,51 @@
   grid-column-gap: 32px;
   grid-row-gap: 16px;
 }
-
-.animal-description {
-  margin: 16px 0 16px 0;
+.input-select {
+  gap: 16px;
 }
 
-.animal-description {
-  height: 200px;
+.small {
+  color: red;
+}
+
+.input-select select,
+input,
+textarea {
   border-radius: 5px;
+  border: 2px solid var(--mainText);
+  background-color: #fff;
+  font-size: 1.125rem;
+  padding: 0.7em 1.8rem 0.7em 0.7em;
+  color: var(--mainText);
+  width: 100%;
+}
+
+.input-select textarea {
+  width: 100%;
+  height: 200px;
+}
+
+.input-select select:focus,
+input:focus,
+textarea:focus {
+  outline: none;
+  border: 2px solid var(--primary2);
+}
+
+.input-select label {
+  font-size: 1rem;
+  display: block;
+}
+.textarea-select {
+  margin-top: 20px;
+}
+.textarea-select label {
+  font-size: 1rem;
+  display: block;
+}
+.textarea-select textarea {
+  height: 200px;
 }
 
 .register-animal-button {
@@ -48,6 +85,7 @@
   width: auto;
   object-fit: contain;
   border-radius: 32px;
+  margin-top: 40px;
 }
 
 #register-animal-form button {

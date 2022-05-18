@@ -16,7 +16,7 @@ animalRoute.get("/:id", animalController.getAnimal);
 animalRoute.post(
   "/register",
   uploadAnimalPictures,
-  tokenChecker,
+
   animalController.postAnimal
 );
 // update existing pictures and data

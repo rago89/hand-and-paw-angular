@@ -2,7 +2,6 @@ import { AnimalPicture } from './picture.model';
 
 export class Animal {
   constructor(
-    public userId: string,
     public name: string,
     public type: string,
     public breed: string,

@@ -1,3 +1,4 @@
+import { UrlService } from './../../../url/url.service';
 import { Animal } from './../animal.model';
 import { AnimalService } from './../animal.service';
 import { Component, OnInit } from '@angular/core';
@@ -15,7 +16,7 @@ export class FindAnimalComponent implements OnInit {
 
   ngOnInit(): void {
     this.isFetching = true;
-    this.animalService.onGetAnimals().subscribe({
+    this.animalService.fetchAnimals().subscribe({
       next: (animals) => {
         this.isFetching = false;
         this.animalsList = animals;

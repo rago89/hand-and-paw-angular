@@ -1,0 +1,65 @@
+<div class="pages-menu">
+  <div class="logo">
+    <a routerLink="" routerLinkActive="active">
+      <img
+        src="../../../assets/images/ui/logo-header.svg"
+        alt="Hand and paw logo"
+      />
+    </a>
+  </div>
+  <div (click)="openMenuToggle()" class="dropdown" type="button">
+    <button class="button-bars">
+      <span class="dark-teal-text"
+        ><fa-icon class="fa-2xl" [icon]="barIcons"></fa-icon
+      ></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div
+      [ngClass]="{ show: openMenu }"
+      class="dropdown-menu menu-position"
+      id="navbarSupportedContent8"
+    >
+      <!-- Links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="dropdown-item">
+          <a routerLink="/animal/find" routerLinkActive="active"
+            >Find an Animal</a
+          >
+        </li>
+        <li class="dropdown-item">
+          <a routerLink="/animal/register" routerLinkActive="active"
+            >Register an animal</a
+          >
+        </li>
+
+        <li class="dropdown-item">
+          <a routerLink="about-adoption" routerLinkActive="active"
+            >About adoption</a
+          >
+        </li>
+        <li><hr class="dropdown-divider" /></li>
+
+        <div class="dropdown-item" *ngIf="!isLogged">
+          <a (click)="onLoadLoginForm()">Login / Sing up</a>
+        </div>
+        <div class="dropdown-item" *ngIf="isLogged">
+          <a>Logout</a>
+          <div class="dropdown-item">
+            <img class="profile-menu-image" [src]="heartIcon" alt="Favorites" />
+            <a routerLink="user/favorites-animals">Favorites</a>
+          </div>
+          <div class="dropdown-item">
+            <img class="profile-menu-image" [src]="dogIcon" alt="Animal" />
+            <a routerLink="user/my-animals">My animals</a>
+          </div>
+          <div class="dropdown-item">
+            <img class="profile-menu-image" [src]="accountIcon" alt="Avatar" />
+            <a routerLink="user/account/edit">Edit profile</a>
+          </div>
+        </div>
+      </ul>
+      <!-- Links -->
+    </div>
+  </div>
+</div>

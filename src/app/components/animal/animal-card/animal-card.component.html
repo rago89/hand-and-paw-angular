@@ -1,7 +1,6 @@
 <div id="{animal._id}" class="animal search-result-card">
   <div class="card-photo">
-    <img *ngIf="pictureHex" src="data:image/jpeg;base64,{{ pictureHex }}" />
-    <img *ngIf="!pictureHex" [src]="anonymousImage" />
+    <img [src]="pictureHex ? pictureHex : anonymousImage" />
   </div>
   <div class="{infoClass}">
     <div class="animal-name">

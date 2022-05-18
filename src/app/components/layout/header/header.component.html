@@ -1,38 +1,67 @@
-<div class="header-navbar-wrapper">
-  <header id="top">
-    <div id="menu">
-      <nav id="top-navbar">
-        <a routerLink="" routerLinkActive="active"></a>
-        <div class="pages-menu">
-          <div class="logo">
-            <a routerLink="" routerLinkActive="active">
+<header id="top">
+  <nav id="top-navbar">
+    <div *ngIf="headerFullBrowserWidth">
+      <div class="pages-menu">
+        <div class="logo">
+          <a routerLink="" routerLinkActive="active">
+            <img
+              src="../../../assets/images/ui/logo-header.svg"
+              alt="Hand and paw logo"
+            />
+          </a>
+        </div>
+
+        <a routerLink="/animal/find">Find an Animal</a>
+        <a routerLink="/animal/register">Register an animal</a>
+        <a routerLink="about-adoption">About adoption</a>
+        <div *ngIf="!isLogged">
+          <a (click)="onLoadLoginForm()">Login / Sing up</a>
+        </div>
+        <div
+          *ngIf="isLogged"
+          (click)="openToggle()"
+          [ngClass]="{ show: openMenu }"
+          class="dropdown dropdown-toggle"
+        >
+          <img
+            class="dropdown-toggle"
+            [src]="avatarHex ? avatarHex : defaultAvatarImg"
+            class="avatar-image"
+          />
+          <div class="dropdown-menu" [ngClass]="{ show: openMenu }">
+            <div class="dropdown-item">
               <img
-                src="../../../assets/images/ui/logo-header.svg"
-                alt="Hand and paw logo"
+                class="profile-menu-image"
+                [src]="heartIcon"
+                alt="Favorites"
               />
-            </a>
-          </div>
-          <a routerLink="/animal/find" routerLinkActive="active"
-            >Find an Animal</a
-          >
-          <a routerLink="/animal/register" routerLinkActive="active"
-            >Register an animal</a
-          >
-          <a routerLink="about-adoption" routerLinkActive="active"
-            >About adoption</a
-          >
-          <div *ngIf="!isLogged">
-            <a routerLink="login" routerLinkActive="active">Login / Sing up</a>
-          </div>
-          <div *ngIf="isLogged">
-            <a routerLink="" routerLinkActive="active">Logout</a>
-          </div>
-          <div class="responsive-menu_close">
-            <span class="pages-menu-close-line"></span>
-            <span class="pages-menu-close-line"></span>
+              <a routerLink="user/favorites-animals">Favorites</a>
+            </div>
+            <div class="dropdown-item">
+              <img class="profile-menu-image" [src]="dogIcon" alt="Animal" />
+              <a routerLink="user/my-animals">My animals</a>
+            </div>
+            <div class="dropdown-item">
+              <img
+                class="profile-menu-image"
+                [src]="defaultAvatarImg"
+                alt="Avatar"
+              />
+              <a routerLink="user/account/edit">Edit profile</a>
+            </div>
+            <div class="dropdown-item">
+              <a (click)="logOut()" routerLink="user/account/edit">Logout</a>
+            </div>
           </div>
         </div>
-      </nav>
+        <div class="responsive-menu_close">
+          <span class="pages-menu-close-line"></span>
+          <span class="pages-menu-close-line"></span>
+        </div>
+      </div>
     </div>
-  </header>
-</div>
+    <app-hamburger *ngIf="!headerFullBrowserWidth"></app-hamburger>
+  </nav>
+  <!-- keep the login component in the header -->
+  <app-login-user *ngIf="openLoginForm"></app-login-user>
+</header>

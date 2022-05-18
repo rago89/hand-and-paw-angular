@@ -668,7 +668,7 @@ Remove an animal of the dataBase.
 
 - **URL**
 
-  /api/animals/:id
+  /api/animals/update/:id
 
 - **Method:**
 

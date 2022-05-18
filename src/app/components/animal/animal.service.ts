@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { UrlService } from 'src/app/url/url.service';
 import { Animal } from './animal.model';
 
 @Injectable({
@@ -7,9 +8,13 @@ import { Animal } from './animal.model';
 })
 export class AnimalService {
   animals: any;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private urlService: UrlService) {}
 
-  onGetAnimals() {
-    return this.http.get<Animal[]>('http://localhost:4000/api/animals');
+  fetchAnimals() {
+    return this.http.get<Animal[]>(`${this.urlService.getAnimals}`);
+  }
+
+  postAnimal(animal: any) {
+    return this.http.post<Animal>(`${this.urlService.registerAnimal}`, animal);
   }
 }
