@@ -32,6 +32,8 @@ app.use(
   })
 );
 
+app.use("/", express.static(path.join(__dirname, "..", config.STATIC_DIR)));
+
 if (config.MODE === "development") {
   app.use(morgan("dev"));
 }
