@@ -1,0 +1,38 @@
+.search-results {
+  margin-top: 10rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 360px));
+  grid-column-gap: 2.4rem;
+  grid-row-gap: 16px;
+  margin: 2rem 0;
+  margin: auto;
+}
+
+.center-items {
+  display: grid;
+  justify-items: center;
+}
+
+.animal-search-menu .input-select {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-column-gap: 30px;
+  grid-row-gap: 16px;
+  grid-auto-rows: 50px;
+  margin: 2rem 0;
+}
+
+.animal-search-menu .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#submit-animal-search-form {
+  display: block;
+  margin: auto;
+}
+#remove-filters {
+  float: right;
+}

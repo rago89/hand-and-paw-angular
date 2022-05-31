@@ -6,27 +6,12 @@ const upload = require("../../middleware/multer-upload-avatar");
 const userController = require("../../controllers/users");
 const tokenChecker = require("../../middleware/token-login");
 
-const uploadAvatarPath = path.join(
-  __dirname,
-  "..",
-  "..",
-  "..",
-  "client",
-  "public",
-  "avatar-uploads"
-);
-
 const userRoute = express.Router();
 
-userRoute.post("/register", upload.single(""), userController.postUser);
+userRoute.post("/register", userController.postUser);
 
-userRoute.use("/uploads", express.static(uploadAvatarPath));
 userRoute.get("/", userController.getAllUsers);
-userRoute.patch(
-  "/delete-animal/:id",
-  tokenChecker,
-  userController.deletePublishedAnimal
-);
+
 // disable validation auth
 userRoute.get("/:id", userController.getUser);
 userRoute.put(
@@ -35,7 +20,8 @@ userRoute.put(
   tokenChecker,
   userController.updateUser
 );
-userRoute.delete("/delete/:id", tokenChecker, userController.deleteUser);
+
+userRoute.delete("/delete/:id", userController.deleteUser);
 userRoute.patch("/add-favorite/:id", tokenChecker, userController.addFavorite);
 userRoute.patch(
   "/remove-favorite/:id",

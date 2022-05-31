@@ -1,26 +1,61 @@
 <div id="{animal._id}" class="animal search-result-card">
-  <div class="card-photo">
-    <img [src]="pictureHex ? pictureHex : anonymousImage" />
-  </div>
-  <div class="{infoClass}">
-    <div class="animal-name">
-      <h3>{{ animal.name }}</h3>
+  <div (click)="goToAnimalDescription()">
+    <div class="card-photo">
+      <img [src]="renderImage()" />
     </div>
-    <br />
-    Type: <span>{{ animal.type }}</span> <br />
-    Breed: <span>{{ animal.breed }}</span> <br />
-    Gender: <span>{{ animal.gender }}</span>
-    <br />
-    Character: <span>{{ animal.character }}</span>
-    <br />
-    Age:
-    <span>{{ age }}</span>
-    <br />
-    City: <span>{{ animal.location }}</span> <br />
-    Province:
-    <span>
-      {{ animal.province }}
-    </span>
-    <br />
+    <div class="{infoClass}">
+      <div class="animal-name">
+        <h3>{{ animal.name | pascalCase }}</h3>
+      </div>
+      <br />
+      Type: <span>{{ animal.type }}</span> <br />
+      Breed: <span>{{ animal.breed }}</span> <br />
+      Gender: <span>{{ animal.gender }}</span>
+      <br />
+      Character: <span>{{ animal.character }}</span>
+      <br />
+      Age:
+      <span>{{ age }}</span>
+      <br />
+      City: <span>{{ animal.location | pascalCase }}</span> <br />
+      Province:
+      <span>
+        {{ animal.province | pascalCase }}
+      </span>
+      <br />
+    </div>
+  </div>
+  <div *ngIf="editOrRemove" id="owner-menu" class="search-card-menu">
+    <img
+      (click)="onDeleteAnimal()"
+      src="/assets/icons/purple_cross.svg"
+      id="delete-animal"
+      class="delete-animal"
+    /><img
+      (click)="goToUpdateAnimal()"
+      src="/assets/icons/purple_edit.svg"
+      id="edit-animal"
+      class="edit-animal"
+    />
+  </div>
+  <div
+    *ngIf="!belongToUser"
+    id="seeker-menu"
+    class="search-card-menu favorites"
+  >
+    <img
+      (click)="onRemoveFavorite()"
+      *ngIf="isFavorite"
+      id="heart"
+      class="favorite-animal"
+      src="/assets/icons/active-heart.svg"
+    />
+    <img
+      (click)="onAddFavorite()"
+      *ngIf="!isFavorite"
+      id="heart"
+      class="favorite-animal"
+      src="/assets/icons/heart.svg"
+    />
   </div>
 </div>

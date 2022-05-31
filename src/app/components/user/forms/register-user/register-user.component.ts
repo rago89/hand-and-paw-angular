@@ -1,8 +1,7 @@
-import { ModalService } from './../../../shared/modal/modal.service';
-import { UserService } from './../../user.service';
+import { AuthService } from './../auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-import { customFormValidation } from 'src/app/form/custom-validators';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { CustomFormValidation } from 'src/app/form/custom-validators';
 
 @Component({
   selector: 'app-register-user',
@@ -10,16 +9,14 @@ import { customFormValidation } from 'src/app/form/custom-validators';
   styleUrls: ['./register-user.component.css'],
 })
 export class RegisterUserComponent
-  extends customFormValidation
+  extends CustomFormValidation
   implements OnInit
 {
   myForm: FormGroup | any;
   successRegistration: boolean = false;
+  @Output() loadRegisterForm = new EventEmitter<boolean>();
   registrationError: string = '';
-  constructor(
-    private userService: UserService,
-    private modalService: ModalService
-  ) {
+  constructor(private authService: AuthService) {
     super();
   }
 
@@ -36,7 +33,7 @@ export class RegisterUserComponent
       ]),
       repeatPassword: new FormControl(null, [
         Validators.required,
-        this.matchPasswords('password'),
+        this.matchInputs('password'),
         this.passwordInputContentValidation(),
         this.passwordInputContentValidation,
       ]),
@@ -44,22 +41,23 @@ export class RegisterUserComponent
   }
 
   onSubmit() {
-    console.log(this.myForm);
-
-    this.userService.postUser(this.myForm.value).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: (error) => {
-        this.registrationError = error.error.message;
+    if (!this.myForm.valid) return;
+    this.authService.postUser(this.myForm.value).subscribe({
+      next: (response) => {},
+      error: (errorMessage) => {
+        this.registrationError = errorMessage;
       },
       complete: () => {
         this.successRegistration = true;
         setTimeout(() => {
           this.successRegistration = false;
-          this.modalService.loadModal.next(false);
+          this.loadRegisterForm.emit(false);
         }, 2000);
       },
     });
+  }
+
+  onLoadLoginForm() {
+    this.loadRegisterForm.emit(false);
   }
 }

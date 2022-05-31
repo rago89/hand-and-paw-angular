@@ -4,6 +4,8 @@
 const animalManager = require("../business-logic/animals");
 const userDbAccess = require("../data-access/users");
 const deleteImage = require("../utils/delete-image");
+const userManager = require("../business-logic/users");
+const CustomError = require("../utils/custom-error");
 
 const animalsController = {
   getAllAnimals: async (req, res) => {
@@ -74,12 +76,65 @@ const animalsController = {
   },
   deleteAnimal: async (req, res) => {
     try {
-      const { id } = req.params;
-      if ([...id].length !== 24) {
-        throw new Error(`invalid id`);
+      //----------------------------------------------------------------
+
+      const animalId = req.params.id;
+      const { userId } = req.query;
+
+      if ([...userId].length !== 24 || [...animalId].length !== 24) {
+        throw new CustomError(`invalid id`, "ValidationError", "VE001");
       }
-      const userDeleted = await animalManager.removeAnimal(id);
-      res.status(200).send(userDeleted);
+
+      const animal = await animalManager.getAnimal(animalId);
+      if (animal.length === 0) {
+        throw new CustomError(
+          `Cannot delete animal id doesn't exist`,
+          "ValidationError",
+          "VE007"
+        );
+      }
+
+      const user = await userManager.getUser(userId);
+      if (user.length === 0) {
+        throw new CustomError(
+          `Cannot delete animal user doesn't exist`,
+          "ValidationError",
+          "VE007"
+        );
+      }
+
+      if (user[0].registeredAnimals.length === 0) {
+        throw new CustomError(
+          `Cannot delete animal, the user do not have registered Animals`,
+          "ValidationError",
+          "VE008"
+        );
+      }
+
+      const matchAnimal = user[0].registeredAnimals.some(
+        (element) => element === animalId
+      );
+
+      if (!matchAnimal) {
+        throw new CustomError(
+          `The animal was not registered by user with the id: ${userId}`,
+          "ValidationError",
+          "VE009"
+        );
+      }
+
+      const updateUser = await userManager.deletePublishedAnimal(
+        userId,
+        animalId
+      );
+
+      if (updateUser.acknowledged === true) {
+        res.status(200).json({
+          message: `publication id: ${animalId} was removed successfully`,
+        });
+      }
+
+      //------------------------------------------------------------
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -89,7 +144,7 @@ const animalsController = {
       const { body } = req;
       const { userId } = body;
       if ([...userId].length !== 24) {
-        throw new Error(`invalid id`);
+        throw new Error(`invalid  user id`);
       }
       body.type = body.type.toLowerCase();
       body.breed = body.breed.toLowerCase();
@@ -107,7 +162,7 @@ const animalsController = {
           subscriber[0]._id
         );
       }
-      res.status(201).json(newPublication);
+      res.status(201).json({ newPublication });
     } catch (error) {
       if (req.files) {
         const pictures = req.files;

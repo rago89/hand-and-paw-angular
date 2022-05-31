@@ -5,6 +5,11 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class ModalService {
-  loadModal = new Subject<boolean>();
+  loadLoginModal = new Subject<boolean>();
+  loadContactUsModal = new Subject<boolean>();
+  loadContactOwner = new Subject<boolean>();
+  loadUpdatePassword = new Subject<boolean>();
+  loadUpdateEmail = new Subject<boolean>();
+
   constructor() {}
 }

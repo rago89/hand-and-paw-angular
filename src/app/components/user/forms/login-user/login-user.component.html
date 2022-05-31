@@ -1,4 +1,4 @@
-<app-modal>
+⁄⁄<app-modal>
   <form
     *ngIf="!loadRegisterForm; else loadRegister"
     class="modal-form"
@@ -25,7 +25,6 @@
       </div>
       <div
         *ngIf="!myForm.get('email').value && myForm.get('email').touched"
-        class="valid-input"
         class="invalid-input"
       >
         Email cannot be empty!
@@ -62,20 +61,19 @@
       </div>
       <div
         *ngIf="!myForm.get('password').value && myForm.get('password').touched"
-        class="valid-input"
         class="invalid-input"
       >
         Password cannot be empty!
       </div>
       <br />
       <img src="/assets/icons/login-password-lock.svg" />
-      <button
+      <a
         (click)="onLoadRegisterForm()"
         id="open-register-form"
         class="link-button"
       >
         Create an account
-      </button>
+      </a>
       <br />
       <button
         [disabled]="!myForm.valid"
@@ -85,10 +83,17 @@
       >
         Submit
       </button>
+      <br />
+      <br />
+      <div *ngIf="loginErrorMessage" class="invalid-input">
+        {{ loginErrorMessage }}
+      </div>
     </div>
   </form>
   <ng-template #loadRegister>
-    <app-register-user></app-register-user>
+    <app-register-user
+      (loadRegisterForm)="loadRegisterForm = $event"
+    ></app-register-user>
   </ng-template>
 </app-modal>
 <app-modal-message *ngIf="successLogin">

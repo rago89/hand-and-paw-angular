@@ -1,0 +1,171 @@
+#edit-account-main-title {
+  text-align: center;
+}
+
+/* user profile form */
+#edit-user-profile {
+  margin-top: 80px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.input-form {
+  margin: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 50%));
+  grid-column-gap: 32px;
+  justify-content: center;
+}
+
+.edit-button {
+  border: 0;
+  display: block;
+  margin: 20px auto;
+  width: 50%;
+  height: 50px;
+  text-align: center;
+  background-color: var(--primary2);
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1.125rem;
+}
+
+.update-account {
+  margin: auto;
+  align-self: center;
+  justify-self: center;
+}
+.edit-button:hover {
+  background-color: var(--primaryHover2);
+}
+#edit-user-profile p {
+  text-align: center;
+}
+
+.yes-checkbox {
+  margin: auto;
+  text-align: center;
+}
+/* public access form */
+#public-access {
+  display: grid;
+  grid-template-columns: 100%;
+  justify-items: center;
+  margin: 40px;
+}
+.input-select {
+  border-radius: 5px;
+  border: 2px solid var(--mainText);
+  background-color: #fff;
+  font-size: 1.125rem;
+  padding: 0.7em 1.8rem 0.7em 0.7em;
+  color: var(--mainText);
+  width: 100%;
+}
+
+.day-class {
+  display: grid;
+  width: 50%;
+  grid-template-columns: 50% 50%;
+  justify-content: center;
+  margin: 0;
+}
+
+#yes-check {
+  width: 30px;
+}
+
+.hour-input {
+  width: 100%;
+  border: 2px solid black;
+  text-align: center;
+  border-bottom: transparent;
+  border-radius: 0;
+}
+
+.check-class {
+  width: 30px;
+  margin-left: 50px;
+  margin-top: 20px;
+}
+
+.container-checkbox {
+  border: 2px solid black;
+  border-bottom: transparent;
+  height: 50.53px;
+  border-right: transparent;
+  border-radius: 0;
+}
+
+#sunday-class {
+  border-bottom: 2px solid black !important;
+}
+
+/* style for the avatar */
+
+.update-animal-image-button {
+  display: none;
+}
+
+.update-avatar-image-upload {
+  cursor: pointer;
+  color: var(--linkBtn);
+  margin-right: 32px;
+}
+
+.upload-images {
+  display: flex;
+  align-items: center;
+  width: 40%;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.upload-images > div {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  width: 200px;
+  margin: auto;
+}
+
+.avatar-preview {
+  height: 75px;
+  width: 75px;
+
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+#update-animal-form button {
+  width: fit-content;
+  height: 30px;
+}
+
+#yes-check {
+  cursor: pointer;
+}
+
+.successText {
+  color: var(--successColor);
+  margin-top: -25px;
+}
+
+.failText {
+  color: var(--errorColor);
+  margin-top: -25px;
+}
+
+@media screen and (max-width: 768px) {
+  .check-class {
+    margin-left: 0px;
+  }
+  .day-class {
+    width: 100%;
+  }
+}

@@ -7,19 +7,25 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+const helmetHeaders = require("./utils/helmet-headers");
 
 const config = require("./config");
 
 const routes = require("./routes");
 
 const app = express();
+
 // set credentials
 const corsConfig = {
   origin: true,
   credentials: true,
 };
+
+app.use(helmet(helmetHeaders));
 app.use(cors(corsConfig));
 app.options("*", cors(corsConfig));
+app.disable("x-powered-by");
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -49,7 +55,7 @@ app.use((err, req, res, next) => {
   res.status(500).end();
 });
 
-app.listen(config.PORT, err => {
+app.listen(config.PORT, (err) => {
   if (err) {
     console.error(err);
   } else {

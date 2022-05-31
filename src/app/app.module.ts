@@ -1,8 +1,10 @@
+import { AuthGuard } from './components/user/forms/auth-guard.service';
+import { AuthInterceptorService } from './components/user/forms/auth-interceptor.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
@@ -25,6 +27,14 @@ import { DropdownMenuDirective } from './shared-directives/dropdown-menu.directi
 import { ModalMessageComponent } from './components/shared/modal-message/modal-message.component';
 import { ToggleCollapseQuestionDirective } from './components/about-adoption/directives/toggle-collapse-question.directive';
 import { HamburgerComponent } from './components/layout/header/hamburger/hamburger.component';
+import { PascalCasePipe } from './pipes/pascal-case.pipe';
+import { AnimalDescriptionComponent } from './components/animal/animal-description/animal-description.component';
+import { EditUserComponent } from './components/user/forms/edit-user/edit-user.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { AnimalFormComponent } from './components/animal/animal-form/animal-form.component';
+import { UpdateAnimalComponent } from './components/animal/update-animal/update-animal.component';
+import { UpdateEmailComponent } from './components/user/forms/update-email/update-email.component';
+import { UpdatePasswordComponent } from './components/user/forms/update-password/update-password.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +58,14 @@ import { HamburgerComponent } from './components/layout/header/hamburger/hamburg
     ModalMessageComponent,
     ToggleCollapseQuestionDirective,
     HamburgerComponent,
+    PascalCasePipe,
+    AnimalDescriptionComponent,
+    EditUserComponent,
+    ContactFormComponent,
+    AnimalFormComponent,
+    UpdateAnimalComponent,
+    UpdateEmailComponent,
+    UpdatePasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,8 +73,16 @@ import { HamburgerComponent } from './components/layout/header/hamburger/hamburg
     HttpClientModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+    AuthGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

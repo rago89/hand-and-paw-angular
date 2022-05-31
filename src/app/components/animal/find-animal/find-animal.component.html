@@ -11,6 +11,153 @@
   </div>
 </section>
 
+<section class="animal-search-menu">
+  <div class="container">
+    <div class="filters-control">
+      <button id="remove-filters" class="link-button" (click)="resetForm()">
+        Remove filters
+      </button>
+    </div>
+    <div class="search-dropdown-menu">
+      <form
+        id="search-animal-form"
+        class="input-select"
+        #f="ngForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div>
+          <input
+            type="text"
+            name="type"
+            placeholder="All animals"
+            ngModel
+            minlength="3"
+            #type="ngModel"
+          />
+          <small
+            *ngIf="
+              type.errors?.['minlength'] &&
+              (type.dirty || type.touched)
+            "
+            class="small"
+            [ngStyle]="{ color: 'red' }"
+            >Type must have al least 3 characters
+          </small>
+        </div>
+        <div>
+          <input
+            type="text"
+            name="breed"
+            placeholder="All breeds"
+            ngModel
+            #breed="ngModel"
+            minlength="3"
+          />
+          <small
+            *ngIf="
+            breed.errors?.['minlength'] &&
+            (breed.dirty || breed.touched)
+          "
+            class="small"
+            [ngStyle]="{ color: 'red' }"
+            >Breed must have al least 3 characters
+          </small>
+        </div>
+
+        <select name="age" [ngModel]="defaultAge">
+          <option value="all">All ages</option>
+          <option value="0">less than 1 year</option>
+          <option value="1">1 year</option>
+          <option value="2">2 years</option>
+          <option value="3">3 years</option>
+          <option value="4">4 years</option>
+          <option value="5">5 years</option>
+          <option value="6">6 years</option>
+          <option value="7">7 years</option>
+          <option value="8">8 years</option>
+          <option value="9">9 years</option>
+          <option value="10">10 years</option>
+          <option value="11">11 years</option>
+          <option value="12">12 years</option>
+          <option value="13">13 years</option>
+          <option value="14">14 years</option>
+          <option value="15">15 years</option>
+          <option value="16">16 years</option>
+          <option value="17">17 years</option>
+          <option value="18">18 years</option>
+          <option value="19">19 years</option>
+          <option value="20">20 years</option>
+          <option value="21">21 years</option>
+          <option value="22">22 years</option>
+          <option value="23">23 years</option>
+          <option value="24">24 years</option>
+          <option value="25">25 years</option>
+          <option value="26">26 years</option>
+          <option value="27">27 years</option>
+          <option value="28">28 years</option>
+          <option value="29">29 years</option>
+          <option value="30">30 years</option>
+          <option value="31">31 years</option>
+          <option value="32">32 years</option>
+          <option value="33">33 years</option>
+          <option value="34">34 years</option>
+          <option value="35">35 years</option>
+          <option value="36">36 years</option>
+          <option value="37">37 years</option>
+          <option value="38">38 years</option>
+          <option value="39">39 years</option>
+          <option value="40">40 years</option>
+        </select>
+        <select name="gender" [ngModel]="defaultGender">
+          <option value="all">All genders</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <select name="character" [ngModel]="defaultCharacter">
+          <option value="all">All characters</option>
+          <option value="affectionate">Affectionate</option>
+          <option value="aggressive">Aggressive</option>
+          <option value="aloof">Aloof</option>
+          <option value="angry">Angry</option>
+          <option value="asocial">Asocial</option>
+          <option value="calm">Calm</option>
+          <option value="energetic">Energetic</option>
+          <option value="friendly">Friendly</option>
+          <option value="needy">Needy</option>
+          <option value="noisy">Noisy</option>
+          <option value="passive">Passive</option>
+          <option value="playful">Playful</option>
+          <option value="quiet">Quiet</option>
+          <option value="shy">Shy</option>
+          <option value="social">Social</option>
+        </select>
+        <select name="province" [ngModel]="defaultProvince">
+          <option value="all">All provinces</option>
+          <option value="brussels">Brussels</option>
+          <option value="antwerp">Antwerp</option>
+          <option value="east-flanders">East-Flanders</option>
+          <option value="flemish-Brabant">Flemish Brabant</option>
+          <option value="limburg">Limburg</option>
+          <option value="west-flanders">West-Flanders</option>
+          <option value="hainaut">Hainaut</option>
+          <option value="liege">Liege</option>
+          <option value="Luxembourg">luxembourg</option>
+          <option value="namur">Namur</option>
+          <option value="Wallon-Brabant">Wallon-Brabant</option>
+        </select>
+      </form>
+    </div>
+    <button
+      type="submit"
+      id="submit-animal-search-form"
+      class="button regular-button"
+      form="search-animal-form"
+    >
+      Search
+    </button>
+  </div>
+</section>
+
 <div *ngIf="isFetching" class="loading-image">
   <img src="../../../../assets/gif/loading_animation.gif" alt="loading image" />
 </div>
@@ -19,7 +166,30 @@
     An error has occurred try again later
   </h2>
 </div>
-<div *ngIf="!isFetching && animalsList.length !== 0">
+<div
+  *ngIf="!filteredAnimalsList.length && showFilteredAnimals"
+  class="center-items"
+>
+  <h2>There are not animals with the parameters requested</h2>
+  <button class="link-button" (click)="onShowAllAnimals()">
+    Back to all animals
+  </button>
+</div>
+
+<div
+  *ngIf="!isFetching && filteredAnimalsList.length !== 0 && showFilteredAnimals"
+>
+  <section id="animals-list" class="animal-search-results">
+    <div class="container search-results">
+      <app-animal-card
+        *ngFor="let animalEl of filteredAnimalsList"
+        [animal]="animalEl"
+      ></app-animal-card>
+    </div>
+  </section>
+</div>
+
+<div *ngIf="!isFetching && animalsList.length !== 0 && !showFilteredAnimals">
   <section id="animals-list" class="animal-search-results">
     <div class="container search-results">
       <app-animal-card

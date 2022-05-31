@@ -1,0 +1,59 @@
+<div id="main-container" class="main">
+  <div class="animal animal-profile-page container">
+    <div *ngIf="backToPage" class="to-search-results">
+      <img class="arrow-back" src="/assets/icons/blue_back-arrow.svg" /><button
+        (click)="onNavigateTo($event)"
+        class="link-button"
+      >
+        {{ backToPage }}
+      </button>
+    </div>
+    <div class="animal-photo">
+      <img [src]="renderImage()" />
+    </div>
+    <div class="animal-info">
+      <div class="animal-name">
+        <h3>{{ animal?.name }}</h3>
+      </div>
+      <br />
+      Type: <span>{{ animal?.name }}</span> <br />
+      Breed: <span>{{ animal?.breed }}</span> <br />
+      Gender: <span>{{ animal?.gender }}</span
+      ><br />
+      Character: <span>{{ animal?.character }}</span
+      ><br />
+      Age: <span>{{ animal?.age }}</span
+      ><br />
+      City: <span>{{ animal?.location }}</span> <br />
+      Province: <span>{{ animal?.province }}</span> <br />
+    </div>
+
+    <button (click)="onLoadContactOwner()" class="button regular-button">
+      Get in touch
+    </button>
+    <div class="animal-story">
+      <h3 class="animal-name">{{ animal?.name }}</h3>
+      <p>{{ animal?.describeAnimal }}</p>
+    </div>
+    <div *ngIf="!belongToUser" id="heart" class="animal-profile-menu favorites">
+      <img
+        (click)="onRemoveFavorite()"
+        *ngIf="isFavorite"
+        id="heart"
+        class="favorite-animal"
+        src="/assets/icons/active-heart.svg"
+      />
+      <img
+        (click)="onAddFavorite()"
+        *ngIf="!isFavorite"
+        id="heart"
+        class="favorite-animal"
+        src="/assets/icons/heart.svg"
+      />
+    </div>
+  </div>
+</div>
+<app-contact-form
+  [formProps]="contactFormArgs"
+  *ngIf="loadContactOwner"
+></app-contact-form>

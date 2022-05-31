@@ -37,9 +37,8 @@ const emailController = {
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.log(error);
+          res.status(500).json({ error });
         } else {
-          console.log(`email sent ${info.response}`);
           res.status(200).json({ success: "message sent" });
         }
       });
@@ -89,9 +88,8 @@ const emailController = {
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.log(error);
+          res.status(500).json({ error });
         } else {
-          console.log(`email sent ${info.response}`);
           res.status(200).json({ success: "message sent" });
         }
       });

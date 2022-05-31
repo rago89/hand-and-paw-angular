@@ -5,7 +5,6 @@
 const userManager = require("../business-logic/users");
 const hashCreator = require("../utils/hash");
 const databaseAccess = require("../data-access/users");
-const animalManager = require("../business-logic/animals");
 const deleteAvatar = require("../utils/delete-image");
 const CustomError = require("../utils/custom-error");
 
@@ -25,7 +24,20 @@ const userRegister = {
         throw new CustomError(`invalid id`, "ValidationError", "VE001");
       }
       const user = await userManager.getUser(id);
-      res.status(200).send(user);
+
+      const userToSend = {
+        id: user[0]._id,
+        name: user[0].name,
+        phone: user[0].phone,
+        location: user[0].location,
+        website: user[0].website,
+        avatar: user[0].avatar,
+        favorites: user[0].favorites,
+        publicAccess: user[0].avatar,
+        registeredAnimals: user[0].registeredAnimals,
+      };
+
+      res.status(200).send(userToSend);
     } catch (error) {
       res.status(401).json({ message: `${error.code} ${error.message}` });
     }
@@ -34,43 +46,42 @@ const userRegister = {
     try {
       const { id } = req.params;
       const newData = req.body;
+      const { email: currentEmail, repeatEmail: newEmail } = req.body;
+
       if ([...id].length !== 24 || [...newData.id].length !== 24) {
-        throw new CustomError(`invalid id`, "ValidationError", "VE001");
+        throw new Error(`invalid id`);
       }
       if (newData.id !== id) {
-        throw new CustomError("Cannot change user ID after creation!", "VE002");
+        throw new Error("Cannot change user ID after creation!");
       }
       // check old password before update the newOne
       if (newData.newPassword && newData.oldPassword) {
         const user = await userManager.getUser(id);
+
         const newPassword = hashCreator(req.body.newPassword);
-        const oldPassword = hashCreator(req.body.oldPassword);
-        if (newPassword === oldPassword) {
-          throw Error("New password and current password are the same");
+        const currentPassword = hashCreator(req.body.oldPassword);
+
+        if (user[0].password === newPassword) {
+          throw Error("New password and current password are the same!");
         }
-        if (user[0].password !== oldPassword) {
-          if (newData.id !== id) {
-            throw new CustomError(
-              "Current password incorrect!",
-              "ValidationError",
-              "VE003"
-            );
-          }
-        } else {
-          newData.password = newPassword;
+        if (user[0].password !== currentPassword) {
+          throw Error("Current password incorrect!");
         }
+
+        newData.password = newPassword;
       }
       // check if user update the email
-      if (newData.email !== newData.repeatEmail) {
-        throw new CustomError("Emails do not match!", "VE004");
-      }
-      const foundEmail = await databaseAccess.findUserByEmail(newData.email);
-      if (foundEmail.length !== 0) {
-        throw new CustomError(
-          `Cannot update email, the email: ${foundEmail[0].email}, already exists`,
-          "ValidationError",
-          "VE005"
-        );
+      if (currentEmail && newEmail) {
+        const user = await userManager.getUser(id);
+
+        if (currentEmail !== user[0].email) {
+          throw Error("Current email incorrect!");
+        }
+
+        if (newEmail === user[0].email) {
+          throw Error(`Current email and New email are the same!`);
+        }
+        newData.email = newEmail;
       }
       // if there is an image uploaded
       if (req.file !== undefined) {
@@ -92,7 +103,7 @@ const userRegister = {
           "avatar-uploads"
         );
       }
-      res.status(401).json({ message: `${error.code} ${error.message}` });
+      res.status(401).json(error.message);
     }
   },
   deleteUser: async (req, res) => {
@@ -127,6 +138,7 @@ const userRegister = {
       if (dbUser.length !== 0) {
         throw new CustomError(
           `Cannot create user with the email: ${dbUser[0].email}, already exists`,
+          "ValidationError",
           "VE006"
         );
       }
@@ -140,65 +152,6 @@ const userRegister = {
       res
         .status(200)
         .json({ message: "You're successfully registered", user: newRegister });
-    } catch (error) {
-      res.status(400).json({ message: `${error.code} ${error.message}` });
-    }
-  },
-  deletePublishedAnimal: async (req, res) => {
-    try {
-      const userId = req.params.id;
-      const { animalId } = req.body;
-      if ([...userId].length !== 24 || [...animalId].length !== 24) {
-        throw new CustomError(`invalid id`, "ValidationError", "VE001");
-      }
-
-      const user = await userManager.getUser(userId);
-      if (user.length === 0) {
-        throw new CustomError(
-          `Cannot delete animal user doesn't exist`,
-          "ValidationError",
-          "VE007"
-        );
-      }
-
-      if (user[0].registeredAnimals.length === 0) {
-        throw new CustomError(
-          `Cannot delete animal, the user do not have registered Animals`,
-          "ValidationError",
-          "VE008"
-        );
-      }
-
-      const matchAnimal = user[0].registeredAnimals.some(
-        (element) => element === animalId
-      );
-
-      if (!matchAnimal) {
-        throw new CustomError(
-          `The animal was not registered by user with the id: ${userId}`,
-          "ValidationError",
-          "VE009"
-        );
-      }
-
-      const animal = await animalManager.getAnimal(animalId);
-      if (animal.length === 0) {
-        throw new CustomError(
-          `Cannot delete animal id doesn't exist`,
-          "ValidationError",
-          "VE007"
-        );
-      }
-
-      const updateUser = await userManager.deletePublishedAnimal(
-        userId,
-        animalId
-      );
-      if (updateUser.acknowledged === true) {
-        res.status(200).json({
-          message: `publication id: ${animalId} was removed successfully`,
-        });
-      }
     } catch (error) {
       res.status(400).json({ message: `${error.code} ${error.message}` });
     }

@@ -1,1 +1,228 @@
-<p>edit-user works!</p>
+<form
+  *ngIf="!isFetching"
+  [formGroup]="myForm"
+  (ngSubmit)="onSubmit()"
+  id="edit-user-profile"
+  class="edit-user-profile-class"
+>
+  <div class="input-form">
+    <label for="name-input">Name</label
+    ><input
+      class="input-select"
+      type="text"
+      name="name"
+      placeholder="Your name"
+      formControlName="name"
+    /><br /><small id="name-small-edit-profile-form"></small>
+  </div>
+  <div class="input-form">
+    <label for="phone-input">Phone</label
+    ><input
+      class="input-select"
+      type="text"
+      name="phone"
+      placeholder="+32123456789"
+      formControlName="phone"
+    /><br /><small id="phone-small-edit-profile-form"></small>
+  </div>
+  <div class="input-form">
+    <label for="location-input">City</label
+    ><input
+      class="input-select"
+      type="text"
+      name="location"
+      id="location-input"
+      placeholder="City"
+      formControlName="location"
+    /><br /><small id="location-small-edit-profile-form"></small>
+  </div>
+  <div class="input-form">
+    <label for="website-input">Website</label
+    ><input
+      class="input-select"
+      type="text"
+      name="website"
+      placeholder="www.yourpage.com"
+      formControlName="website"
+    /><br /><small id="website-small-edit-profile-form"></small>
+  </div>
+  <button (click)="onLoadUpdateEmailForm($event)" class="edit-button">
+    Update email</button
+  ><button (click)="onLoadUpdatePasswordForm($event)" class="edit-button">
+    Update password
+  </button>
+  <p>Would you like to specify public access hours?</p>
+  <div class="checkbox">
+    <div class="yes-checkbox">
+      <input
+        [(ngModel)]="loadAccessDays"
+        type="checkbox"
+        name="yes"
+        id="yes-check"
+        [ngModelOptions]="{ standalone: true }"
+      /><label for="yes-check">Yes</label>
+    </div>
+  </div>
+  <div class="upload-images">
+    <div class="input-image-container">
+      <label for="avatar-id" class="update-avatar-image-upload">
+        {{ user?.avatar?.data ? "Update Avatar" : "Upload Avatar" }} </label
+      ><input
+        (change)="onFileSelect($event)"
+        (change)="imagePreview($event)"
+        type="file"
+        name="avatar"
+        id="avatar-id"
+        class="link-button update-animal-image-button"
+      />
+    </div>
+    <div class="avatar-preview-container">
+      <img
+        *ngIf="avatarPath"
+        id="avatar-preview"
+        class="avatar-preview"
+        [src]="avatarPath"
+      />
+    </div>
+  </div>
+  <div *ngIf="loadAccessDays" id="public-access" class="public-access-style">
+    <div class="day-class" id="monday-class">
+      <div class="container-checkbox">
+        <input
+          type="checkbox"
+          name="monday-access"
+          class="check-class"
+          formControlName="mondayCheck"
+        /><label for="monday-check">monday</label>
+      </div>
+      <input
+        class="hour-input"
+        type="text"
+        name="monday-hours"
+        placeholder="8:00 - 18:00"
+        formControlName="mondayHours"
+      />
+    </div>
+    <div class="day-class" id="day-class">
+      <div class="container-checkbox">
+        <input
+          type="checkbox"
+          name="tuesday-access"
+          formControlName="tuesdayCheck"
+          class="check-class"
+        /><label for="tuesday-check">tuesday</label>
+      </div>
+      <input
+        class="hour-input"
+        type="text"
+        name="tuesday-hours"
+        formControlName="tuesdayHours"
+        placeholder="8:00 - 18:00"
+      />
+    </div>
+    <div class="day-class" id="wednesday-class">
+      <div class="container-checkbox">
+        <input
+          type="checkbox"
+          name="wednesday-access"
+          formControlName="wednesdayCheck"
+          class="check-class"
+        /><label for="wednesday-check">wednesday</label>
+      </div>
+      <input
+        class="hour-input"
+        type="text"
+        name="wednesday-hours"
+        formControlName="wednesdayHours"
+        placeholder="8:00 - 18:00"
+      />
+    </div>
+    <div class="day-class" id="thursday-class">
+      <div class="container-checkbox">
+        <input
+          type="checkbox"
+          name="thursday-access"
+          formControlName="thursdayCheck"
+          class="check-class"
+        /><label for="thursday-check">thursday</label>
+      </div>
+      <input
+        class="hour-input"
+        type="text"
+        name="thursday-hours"
+        formControlName="thursdayHours"
+        placeholder="8:00 - 18:00"
+      />
+    </div>
+    <div class="day-class" id="friday-class">
+      <div class="container-checkbox">
+        <input
+          type="checkbox"
+          name="friday-access"
+          formControlName="fridayCheck"
+          class="check-class"
+        /><label for="friday-check">friday</label>
+      </div>
+      <input
+        class="hour-input"
+        type="text"
+        name="friday-hours"
+        formControlName="fridayHours"
+        placeholder="8:00 - 18:00"
+      />
+    </div>
+    <div class="day-class" id="saturday-class">
+      <div class="container-checkbox">
+        <input
+          type="checkbox"
+          name="saturday-access"
+          id="saturday-check"
+          formControlName="saturdayCheck"
+          class="check-class"
+        /><label for="saturday-check">saturday</label>
+      </div>
+      <input
+        class="hour-input"
+        type="text"
+        name="saturday-hours"
+        formControlName="saturdayHours"
+        placeholder="8:00 - 18:00"
+      />
+    </div>
+    <div class="day-class" id="sunday-class">
+      <div class="container-checkbox">
+        <input
+          type="checkbox"
+          name="sunday-access"
+          class="check-class"
+          formControlName="sundayCheck"
+        /><label for="sunday-check">sunday</label>
+      </div>
+      <input
+        class="hour-input"
+        type="text"
+        name="sunday-hours"
+        placeholder="8:00 - 18:00"
+        formControlName="sundayHours"
+      />
+    </div>
+  </div>
+  <button class="update-account button regular-button" id="update-button">
+    Update account
+  </button>
+</form>
+<div *ngIf="isFetching" class="loading-image">
+  <img
+    src="../../../../../assets/gif/loading_animation.gif"
+    alt="loading image"
+  />
+</div>
+
+<app-update-password
+  [userId]="userId"
+  *ngIf="loadUpdatePasswordForm"
+></app-update-password>
+<app-update-email
+  [userId]="userId"
+  *ngIf="loadUpdateEmailForm"
+></app-update-email>

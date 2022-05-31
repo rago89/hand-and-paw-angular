@@ -16,18 +16,19 @@ const imageFilter = (req, file, callback) => {
   if (
     file.mimetype === "image/jpeg" ||
     file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg"
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/webp"
   ) {
     callback(null, true);
   } else {
-    callback(null, false);
+    callback(new Error("Only jpeg, png, jpg and webp images are allowed"));
   }
 };
 
 const upload = multer({
   storage: storageImage,
   limits: {
-    fileSize: 3024 * 3024,
+    fileSize: 10024 * 10024,
   },
   fileFilter: imageFilter,
 });

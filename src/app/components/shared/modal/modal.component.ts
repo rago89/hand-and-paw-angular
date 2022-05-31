@@ -13,6 +13,10 @@ export class ModalComponent implements OnInit {
   ngOnInit(): void {}
 
   closeModal() {
-    this.modalService.loadModal.next(false);
+    this.modalService.loadContactUsModal.next(false);
+    this.modalService.loadLoginModal.next(false);
+    this.modalService.loadContactOwner.next(false);
+    this.modalService.loadUpdatePassword.next(false);
+    this.modalService.loadUpdateEmail.next(false);
   }
 }

@@ -1,38 +1,49 @@
+import { AuthService } from './../../../user/forms/auth.service';
+import { Router } from '@angular/router';
 import { ModalService } from './../../../shared/modal/modal.service';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { UserService } from 'src/app/components/user/user.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-hamburger',
   templateUrl: './hamburger.component.html',
   styleUrls: ['./hamburger.component.css'],
 })
-export class HamburgerComponent implements OnInit {
-  isLogged: boolean = false;
+export class HamburgerComponent implements OnInit, OnDestroy {
+  @Input() isLogged: boolean = false;
   barIcons = faBars;
-  openLoginForm: boolean = false;
+  @Output() userLogout = new EventEmitter();
   openMenu: boolean = false;
   heartIcon: string = '/assets/icons/dropdown menu/akar-icons_heart.svg';
   dogIcon: string = '/assets/icons/dropdown menu/ph_dog.svg';
   accountIcon: string =
     '/assets/icons/dropdown menu/dropdownmenu_codicon_account.svg';
+  userId: string = '';
+  @Input() userAvatar?: SafeResourceUrl;
+
   constructor(
     private modalService: ModalService,
-    private userService: UserService
+    private router: Router,
+    private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    this.modalService.loadModal.subscribe((value) => {
-      this.openLoginForm = value;
-    });
-    this.userService.isLogged.subscribe((value) => {
-      this.isLogged = value;
-    });
-  }
+  ngOnInit(): void {}
   openMenuToggle() {
     this.openMenu = !this.openMenu;
   }
   onLoadLoginForm() {
-    this.modalService.loadModal.next(true);
+    this.modalService.loadLoginModal.next(true);
   }
+  logOutAccount() {
+    this.userLogout.emit();
+  }
+  ngOnDestroy(): void {}
 }

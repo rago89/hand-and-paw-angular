@@ -1,0 +1,138 @@
+<app-modal>
+  <form
+    [formGroup]="myForm"
+    (ngSubmit)="onSubmit()"
+    class="modal-form needs-validation"
+  >
+    <h1>Update email</h1>
+    <br />
+    <div class="form-input-container">
+      <label for="currentEemail">Current email:</label><br />
+      <input type="email" name="currentEmail" formControlName="currentEmail" />
+      <div
+        *ngIf="
+          myForm.get('currentEmail').valid && myForm.get('currentEmail').touched
+        "
+        class="valid-input"
+      >
+        Looks good!
+      </div>
+      <div
+        *ngIf="
+          !myForm.get('currentEmail').value &&
+          myForm.get('currentEmail').touched
+        "
+        class="valid-input"
+        class="invalid-input"
+      >
+        Email cannot be empty!
+      </div>
+      <div
+        *ngIf="
+          myForm.get('currentEmail').value &&
+          myForm.get('currentEmail').value.length !== 0 &&
+          !myForm.get('currentEmail').valid &&
+          myForm.get('currentEmail').touched
+        "
+        class="invalid-input"
+      >
+        Invalid email!
+      </div>
+    </div>
+
+    <div class="form-input-container">
+      <label for="newEmail">New email:</label><br />
+      <input type="email" name="newEmail" formControlName="newEmail" />
+      <div
+        *ngIf="myForm.get('newEmail').valid && myForm.get('newEmail').touched"
+        class="valid-input"
+      >
+        Looks good!
+      </div>
+      <div
+        *ngIf="!myForm.get('newEmail').value && myForm.get('newEmail').touched"
+        class="valid-input"
+        class="invalid-input"
+      >
+        Email cannot be empty!
+      </div>
+      <div
+        *ngIf="
+          myForm.get('newEmail').value &&
+          myForm.get('newEmail').value.length !== 0 &&
+          !myForm.get('newEmail').valid &&
+          myForm.get('newEmail').touched
+        "
+        class="invalid-input"
+      >
+        Invalid email!
+      </div>
+    </div>
+
+    <div class="form-input-container">
+      <label for="repeatEmail">Repeat email:</label><br />
+      <input
+        type="email"
+        id="email"
+        name="repeatEmail"
+        formControlName="repeatEmail"
+      />
+      <div
+        *ngIf="
+          myForm.get('repeatEmail').valid && myForm.get('repeatEmail').touched
+        "
+        class="valid-input"
+      >
+        Looks good!
+      </div>
+      <div
+        *ngIf="
+          !myForm.get('repeatEmail').value && myForm.get('repeatEmail').touched
+        "
+        class="valid-input"
+        class="invalid-input"
+      >
+        Email cannot be empty!
+      </div>
+      <div
+        *ngIf="
+          myForm.get('repeatEmail').value &&
+          myForm.get('repeatEmail').value.length !== 0 &&
+          !myForm.get('repeatEmail').valid &&
+          myForm.get('repeatEmail').touched
+        "
+        class="invalid-input"
+      >
+        Invalid email!
+      </div>
+      <div
+        *ngIf="
+          myForm.get('repeatEmail').value &&
+          myForm.get('repeatEmail').errors?.inputsNotMatch &&
+          myForm.get('repeatEmail').touched
+        "
+        class="invalid-input"
+      >
+        Emails do not match!
+      </div>
+    </div>
+
+    <button
+      [disabled]="!myForm.valid"
+      id="submit-register-form"
+      type="submit"
+      [ngClass]="{ 'disable-reg-btn': !myForm.valid }"
+      class="button regular-button"
+    >
+      Register
+    </button>
+    <br />
+    <div *ngIf="registrationError" class="invalid-input">
+      {{ registrationError }}
+    </div>
+  </form>
+</app-modal>
+<app-login-user *ngIf="loadLoginForm"></app-login-user>
+<app-modal-message *ngIf="successRegistration">
+  <h2>Password updated</h2>
+</app-modal-message>

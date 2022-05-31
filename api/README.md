@@ -18,7 +18,6 @@ Is an open API where you can use already to get animals and publish them in your
     - [Fetch one user](#fetch-one-user)
     - [Delete user](#delete-user)
     - [Update User](#update-user)
-    - [Delete user publication](#delete-user-publication)
     - [Add favorite](#add-favorite)
     - [Remove favorite](#remove-favorite)
   - [Animals](#animals)
@@ -327,48 +326,6 @@ Multiform data
 
 ---
 
-### Delete user publication
-
-Remove the animal id in the `registeredAnimals` property, and deletes the animal in Animal collection
-
-> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
-
-- **URL**
-
-  /api/users/delete-animal/:id
-
-- **Method:**
-
-  `PATCH`
-
-- **URL Params**
-
-  `id = string` -> the user id
-
-  **Required:**
-
-  `id = string, animalId = string`
-
-  **Body**
-
-```js
-  {
-    "animalId": "61701cf768400ebe536a57c8"
-  }
-```
-
-- **Result:**
-
-  ```js
-    }
-      "message": "publication id: 61701cf768400ebe536a57c8 was removed successfully"
-    }
-  ```
-
-  > [Back to index routes](#index)
-
----
-
 ### Add favorite
 
 Add the animal id in the `favorites` property
@@ -630,7 +587,7 @@ No registration or authorization required
 
 ### Delete Animal
 
-Remove an animal of the dataBase.
+Remove the animal "id" in the `registeredAnimals` property, and deletes the animal in Animal collection
 
 > To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
 
@@ -640,21 +597,29 @@ Remove an animal of the dataBase.
 
 - **Method:**
 
-  `DELETE`
+  `PATCH`
 
 - **URL Params**
 
-  `id = string` -> animal id
+  `id = string` -> the animal id
 
   **Required:**
 
-  `id = string`s
+  `userId = string, animalId = string`
+
+  **Body**
+
+  ```js
+    {
+    "userId": "61701cf768400ebe536a57c8"
+    }
+  ```
 
 - **Result:**
 
   ```js
     }
-     "message":"Animal, with the id: '616fc5693e31fe2c1f5629a0' removed successfully"
+      "message": "publication id: 61701cf768400ebe536a57c8 was removed successfully"
     }
   ```
 

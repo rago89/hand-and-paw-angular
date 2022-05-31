@@ -21,12 +21,6 @@
   font-size: 1.125rem;
 }
 
-.link-button {
-  margin-bottom: 1.5rem;
-  all: unset;
-  color: var(--linkBtn);
-}
-
 .link-button:hover {
   cursor: pointer;
 }

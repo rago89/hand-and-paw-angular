@@ -1,19 +1,24 @@
 <header id="top">
   <nav id="top-navbar">
-    <div *ngIf="headerFullBrowserWidth">
-      <div class="pages-menu">
-        <div class="logo">
-          <a routerLink="" routerLinkActive="active">
-            <img
-              src="../../../assets/images/ui/logo-header.svg"
-              alt="Hand and paw logo"
-            />
-          </a>
-        </div>
-
-        <a routerLink="/animal/find">Find an Animal</a>
-        <a routerLink="/animal/register">Register an animal</a>
-        <a routerLink="about-adoption">About adoption</a>
+    <div class="pages-menu">
+      <div class="logo">
+        <a routerLink="" routerLinkActive="active">
+          <img
+            src="../../../assets/images/ui/logo-header.svg"
+            alt="Hand and paw logo"
+          />
+        </a>
+      </div>
+      <a *ngIf="headerFullBrowserWidth" routerLink="/animal/find"
+        >Find an Animal</a
+      >
+      <a *ngIf="headerFullBrowserWidth" routerLink="/animal/register"
+        >Register an animal</a
+      >
+      <a *ngIf="headerFullBrowserWidth" routerLink="about-adoption"
+        >About adoption</a
+      >
+      <div *ngIf="headerFullBrowserWidth; else hamburger">
         <div *ngIf="!isLogged">
           <a (click)="onLoadLoginForm()">Login / Sing up</a>
         </div>
@@ -25,7 +30,7 @@
         >
           <img
             class="dropdown-toggle"
-            [src]="avatarHex ? avatarHex : defaultAvatarImg"
+            [src]="userAvatar ? userAvatar : defaultAvatarImg"
             class="avatar-image"
           />
           <div class="dropdown-menu" [ngClass]="{ show: openMenu }">
@@ -35,11 +40,13 @@
                 [src]="heartIcon"
                 alt="Favorites"
               />
-              <a routerLink="user/favorites-animals">Favorites</a>
+              <a [routerLink]="['user', 'favorites-animals', userId]"
+                >Favorites</a
+              >
             </div>
             <div class="dropdown-item">
               <img class="profile-menu-image" [src]="dogIcon" alt="Animal" />
-              <a routerLink="user/my-animals">My animals</a>
+              <a [routerLink]="['user', 'my-animals', userId]">My animals</a>
             </div>
             <div class="dropdown-item">
               <img
@@ -47,20 +54,29 @@
                 [src]="defaultAvatarImg"
                 alt="Avatar"
               />
-              <a routerLink="user/account/edit">Edit profile</a>
+              <a [routerLink]="['user', 'edit', userId]">Edit profile</a>
             </div>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
             <div class="dropdown-item">
-              <a (click)="logOut()" routerLink="user/account/edit">Logout</a>
+              <a (click)="logOut()">Logout</a>
             </div>
           </div>
         </div>
-        <div class="responsive-menu_close">
-          <span class="pages-menu-close-line"></span>
-          <span class="pages-menu-close-line"></span>
-        </div>
+      </div>
+      <ng-template #hamburger>
+        <app-hamburger
+          [userAvatar]="userAvatar"
+          [isLogged]="isLogged"
+          (userLogout)="logOut()"
+        ></app-hamburger>
+      </ng-template>
+      <div class="responsive-menu_close">
+        <span class="pages-menu-close-line"></span>
+        <span class="pages-menu-close-line"></span>
       </div>
     </div>
-    <app-hamburger *ngIf="!headerFullBrowserWidth"></app-hamburger>
   </nav>
   <!-- keep the login component in the header -->
   <app-login-user *ngIf="openLoginForm"></app-login-user>

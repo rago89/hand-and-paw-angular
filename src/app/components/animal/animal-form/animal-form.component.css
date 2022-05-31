@@ -1,0 +1,66 @@
+.input-select {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-column-gap: 32px;
+  grid-row-gap: 16px;
+}
+.small {
+  color: red;
+}
+
+.textarea-select {
+  margin-top: 20px;
+}
+.textarea-select label {
+  font-size: 1rem;
+  display: block;
+}
+.textarea-select textarea {
+  height: 200px;
+}
+
+.register-animal-button {
+  display: block;
+  margin: auto;
+}
+
+.register-animal-image-button {
+  display: none;
+}
+
+.register-animal-image-upload {
+  cursor: pointer;
+  color: var(--linkBtn);
+  margin-right: 32px;
+}
+
+.upload-images {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.upload-images > div {
+  display: flex;
+  align-items: center;
+  height: 200px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.animal-preview {
+  height: 200px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 32px;
+  margin-top: 40px;
+}
+
+#register-animal-form button {
+  width: fit-content;
+}
+
+.failText {
+  color: var(--errorColor);
+  margin-top: -25px;
+}

@@ -139,6 +139,10 @@
         between 7-15 characters
       </div>
     </div>
+    <br />
+    <div (click)="onLoadLoginForm()">
+      <a id="open-register-form" class="link-button"> Login </a>
+    </div>
     <button
       [disabled]="!myForm.valid"
       id="submit-register-form"
@@ -148,6 +152,7 @@
     >
       Register
     </button>
+    <br />
     <div *ngIf="registrationError" class="invalid-input">
       {{ registrationError }}
     </div>

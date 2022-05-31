@@ -1,17 +1,14 @@
 <div class="pages-menu">
-  <div class="logo">
-    <a routerLink="" routerLinkActive="active">
-      <img
-        src="../../../assets/images/ui/logo-header.svg"
-        alt="Hand and paw logo"
-      />
-    </a>
-  </div>
   <div (click)="openMenuToggle()" class="dropdown" type="button">
     <button class="button-bars">
-      <span class="dark-teal-text"
+      <span *ngIf="!isLogged" class="dark-teal-text"
         ><fa-icon class="fa-2xl" [icon]="barIcons"></fa-icon
       ></span>
+      <img
+        *ngIf="isLogged"
+        [src]="userAvatar ? userAvatar : accountIcon"
+        class="dropdown-toggle avatar-image"
+      />
     </button>
 
     <!-- Collapsible content -->
@@ -39,12 +36,10 @@
           >
         </li>
         <li><hr class="dropdown-divider" /></li>
-
         <div class="dropdown-item" *ngIf="!isLogged">
           <a (click)="onLoadLoginForm()">Login / Sing up</a>
         </div>
-        <div class="dropdown-item" *ngIf="isLogged">
-          <a>Logout</a>
+        <div *ngIf="isLogged">
           <div class="dropdown-item">
             <img class="profile-menu-image" [src]="heartIcon" alt="Favorites" />
             <a routerLink="user/favorites-animals">Favorites</a>
@@ -55,7 +50,11 @@
           </div>
           <div class="dropdown-item">
             <img class="profile-menu-image" [src]="accountIcon" alt="Avatar" />
-            <a routerLink="user/account/edit">Edit profile</a>
+            <a [routerLink]="['user', 'edit', userId]">Edit profile</a>
+          </div>
+          <li><hr class="dropdown-divider" /></li>
+          <div class="dropdown-item">
+            <a (click)="logOutAccount()">Logout</a>
           </div>
         </div>
       </ul>

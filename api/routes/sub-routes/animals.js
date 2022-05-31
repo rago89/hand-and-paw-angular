@@ -9,14 +9,14 @@ const tokenChecker = require("../../middleware/token-login");
 // all animals
 animalRoute.get("/", animalController.getAllAnimals);
 // filter animals
-animalRoute.post("/filter-animals", animalController.filterAnimals);
+animalRoute.post("/filter", animalController.filterAnimals);
 // get one animal
 animalRoute.get("/:id", animalController.getAnimal);
 
 animalRoute.post(
   "/register",
   uploadAnimalPictures,
-
+  tokenChecker,
   animalController.postAnimal
 );
 // update existing pictures and data
@@ -26,7 +26,7 @@ animalRoute.put(
   tokenChecker,
   animalController.updateAnimal
 );
-animalRoute.delete("/delete/:id", tokenChecker, animalController.deleteAnimal);
+animalRoute.delete("/delete/:id", animalController.deleteAnimal);
 // update one picture
 animalRoute.patch(
   "/update-picture/:animalId",

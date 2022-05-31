@@ -49,31 +49,31 @@ const userSchema = new mongoose.Schema({
   favorites: [String],
   publicAccess: {
     monday: {
-      access: String,
+      access: Boolean,
       hours: String,
     },
     tuesday: {
-      access: String,
+      access: Boolean,
       hours: String,
     },
     wednesday: {
-      access: String,
+      access: Boolean,
       hours: String,
     },
     thursday: {
-      access: String,
+      access: Boolean,
       hours: String,
     },
     friday: {
-      access: String,
+      access: Boolean,
       hours: String,
     },
     saturday: {
-      access: String,
+      access: Boolean,
       hours: String,
     },
     sunday: {
-      access: String,
+      access: Boolean,
       hours: String,
     },
   },

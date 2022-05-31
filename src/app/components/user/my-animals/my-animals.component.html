@@ -1,1 +1,31 @@
-<p>my-animals works!</p>
+<section class="page-intro">
+  <div class="container">
+    <article>
+      <h2>My animals</h2>
+      <p class="no-animals-message" *ngIf="animalsList.length === 0">
+        You don't have registered animals
+      </p>
+    </article>
+  </div>
+</section>
+
+<div *ngIf="isFetching" class="loading-image">
+  <img src="../../../../assets/gif/loading_animation.gif" alt="loading image" />
+</div>
+<div *ngIf="error">
+  <h2 [ngStyle]="{ color: 'red', textAlign: 'center' }">
+    An error has occurred try again later
+  </h2>
+</div>
+<div *ngIf="!isFetching && animalsList.length !== 0">
+  <section id="animals-list" class="animal-search-results">
+    <div class="container search-results">
+      <app-animal-card
+        (animalToDelete)="onDeleteAnimal($event)"
+        [editOrRemove]="true"
+        *ngFor="let animalEl of animalsList"
+        [animal]="animalEl"
+      ></app-animal-card>
+    </div>
+  </section>
+</div>
