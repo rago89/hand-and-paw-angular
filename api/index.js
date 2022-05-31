@@ -16,15 +16,9 @@ const routes = require("./routes");
 
 const app = express();
 
-// set credentials
-const corsConfig = {
-  origin: true,
-  credentials: true,
-};
-
 app.use(helmet(helmetHeaders));
-app.use(cors(corsConfig));
-app.options("*", cors(corsConfig));
+// cors ------
+app.use(cors());
 app.disable("x-powered-by");
 
 app.use(bodyParser.json());
@@ -41,8 +35,6 @@ app.use(
 if (config.MODE === "development") {
   app.use(morgan("dev"));
 }
-
-app.use("/", express.static(path.join(__dirname, "..", config.STATIC_DIR)));
 
 app.get("/", (req, res) => {
   res.send("API! go to `/api`");
