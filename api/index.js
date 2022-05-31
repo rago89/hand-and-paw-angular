@@ -17,7 +17,7 @@ const routes = require("./routes");
 const app = express();
 
 app.use(helmet(helmetHeaders));
-// cors ------
+
 app.use(cors());
 app.disable("x-powered-by");
 
