@@ -2,6 +2,7 @@ import { Subscription } from 'rxjs';
 import { ModalService } from './components/shared/modal/modal.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from './components/user/forms/auth.service';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,8 @@ import { AuthService } from './components/user/forms/auth.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   loadLoginForm: boolean = false;
+  isLoading: boolean = false;
+  timerInterval: any;
   private modalSubscription?: Subscription;
   constructor(
     private authService: AuthService,
@@ -17,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.authService.autoLogin();
     this.authService.autoLogout();
     this.modalSubscription = this.modalService.loadLoginModal.subscribe(
@@ -24,6 +28,11 @@ export class AppComponent implements OnInit, OnDestroy {
         this.loadLoginForm = value;
       }
     );
+    console.log(performance.getEntriesByType('navigation')[0].duration);
+
+    window.onload = (event) => {
+      this.isLoading = false;
+    };
   }
   ngOnDestroy(): void {
     this.modalSubscription?.unsubscribe();
