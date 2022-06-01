@@ -1,0 +1,1 @@
+web: NODE_ENV=production STATIC_DIR=dis/hand-and-paw DATA_DIR=data node api/index.js
