@@ -9,7 +9,7 @@
     "test": "ng test",
     "api": "nodemon api/index.js",
     "heroku-postbuild": "ng build --prod",
-    "start": "NODE_ENV=production node ./api/index.js"
+    "start": "NODE_ENV=production PORT=3000 STATIC_DIR=dist/hand-and-paw DATA_DIR=data DB_PATH=mongodb://localhost/handAndPaw node ./api/index.js"
   },
   "private": true,
   "dependencies": {
