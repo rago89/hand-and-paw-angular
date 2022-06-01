@@ -11,7 +11,7 @@ import { faL } from '@fortawesome/free-solid-svg-icons';
 })
 export class AppComponent implements OnInit, OnDestroy {
   loadLoginForm: boolean = false;
-  isLoading: boolean = false;
+
   timerInterval: any;
   private modalSubscription?: Subscription;
   constructor(
@@ -20,7 +20,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = true;
     this.authService.autoLogin();
     this.authService.autoLogout();
     this.modalSubscription = this.modalService.loadLoginModal.subscribe(
@@ -28,11 +27,6 @@ export class AppComponent implements OnInit, OnDestroy {
         this.loadLoginForm = value;
       }
     );
-
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 1000);
-    this.isLoading = false;
   }
   ngOnDestroy(): void {
     this.modalSubscription?.unsubscribe();
