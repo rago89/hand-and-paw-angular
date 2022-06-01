@@ -40,7 +40,9 @@ export class LoginUserComponent implements OnInit, OnDestroy {
         },
         error: (errorMessage) => {
           this.loginErrorMessage = errorMessage;
-          return EMPTY;
+          setTimeout(() => {
+            this.loginErrorMessage = '';
+          }, 200);
         },
         complete: () => {
           this.isFetching = false;
