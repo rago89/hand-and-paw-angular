@@ -35,6 +35,7 @@ import { AnimalFormComponent } from './components/animal/animal-form/animal-form
 import { UpdateAnimalComponent } from './components/animal/update-animal/update-animal.component';
 import { UpdateEmailComponent } from './components/user/forms/update-email/update-email.component';
 import { UpdatePasswordComponent } from './components/user/forms/update-password/update-password.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { UpdatePasswordComponent } from './components/user/forms/update-password
       multi: true,
     },
     AuthGuard,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
   bootstrap: [AppComponent],
 })
