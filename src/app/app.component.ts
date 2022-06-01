@@ -28,11 +28,11 @@ export class AppComponent implements OnInit, OnDestroy {
         this.loadLoginForm = value;
       }
     );
-    console.log(performance.getEntriesByType('navigation')[0].duration);
 
-    window.onload = (event) => {
+    setTimeout(() => {
       this.isLoading = false;
-    };
+    }, 1000);
+    this.isLoading = false;
   }
   ngOnDestroy(): void {
     this.modalSubscription?.unsubscribe();
