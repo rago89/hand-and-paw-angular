@@ -12,6 +12,15 @@
   justify-content: center;
 }
 
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  text-align: center;
+  height: 50vh;
+}
+
 .input-form {
   margin: 8px;
   display: grid;

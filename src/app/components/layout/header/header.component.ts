@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userSubscription = this.userService.user.subscribe((user) => {
       this.userId = user ? user.id : '';
 
-      if (user?.avatar.data) {
+      if (user?.avatar?.data) {
         this.userAvatar = this._sanitizer.bypassSecurityTrustResourceUrl(
           'data:image/jpg;base64,' + user?.avatar.data
         );

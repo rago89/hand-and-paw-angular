@@ -58,7 +58,7 @@ export class UpdateEmailComponent
     formData.append('email', this.myForm.get('currentEmail').value);
     formData.append('repeatEmail', this.myForm.get('repeatEmail').value);
 
-    this.userService.updateUser(formData).subscribe({
+    this.userService.updateUser(formData, this.userId).subscribe({
       next: (response) => {},
       error: (errorMessage) => {
         this.registrationError = errorMessage.error;

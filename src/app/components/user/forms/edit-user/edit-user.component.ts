@@ -1,5 +1,4 @@
 import { ModalService } from './../../../shared/modal/modal.service';
-import { AuthService } from './../auth.service';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -18,6 +17,7 @@ export class EditUserComponent
   implements OnInit, OnDestroy
 {
   myForm: FormGroup | any;
+  error: boolean = false;
   showDayAccessFields: boolean = false;
   loadAccessDays: boolean = false;
   avatarPath: string = '';
@@ -150,7 +150,7 @@ export class EditUserComponent
   }
   onSubmit() {
     this.isFetching = true;
-    const formData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('id', this.userId);
     formData.append('name', this.myForm.get('name').value);
     formData.append('phone', this.myForm.get('phone').value);
@@ -175,15 +175,25 @@ export class EditUserComponent
     formData.append('sunday-access', this.myForm.get('sundayCheck').value);
     formData.append('sunday-hours', this.myForm.get('sundayHours').value);
 
-    this.updateSubscription = this.userService.updateUser(formData).subscribe({
-      next: (arrUser) => {
-        this.userService.user.next(arrUser[0]);
-      },
-      error: (error) => {},
-      complete: () => {
-        this.isFetching = false;
-      },
-    });
+    if (this.userId) {
+      this.updateSubscription = this.userService
+        .updateUser(formData, this.userId)
+        .subscribe({
+          next: (arrUser) => {
+            this.userService.user.next(arrUser[0]);
+          },
+          error: (error) => {
+            this.isFetching = false;
+            this.error = true;
+            setTimeout(() => {
+              this.error = false;
+            }, 2000);
+          },
+          complete: () => {
+            this.isFetching = false;
+          },
+        });
+    }
   }
   onLoadUpdatePasswordForm(event: Event) {
     event.preventDefault();

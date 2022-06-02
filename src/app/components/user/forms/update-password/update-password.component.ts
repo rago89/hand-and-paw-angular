@@ -57,7 +57,7 @@ export class UpdatePasswordComponent
     formData.append('oldPassword', this.myForm.get('currentPassword').value);
     formData.append('newPassword', this.myForm.get('repeatPassword').value);
 
-    this.userService.updateUser(formData).subscribe({
+    this.userService.updateUser(formData, this.userId).subscribe({
       next: (response) => {},
       error: (errorMessage) => {
         this.registrationError = errorMessage.error;
