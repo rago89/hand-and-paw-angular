@@ -75,7 +75,7 @@ export class EditUserComponent
         !this.user?.website ? '' : this.user.website,
         []
       ),
-      avatar: new FormControl(!this.user?.avatar ? null : this.user.avatar, []),
+      avatar: new FormControl(!this.user?.avatar ? null : this.user.avatar),
       mondayCheck: new FormControl(
         !this.user?.publicAccess?.monday?.access ? false : true,
         []

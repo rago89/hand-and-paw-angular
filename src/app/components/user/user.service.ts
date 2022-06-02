@@ -13,8 +13,9 @@ export class UserService {
   constructor(private http: HttpClient, private urlService: UrlService) {}
 
   updateUser = (updateValues: any) => {
+    const id = updateValues.get('id');
     return this.http.put<User[]>(
-      `${this.urlService.updateUser(updateValues.get('id'))}`,
+      `${this.urlService.updateUser(id)}`,
       updateValues
     );
   };
