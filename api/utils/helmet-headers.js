@@ -2,8 +2,6 @@ const helmetHeaders = {
   contentSecurityPolicy: {
     directives: {
       "default-src": [
-        "'self'",
-        "api.cloudinary.com",
         "api.iconify.design",
         "api.simplesvg.com",
         "api.unisvg.com",

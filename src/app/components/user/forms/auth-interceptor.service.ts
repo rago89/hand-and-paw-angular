@@ -23,8 +23,6 @@ export class AuthInterceptorService implements HttpInterceptor {
         if (!accessToken) {
           return next.handle(req);
         } else {
-          console.log(accessToken.token?.slice(0, 15));
-
           const modifiedRequest = req.clone({
             headers: new HttpHeaders({
               authorization: `Bearer ${accessToken.token}`,
