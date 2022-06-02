@@ -1,1 +1,0 @@
-web:node api/index.js NODE_ENV=production STATIC_DIR=dist/hand-and-paw
