@@ -12,7 +12,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "api": "nodemon api/index.js",
-    "start": "node ./api/index.js"
+    "start": "node ./api/index.js NODE_ENV=production STATIC_DIR=dist/hand-and-paw"
   },
   "private": true,
   "dependencies": {
