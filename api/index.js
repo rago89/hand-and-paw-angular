@@ -42,9 +42,7 @@ app.get("/", (req, res) => {
   res.send("API! go to `/api`");
 });
 
-app.get(`/apps/hand-and-paw/config-vars`, (req, res) => {
-  console.log(response);
-});
+app.get(`/apps/hand-and-paw/config-vars`, (req, res) => {});
 
 app.use("/api", routes);
 
