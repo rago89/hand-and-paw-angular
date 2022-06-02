@@ -179,8 +179,8 @@ export class EditUserComponent
       this.updateSubscription = this.userService
         .updateUser(formData, this.userId)
         .subscribe({
-          next: (arrUser) => {
-            this.userService.user.next(arrUser[0]);
+          next: (user) => {
+            this.userService.user.next(user);
           },
           error: (error) => {
             this.isFetching = false;

@@ -86,15 +86,37 @@ const userRegister = {
       // if there is an image uploaded
       if (req.file !== undefined) {
         await userManager.updateUser(newData, req.file);
-        const userUpdated = await userManager.getUser(id);
-        userUpdated[0].password = undefined;
-        res.status(200).send(userUpdated);
+        const user = await userManager.getUser(id);
+        const userToSend = {
+          id: user[0]._id,
+          name: user[0].name,
+          phone: user[0].phone,
+          location: user[0].location,
+          website: user[0].website,
+          avatar: user[0].avatar,
+          favorites: user[0].favorites,
+          publicAccess: user[0].avatar,
+          registeredAnimals: user[0].registeredAnimals,
+        };
+        res.status(200).send(userToSend);
         return;
       }
       await userManager.updateUser(newData);
-      const userUpdated = await userManager.getUser(id);
-      userUpdated[0].password = undefined;
-      res.status(200).send(userUpdated);
+
+      const user = await userManager.getUser(id);
+      const userToSend = {
+        id: user[0]._id,
+        name: user[0].name,
+        phone: user[0].phone,
+        location: user[0].location,
+        website: user[0].website,
+        avatar: user[0].avatar,
+        favorites: user[0].favorites,
+        publicAccess: user[0].avatar,
+        registeredAnimals: user[0].registeredAnimals,
+      };
+
+      res.status(200).send(userToSend);
     } catch (error) {
       // if any error ,make sure multer doesn't store image
       if (req.file) {
