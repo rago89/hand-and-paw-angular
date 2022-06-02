@@ -20,8 +20,6 @@ export class AuthInterceptorService implements HttpInterceptor {
     return this.authService.accessToken.pipe(
       take(1),
       exhaustMap((accessToken) => {
-        console.log(accessToken);
-
         if (!accessToken) {
           return next.handle(req);
         } else {
