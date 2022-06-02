@@ -42,7 +42,12 @@ app.get("/", (req, res) => {
   res.send("API! go to `/api`");
 });
 
+app.get(`/apps/hand-and-paw/config-vars`, (req, res) => {
+  console.log(response);
+});
+
 app.use("/api", routes);
+
 /* eslint-disable */
 app.use((err, req, res, next) => {
   console.error(err.stack);

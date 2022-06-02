@@ -8,7 +8,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "api": "nodemon api/index.js",
-    "heroku-postbuild": "ng build --prod",
     "start": "node ./api/index.js"
   },
   "private": true,

@@ -12,6 +12,7 @@ const loginController = {
   addUserLogin: async (req, res) => {
     try {
       const { email } = req.body;
+      console.log(req.body);
       // check if email is well formatted
 
       if (!validator.isEmail(email)) {

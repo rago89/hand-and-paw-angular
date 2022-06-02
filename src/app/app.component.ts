@@ -2,7 +2,6 @@ import { Subscription } from 'rxjs';
 import { ModalService } from './components/shared/modal/modal.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from './components/user/forms/auth.service';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',

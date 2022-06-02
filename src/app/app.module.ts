@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
@@ -35,7 +36,6 @@ import { AnimalFormComponent } from './components/animal/animal-form/animal-form
 import { UpdateAnimalComponent } from './components/animal/update-animal/update-animal.component';
 import { UpdateEmailComponent } from './components/user/forms/update-email/update-email.component';
 import { UpdatePasswordComponent } from './components/user/forms/update-password/update-password.component';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -83,7 +83,6 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
       multi: true,
     },
     AuthGuard,
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
   bootstrap: [AppComponent],
 })
