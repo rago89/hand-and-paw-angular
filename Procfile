@@ -1,1 +1,1 @@
-web:api/index.js
+web: api/index.js 

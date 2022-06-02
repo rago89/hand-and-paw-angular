@@ -71,12 +71,7 @@
 
     <div class="form-input-container">
       <label for="repeatEmail">Repeat email:</label><br />
-      <input
-        type="email"
-        id="email"
-        name="repeatEmail"
-        formControlName="repeatEmail"
-      />
+      <input type="email" name="repeatEmail" formControlName="repeatEmail" />
       <div
         *ngIf="
           myForm.get('repeatEmail').valid && myForm.get('repeatEmail').touched

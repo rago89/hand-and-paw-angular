@@ -11,7 +11,6 @@
       <label for="email">Email</label><br />
       <input
         type="email"
-        id="email"
         name="email"
         placeholder="Enter your e-mail"
         autocomplete="email"
@@ -48,7 +47,6 @@
       <input
         type="password"
         name="password"
-        id="password"
         autocomplete="current-password"
         placeholder="Enter your password"
         formControlName="password"
@@ -78,7 +76,6 @@
       <button
         [disabled]="!myForm.valid"
         [ngClass]="{ 'disable-reg-btn': !myForm.valid }"
-        id="login-submit-btn"
         class="button regular-button"
       >
         Submit
