@@ -64,7 +64,6 @@ export class AnimalFormComponent
     this.userSubscription = this.userService.user.subscribe((user) => {
       this.userId = user ? user.id : '';
     });
-    console.log(this.formProps.animal);
 
     this.myForm = new FormGroup({
       name: new FormControl(

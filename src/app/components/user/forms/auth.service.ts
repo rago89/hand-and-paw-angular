@@ -64,10 +64,11 @@ export class AuthService implements OnDestroy {
 
           const tokenUserRemainingTime: number =
             accessToken.tokenExpiringDate - new Date().getTime();
+
+          localStorage.setItem('at', JSON.stringify(accessToken));
           this.refreshTokenData.next(refreshToken);
           this.accessToken.next(accessToken);
           this.userService.user.next(resData.user);
-          localStorage.setItem('at', JSON.stringify(accessToken));
           this.autoRefreshToken(tokenUserRemainingTime);
 
           if (refreshToken && refreshToken.tokenExpiringDate) {

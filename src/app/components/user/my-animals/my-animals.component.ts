@@ -24,7 +24,7 @@ export class MyAnimalsComponent implements OnInit, OnDestroy {
     private animalService: AnimalService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router:Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -72,9 +72,7 @@ export class MyAnimalsComponent implements OnInit, OnDestroy {
             (a) => a._id !== animal._id
           );
         },
-        error: (error) => {
-          console.log(error);
-        },
+        error: (error) => {},
         complete: () => {
           this.userService.getUser(this.userId).subscribe((user) => {
             this.userService.user.next(user);
