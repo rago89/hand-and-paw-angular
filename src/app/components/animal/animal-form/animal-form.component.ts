@@ -26,6 +26,7 @@ export class AnimalFormComponent
   userId: string = '';
   newAnimalId: string = '';
   successRegistration: boolean = false;
+  successUpdate: boolean = false;
   filePath: string = '';
   myForm: FormGroup | any;
   pictureHex: any;

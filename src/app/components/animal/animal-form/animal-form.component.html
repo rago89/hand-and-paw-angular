@@ -376,8 +376,11 @@
     />
   </div>
 </div>
-<app-modal-message *ngIf="successRegistration">
-  <h2>You're animal is successfully registered</h2>
+<app-modal-message *ngIf="successRegistration || successUpdate">
+  <h2>
+    You're animal is successfully
+    {{ successRegistration ? "registered" : "updated" }}
+  </h2>
   <a
     *ngIf="newAnimalId; else animalUpdated"
     [routerLink]="['/animal', 'description', newAnimalId]"
