@@ -217,7 +217,7 @@ export class AnimalFormComponent
               this.myForm.reset();
               this.filePath = '';
               this.isFetching = false;
-              this.successRegistration = true;
+              this.successUpdate = true;
             },
           });
         break;
