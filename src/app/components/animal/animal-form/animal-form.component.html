@@ -263,7 +263,7 @@
               *ngIf="
                 myForm.get('phone').value &&
                 myForm.get('phone').errors?.invalidPhoneNumber &&
-                (myForm.get('phone').touched || myForm.get('phone').dirty)
+                myForm.get('phone').touched
               "
               class="small"
               >Invalid phone number E.g. (+32471123456 or +320471123456)

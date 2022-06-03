@@ -2,7 +2,7 @@ import { ModalService } from './../../../shared/modal/modal.service';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/components/user/user.service';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
 import { User } from '../../interface/User';
@@ -18,6 +18,7 @@ export class EditUserComponent
 {
   myForm: FormGroup | any;
   error: boolean = false;
+  successUpdate: boolean = false;
   showDayAccessFields: boolean = false;
   loadAccessDays: boolean = false;
   avatarPath: string = '';
@@ -40,7 +41,7 @@ export class EditUserComponent
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
+    this.route.params.subscribe((params) => {
       this.userId = params['id'];
     });
     this.modalPasswordSubscription =
@@ -71,10 +72,9 @@ export class EditUserComponent
         !this.user?.location ? '' : this.user.location,
         [Validators.minLength(3), Validators.maxLength(25)]
       ),
-      website: new FormControl(
-        !this.user?.website ? '' : this.user.website,
-        []
-      ),
+      website: new FormControl(!this.user?.website ? '' : this.user.website, [
+        this.validUrl(),
+      ]),
       avatar: new FormControl(!this.user?.avatar ? null : this.user.avatar),
       mondayCheck: new FormControl(
         !this.user?.publicAccess?.monday?.access ? false : true,
@@ -149,8 +149,6 @@ export class EditUserComponent
     });
   }
   onSubmit() {
-    console.log(this.myForm);
-
     this.isFetching = true;
     const formData: FormData = new FormData();
     formData.append('id', this.userId);
@@ -192,7 +190,11 @@ export class EditUserComponent
             }, 2000);
           },
           complete: () => {
+            this.successUpdate = true;
             this.isFetching = false;
+            setTimeout(() => {
+              this.successUpdate = false;
+            }, 1500);
           },
         });
     } else {

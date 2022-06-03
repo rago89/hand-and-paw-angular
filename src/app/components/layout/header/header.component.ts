@@ -32,15 +32,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private _sanitizer: DomSanitizer
   ) {}
   ngOnInit(): void {
-    this.onWindowResize();
-    this.modalSubscription = this.modalService.loadLoginModal.subscribe(
-      (value) => {
-        this.openLoginForm = value;
-      }
-    );
-    this.isLoggedSubscription = this.authService.isLogged.subscribe((value) => {
-      this.isLogged = value;
-    });
     this.userSubscription = this.userService.user.subscribe((user) => {
       this.userId = user ? user.id : '';
 
@@ -51,6 +42,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
       } else {
         this.userAvatar = undefined;
       }
+    });
+    this.onWindowResize();
+    this.modalSubscription = this.modalService.loadLoginModal.subscribe(
+      (value) => {
+        this.openLoginForm = value;
+      }
+    );
+    this.isLoggedSubscription = this.authService.isLogged.subscribe((value) => {
+      this.isLogged = value;
     });
   }
 

@@ -23,7 +23,7 @@
           <a (click)="onLoadLoginForm()">Login / Sing up</a>
         </div>
         <div
-          *ngIf="isLogged"
+          *ngIf="isLogged && userId"
           (click)="openToggle()"
           [ngClass]="{ show: openMenu }"
           class="dropdown dropdown-toggle"

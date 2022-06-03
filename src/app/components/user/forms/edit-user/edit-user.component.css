@@ -3,7 +3,10 @@
 }
 
 .setActiveColor {
-  background-color: var(--regularBtn) !important;
+  background-color: var(--primary1) !important;
+}
+.small-error {
+  color: red;
 }
 
 /* user profile form */
