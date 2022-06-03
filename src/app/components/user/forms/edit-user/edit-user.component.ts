@@ -1,9 +1,8 @@
 import { ModalService } from './../../../shared/modal/modal.service';
-import { AuthService } from './../auth.service';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/components/user/user.service';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
 import { User } from '../../interface/User';
@@ -18,6 +17,8 @@ export class EditUserComponent
   implements OnInit, OnDestroy
 {
   myForm: FormGroup | any;
+  error: boolean = false;
+  successUpdate: boolean = false;
   showDayAccessFields: boolean = false;
   loadAccessDays: boolean = false;
   avatarPath: string = '';
@@ -40,7 +41,7 @@ export class EditUserComponent
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
+    this.route.params.subscribe((params) => {
       this.userId = params['id'];
     });
     this.modalPasswordSubscription =
@@ -71,11 +72,10 @@ export class EditUserComponent
         !this.user?.location ? '' : this.user.location,
         [Validators.minLength(3), Validators.maxLength(25)]
       ),
-      website: new FormControl(
-        !this.user?.website ? '' : this.user.website,
-        []
-      ),
-      avatar: new FormControl(!this.user?.avatar ? null : this.user.avatar, []),
+      website: new FormControl(!this.user?.website ? '' : this.user.website, [
+        this.validUrl(),
+      ]),
+      avatar: new FormControl(!this.user?.avatar ? null : this.user.avatar),
       mondayCheck: new FormControl(
         !this.user?.publicAccess?.monday?.access ? false : true,
         []
@@ -150,7 +150,7 @@ export class EditUserComponent
   }
   onSubmit() {
     this.isFetching = true;
-    const formData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('id', this.userId);
     formData.append('name', this.myForm.get('name').value);
     formData.append('phone', this.myForm.get('phone').value);
@@ -175,15 +175,35 @@ export class EditUserComponent
     formData.append('sunday-access', this.myForm.get('sundayCheck').value);
     formData.append('sunday-hours', this.myForm.get('sundayHours').value);
 
-    this.updateSubscription = this.userService.updateUser(formData).subscribe({
-      next: (arrUser) => {
-        this.userService.user.next(arrUser[0]);
-      },
-      error: (error) => {},
-      complete: () => {
+    if (this.userId) {
+      this.updateSubscription = this.userService
+        .updateUser(formData, this.userId)
+        .subscribe({
+          next: (user) => {
+            this.userService.user.next(user);
+          },
+          error: (error) => {
+            this.isFetching = false;
+            this.error = true;
+            setTimeout(() => {
+              this.error = false;
+            }, 2000);
+          },
+          complete: () => {
+            this.successUpdate = true;
+            this.isFetching = false;
+            setTimeout(() => {
+              this.successUpdate = false;
+            }, 1500);
+          },
+        });
+    } else {
+      this.error = true;
+      setTimeout(() => {
+        this.error = false;
         this.isFetching = false;
-      },
-    });
+      }, 1500);
+    }
   }
   onLoadUpdatePasswordForm(event: Event) {
     event.preventDefault();

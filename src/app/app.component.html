@@ -1,9 +1,9 @@
-<div *ngIf="!isLoading">
+<div *ngIf="!windowLoads">
   <app-header></app-header>
   <router-outlet></router-outlet>
   <app-footer></app-footer>
-  <app-login-user *ngIf="loadLoginForm"></app-login-user>
 </div>
-<div *ngIf="isLoading" class="loading-image">
-  <img src="../../../../assets/gif/loading_animation.gif" alt="loading image" />
+<app-login-user *ngIf="loadLoginForm"></app-login-user>
+<div *ngIf="windowLoads" class="loading-image">
+  <img src="/assets/gif/loading_animation.gif" alt="loading image" />
 </div>

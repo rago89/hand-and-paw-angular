@@ -1,32 +1,29 @@
-nav {
-  font-size: 1.125rem;
-  font-weight: 500;
-  width: 80%;
-  margin: auto;
-}
-
 .avatar-image {
   margin-top: 2px;
-  height: 70px;
-  width: 70px;
+  height: 60px;
+  width: 60px;
   object-fit: cover;
   border-radius: 50%;
   cursor: pointer;
 }
 
-.pages-menu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-}
-
 .button-bars {
-  background-color: var(--primary1);
+  background-color: transparent;
   width: 110px;
   height: 110px;
   border: none;
+  text-align: end;
 }
+.dropdown {
+  display: grid;
+  justify-items: end;
+}
+
+.dropdown-menu.show {
+  display: block;
+  margin-top: 90px;
+}
+
 .button-bars span {
   width: 80px;
 }
@@ -74,31 +71,20 @@ nav {
   -ms-flex-align: center;
   align-items: center;
 }
-@media screen and (max-width: 540px) {
-  .menu-position {
-    text-align: start;
-    margin-left: -35px;
-  }
-}
-@media screen and (max-width: 414px) {
-  .menu-position {
-    text-align: start;
-    margin-left: -65px;
-  }
-  nav {
-    width: 85%;
-  }
-}
-@media screen and (max-width: 375px) {
-  .menu-position {
-    text-align: start;
-    margin-left: -60px;
-  }
 
+@media screen and (max-width: 991px) {
+  .dropdown-menu {
+  }
+}
+@media screen and (max-width: 540px) {
+  .dropdown-menu.show {
+    display: block;
+    margin-top: 70px;
+  }
   .button-bars {
     background-color: var(--primary1);
-    width: 115px;
-    height: 115px;
+    width: 70px;
+    height: 70px;
     border: none;
   }
 }

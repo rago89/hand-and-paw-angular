@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+.setActiveColor {
+  background-color: var(--primary1) !important;
+}
+.small-error {
+  color: red;
+}
+
 /* user profile form */
 #edit-user-profile {
   margin-top: 80px;
@@ -10,6 +17,15 @@
   flex-direction: column;
   align-content: center;
   justify-content: center;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  text-align: center;
+  height: 50vh;
 }
 
 .input-form {

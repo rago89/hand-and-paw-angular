@@ -26,6 +26,7 @@ export class AnimalFormComponent
   userId: string = '';
   newAnimalId: string = '';
   successRegistration: boolean = false;
+  successUpdate: boolean = false;
   filePath: string = '';
   myForm: FormGroup | any;
   pictureHex: any;
@@ -64,7 +65,6 @@ export class AnimalFormComponent
     this.userSubscription = this.userService.user.subscribe((user) => {
       this.userId = user ? user.id : '';
     });
-    console.log(this.formProps.animal);
 
     this.myForm = new FormGroup({
       name: new FormControl(
@@ -217,7 +217,7 @@ export class AnimalFormComponent
               this.myForm.reset();
               this.filePath = '';
               this.isFetching = false;
-              this.successRegistration = true;
+              this.successUpdate = true;
             },
           });
         break;

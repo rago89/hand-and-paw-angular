@@ -143,6 +143,7 @@ const animalsController = {
     try {
       const { body } = req;
       const { userId } = body;
+
       if ([...userId].length !== 24) {
         throw new Error(`invalid  user id`);
       }

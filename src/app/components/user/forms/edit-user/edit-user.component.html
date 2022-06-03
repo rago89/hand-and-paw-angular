@@ -1,5 +1,5 @@
 <form
-  *ngIf="!isFetching"
+  *ngIf="!isFetching && !error"
   [formGroup]="myForm"
   (ngSubmit)="onSubmit()"
   id="edit-user-profile"
@@ -13,7 +13,17 @@
       name="name"
       placeholder="Your name"
       formControlName="name"
-    /><br /><small id="name-small-edit-profile-form"></small>
+    />
+    <small
+      *ngIf="myForm.get('name').errors?.minlength && myForm.get('name').touched"
+      class="small-error"
+      >Name must have al least 3 characters
+    </small>
+    <small
+      *ngIf="myForm.get('name').errors?.maxlength && myForm.get('name').touched"
+      class="small-error"
+      >Name's Maximum characters is 40
+    </small>
   </div>
   <div class="input-form">
     <label for="phone-input">Phone</label
@@ -23,7 +33,16 @@
       name="phone"
       placeholder="+32123456789"
       formControlName="phone"
-    /><br /><small id="phone-small-edit-profile-form"></small>
+    />
+    <small
+      *ngIf="
+        myForm.get('phone').value &&
+        myForm.get('phone').errors?.invalidPhoneNumber &&
+        myForm.get('phone').touched
+      "
+      class="small-error"
+      >Invalid phone number E.g. (+32471123456 or +320471123456)
+    </small>
   </div>
   <div class="input-form">
     <label for="location-input">City</label
@@ -34,7 +53,23 @@
       id="location-input"
       placeholder="City"
       formControlName="location"
-    /><br /><small id="location-small-edit-profile-form"></small>
+    />
+    <small
+      *ngIf="
+        myForm.get('location').errors?.minlength &&
+        myForm.get('location').touched
+      "
+      class="small-error"
+      >City must have al least 3 characters
+    </small>
+    <small
+      *ngIf="
+        myForm.get('location').errors?.maxlength &&
+        myForm.get('location').touched
+      "
+      class="small-error"
+      >City's maximum characters is 40
+    </small>
   </div>
   <div class="input-form">
     <label for="website-input">Website</label
@@ -44,7 +79,15 @@
       name="website"
       placeholder="www.yourpage.com"
       formControlName="website"
-    /><br /><small id="website-small-edit-profile-form"></small>
+    />
+    <small
+      *ngIf="
+        myForm.get('website').errors?.invalidUrl &&
+        myForm.get('website').touched
+      "
+      class="small-error"
+      >Invalid url e.g http://www.yourpage.com
+    </small>
   </div>
   <button (click)="onLoadUpdateEmailForm($event)" class="edit-button">
     Update email</button
@@ -207,7 +250,12 @@
       />
     </div>
   </div>
-  <button class="update-account button regular-button" id="update-button">
+  <button
+    [disabled]="!myForm.valid"
+    [ngClass]="{ setActiveColor: myForm.valid }"
+    class="update-account button regular-button"
+    id="update-button"
+  >
     Update account
   </button>
 </form>
@@ -217,12 +265,18 @@
     alt="loading image"
   />
 </div>
+<div *ngIf="error">
+  <h3 class="error">An error has occurred try again later</h3>
 
-<app-update-password
-  [userId]="userId"
-  *ngIf="loadUpdatePasswordForm"
-></app-update-password>
-<app-update-email
-  [userId]="userId"
-  *ngIf="loadUpdateEmailForm"
-></app-update-email>
+  <app-update-password
+    [userId]="userId"
+    *ngIf="loadUpdatePasswordForm"
+  ></app-update-password>
+  <app-update-email
+    [userId]="userId"
+    *ngIf="loadUpdateEmailForm"
+  ></app-update-email>
+</div>
+<app-modal-message *ngIf="successUpdate">
+  <h2>Account updated</h2>
+</app-modal-message>

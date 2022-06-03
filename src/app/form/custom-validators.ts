@@ -10,6 +10,11 @@ export class CustomFormValidation {
       if (!control.parent) {
         return null;
       }
+
+      if (control.value && control.value.length === 0) {
+        return null;
+      }
+
       if (
         control.value?.match(phoneRegExp) &&
         (control.value.length === 12 || control.value.length === 13)
@@ -24,14 +29,15 @@ export class CustomFormValidation {
 
   validUrl() {
     const urlRegExp =
-      /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/gm;
+      /(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,63}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?/;
     return (
       control: AbstractControl | any
     ): { [key: string]: boolean } | null => {
       if (!control.parent) {
         return null;
       }
-      if (control.value?.match(urlRegExp)) {
+
+      if (urlRegExp.test(control.value.trim())) {
         return null;
       }
       return {
