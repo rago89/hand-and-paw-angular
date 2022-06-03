@@ -30,6 +30,11 @@ body {
   flex-direction: column;
   height: fit-content;
   /* height: 100vh; */
+  background-image: url("/assets/images/ui/home/figma-images/welcome-bg.svg");
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size: 750px;
+  position: relative;
 }
 
 h1 {

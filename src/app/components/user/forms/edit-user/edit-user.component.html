@@ -207,7 +207,11 @@
       />
     </div>
   </div>
-  <button class="update-account button regular-button" id="update-button">
+  <button
+    [ngStyle]="{ setActiveColor: myForm.dirty }"
+    class="update-account button regular-button"
+    id="update-button"
+  >
     Update account
   </button>
 </form>

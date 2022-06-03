@@ -8,13 +8,20 @@
 }
 
 .button-bars {
-  background-color: var(--primary1);
+  background-color: transparent;
   width: 110px;
   height: 110px;
   border: none;
+  text-align: end;
 }
 .dropdown {
-  text-align: end;
+  display: grid;
+  justify-items: end;
+}
+
+.dropdown-menu.show {
+  display: block;
+  margin-top: 90px;
 }
 
 .button-bars span {
@@ -64,30 +71,20 @@
   -ms-flex-align: center;
   align-items: center;
 }
+
+@media screen and (max-width: 991px) {
+  .dropdown-menu {
+  }
+}
 @media screen and (max-width: 540px) {
-  .menu-position {
-    text-align: start;
-    margin-left: -35px;
+  .dropdown-menu.show {
+    display: block;
+    margin-top: 70px;
   }
   .button-bars {
     background-color: var(--primary1);
     width: 70px;
     height: 70px;
     border: none;
-  }
-}
-@media screen and (max-width: 414px) {
-  .menu-position {
-    text-align: start;
-    margin-left: -65px;
-  }
-  nav {
-    width: 85%;
-  }
-}
-@media screen and (max-width: 375px) {
-  .menu-position {
-    text-align: start;
-    margin-left: -60px;
   }
 }
