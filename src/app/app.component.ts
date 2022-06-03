@@ -10,6 +10,7 @@ import { AuthService } from './components/user/forms/auth.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   loadLoginForm: boolean = false;
+  windowLoads: boolean = false;
 
   timerInterval: any;
   private modalSubscription?: Subscription;
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.windowLoads = true;
     this.authService.autoLogin();
     this.authService.autoLogout();
     this.modalSubscription = this.modalService.loadLoginModal.subscribe(
@@ -26,6 +28,9 @@ export class AppComponent implements OnInit, OnDestroy {
         this.loadLoginForm = value;
       }
     );
+    window.addEventListener('load', (event) => {
+      this.windowLoads = false;
+    });
   }
   ngOnDestroy(): void {
     this.modalSubscription?.unsubscribe();

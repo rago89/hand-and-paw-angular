@@ -1,24 +1,10 @@
-nav {
-  font-size: 1.125rem;
-  font-weight: 500;
-  width: 80%;
-  margin: auto;
-}
-
 .avatar-image {
   margin-top: 2px;
-  height: 70px;
-  width: 70px;
+  height: 60px;
+  width: 60px;
   object-fit: cover;
   border-radius: 50%;
   cursor: pointer;
-}
-
-.pages-menu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
 }
 
 .button-bars {
@@ -27,6 +13,10 @@ nav {
   height: 110px;
   border: none;
 }
+.dropdown {
+  text-align: end;
+}
+
 .button-bars span {
   width: 80px;
 }
@@ -79,6 +69,12 @@ nav {
     text-align: start;
     margin-left: -35px;
   }
+  .button-bars {
+    background-color: var(--primary1);
+    width: 70px;
+    height: 70px;
+    border: none;
+  }
 }
 @media screen and (max-width: 414px) {
   .menu-position {
@@ -93,12 +89,5 @@ nav {
   .menu-position {
     text-align: start;
     margin-left: -60px;
-  }
-
-  .button-bars {
-    background-color: var(--primary1);
-    width: 115px;
-    height: 115px;
-    border: none;
   }
 }

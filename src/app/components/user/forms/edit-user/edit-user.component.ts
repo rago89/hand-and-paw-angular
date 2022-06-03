@@ -197,6 +197,7 @@ export class EditUserComponent
       this.error = true;
       setTimeout(() => {
         this.error = false;
+        this.isFetching = false;
       }, 1500);
     }
   }
