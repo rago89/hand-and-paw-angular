@@ -56,9 +56,13 @@ const loginController = {
         publicAccess: userRegistered[0].publicAccess,
       };
 
-      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: "15m",
-      });
+      const accessToken = jwt.sign(
+        { id: user.id, name: user.name },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+          expiresIn: "15m",
+        }
+      );
 
       const refreshToken = jwt.sign(
         {

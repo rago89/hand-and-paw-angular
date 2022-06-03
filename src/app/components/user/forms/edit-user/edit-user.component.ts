@@ -193,6 +193,11 @@ export class EditUserComponent
             this.isFetching = false;
           },
         });
+    } else {
+      this.error = true;
+      setTimeout(() => {
+        this.error = false;
+      }, 1500);
     }
   }
   onLoadUpdatePasswordForm(event: Event) {
