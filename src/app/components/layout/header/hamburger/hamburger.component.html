@@ -42,11 +42,13 @@
         <div *ngIf="isLogged">
           <div class="dropdown-item">
             <img class="profile-menu-image" [src]="heartIcon" alt="Favorites" />
-            <a routerLink="user/favorites-animals">Favorites</a>
+            <a [routerLink]="['/user', 'favorites-animals', userId]"
+              >Favorites</a
+            >
           </div>
           <div class="dropdown-item">
             <img class="profile-menu-image" [src]="dogIcon" alt="Animal" />
-            <a routerLink="user/my-animals">My animals</a>
+            <a [routerLink]="['/user', 'my-animals', userId]">My animals</a>
           </div>
           <div class="dropdown-item">
             <img class="profile-menu-image" [src]="accountIcon" alt="Avatar" />

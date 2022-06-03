@@ -26,14 +26,10 @@ export class HamburgerComponent implements OnInit, OnDestroy {
   dogIcon: string = '/assets/icons/dropdown menu/ph_dog.svg';
   accountIcon: string =
     '/assets/icons/dropdown menu/dropdownmenu_codicon_account.svg';
-  userId: string = '';
+  @Input() userId: string = '';
   @Input() userAvatar?: SafeResourceUrl;
 
-  constructor(
-    private modalService: ModalService,
-    private router: Router,
-    private authService: AuthService
-  ) {}
+  constructor(private modalService: ModalService) {}
 
   ngOnInit(): void {}
   openMenuToggle() {

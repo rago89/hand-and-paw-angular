@@ -230,12 +230,44 @@ textarea:focus {
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
+  body {
+    background-size: 550px;
+  }
+
   .menu {
     padding: 0 16px 0 16px;
   }
 
   .main-navbar {
     margin-left: 0px;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  body {
+    background-size: 600px;
+  }
+}
+@media screen and (max-width: 912px) {
+  body {
+    background-size: 700px;
+  }
+}
+@media screen and (max-width: 540px) {
+  body {
+    background-size: 520px;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  body {
+    background-size: 440px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  body {
+    background-size: 380px;
   }
 }

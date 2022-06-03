@@ -92,8 +92,7 @@ export class AuthService implements OnDestroy {
       typeof localStorageAccessToken === 'string'
         ? JSON.parse(localStorageAccessToken)
         : null;
-
-    const refreshToken = this.newRefreshToken();
+    const refreshToken = this.getRefreshTokenLocalStorage();
 
     const loadedAccessToken =
       accessTokenData &&
@@ -124,6 +123,7 @@ export class AuthService implements OnDestroy {
             const remainingTime: number =
               accessToken.tokenExpiringDate - new Date().getTime();
             this.isLogged.next(true);
+
             this.autoRefreshToken(remainingTime);
           }
         }
@@ -131,7 +131,7 @@ export class AuthService implements OnDestroy {
     }
 
     if (loadedAccessToken && loadedAccessToken.token) {
-      clearInterval(this.refreshTokenInterval);
+      // clearInterval(this.refreshTokenInterval);
       const remainingTime: number =
         loadedAccessToken.tokenExpiringDate - new Date().getTime();
       this.accessToken.next(loadedAccessToken);
@@ -145,6 +145,8 @@ export class AuthService implements OnDestroy {
 
   autoRefreshToken(expirationDuration: number) {
     setInterval(() => {
+      console.log('here');
+
       this.refreshTokenRequestObservable = this.refreshTokenRequest().subscribe(
         {
           next: (resData: AuthResponseData) => {
@@ -191,7 +193,7 @@ export class AuthService implements OnDestroy {
   };
 
   autoLogout() {
-    const refreshToken = this.newRefreshToken();
+    const refreshToken = this.getRefreshTokenLocalStorage();
     if (refreshToken && refreshToken.token) {
       const remainingTime: number =
         refreshToken.tokenExpiringDate - new Date().getTime();
@@ -270,30 +272,34 @@ export class AuthService implements OnDestroy {
 
       return refreshToken;
     } else {
-      const localStorageRefreshTokenData = localStorage.getItem('rt');
+      return null;
+    }
+  };
 
-      const refreshTokenData: {
-        _token: string;
-        tokenExpiringDate: number;
-        userId: string;
-      } | null =
-        localStorageRefreshTokenData !== null &&
-        typeof localStorageRefreshTokenData === 'string'
-          ? JSON.parse(localStorageRefreshTokenData)
-          : null;
+  getRefreshTokenLocalStorage = () => {
+    const localStorageRefreshTokenData = localStorage.getItem('rt');
 
-      const refreshToken =
-        refreshTokenData &&
-        new RefreshToken(
-          refreshTokenData._token,
-          Number(refreshTokenData.tokenExpiringDate),
-          refreshTokenData.userId
-        );
-      if (refreshToken && refreshToken.token) {
-        return refreshToken;
-      } else {
-        return null;
-      }
+    const refreshTokenData: {
+      _token: string;
+      tokenExpiringDate: number;
+      userId: string;
+    } | null =
+      localStorageRefreshTokenData !== null &&
+      typeof localStorageRefreshTokenData === 'string'
+        ? JSON.parse(localStorageRefreshTokenData)
+        : null;
+
+    const refreshToken =
+      refreshTokenData &&
+      new RefreshToken(
+        refreshTokenData._token,
+        Number(refreshTokenData.tokenExpiringDate),
+        refreshTokenData.userId
+      );
+    if (refreshToken && refreshToken.token) {
+      return refreshToken;
+    } else {
+      return null;
     }
   };
 
