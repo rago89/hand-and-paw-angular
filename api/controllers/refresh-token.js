@@ -48,9 +48,13 @@ const refreshToken = async (req, res) => {
       publicAccess: userRegistered[0].publicAccess,
     };
 
-    const newAccessToken = jwt.sign({ user }, tokenSecret, {
-      expiresIn: "15m",
-    });
+    const newAccessToken = jwt.sign(
+      { id: user.id, name: user.name },
+      tokenSecret,
+      {
+        expiresIn: "15m",
+      }
+    );
 
     return res
       .set({
