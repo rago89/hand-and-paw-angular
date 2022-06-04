@@ -71,10 +71,19 @@ export class AuthService implements OnDestroy {
           this.userService.user.next(resData.user);
           this.autoRefreshToken(tokenUserRemainingTime);
 
-          if (refreshToken && refreshToken.tokenExpiringDate) {
+          if (refreshToken && refreshToken.token) {
             const tokenRefreshRemainingTime: number =
               refreshToken.tokenExpiringDate - new Date().getTime();
-            setTimeout(this.logOut, tokenRefreshRemainingTime);
+            setTimeout(() => {
+              this.logOut().subscribe({
+                next: (res) => {
+                  console.log(res);
+                },
+                error: (error) => {
+                  console.log(error);
+                },
+              });
+            }, tokenRefreshRemainingTime);
           }
         })
       );
@@ -163,6 +172,9 @@ export class AuthService implements OnDestroy {
               }
             }
           },
+          error: (error: any) => {
+            console.log(error);
+          },
         }
       );
     }, expirationDuration);
@@ -197,7 +209,16 @@ export class AuthService implements OnDestroy {
     if (refreshToken && refreshToken.token) {
       const remainingTime: number =
         refreshToken.tokenExpiringDate - new Date().getTime();
-      this.logOutSetTimeout = setTimeout(this.logOut, remainingTime);
+      this.logOutSetTimeout = setTimeout(() => {
+        this.logOut().subscribe({
+          next: (res) => {
+            console.log(res);
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
+      }, remainingTime);
     } else {
       this.clearData();
     }
@@ -206,10 +227,10 @@ export class AuthService implements OnDestroy {
   logOut() {
     return this.accessToken.pipe(
       take(1),
-      exhaustMap((user) => {
-        if (user) {
+      exhaustMap((token) => {
+        if (token?.userId) {
           return this.http
-            .get(`${this.urlService.logoutUser(user.userId)}`)
+            .get(`${this.urlService.logoutUser(token.userId)}`)
             .pipe(
               tap((response) => {
                 this.clearData();
@@ -219,6 +240,7 @@ export class AuthService implements OnDestroy {
         } else {
           return new Observable((subscriber) => {
             subscriber.next(null);
+            subscriber.error('there is no token');
           });
         }
       })
