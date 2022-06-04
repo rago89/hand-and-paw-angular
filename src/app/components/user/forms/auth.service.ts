@@ -76,12 +76,8 @@ export class AuthService implements OnDestroy {
               refreshToken.tokenExpiringDate - new Date().getTime();
             setTimeout(() => {
               this.logOut().subscribe({
-                next: (res) => {
-                  console.log(res);
-                },
-                error: (error) => {
-                  console.log(error);
-                },
+                next: (res) => {},
+                error: (error) => {},
               });
             }, tokenRefreshRemainingTime);
           }
@@ -154,8 +150,6 @@ export class AuthService implements OnDestroy {
 
   autoRefreshToken(expirationDuration: number) {
     setInterval(() => {
-      console.log('here');
-
       this.refreshTokenRequestObservable = this.refreshTokenRequest().subscribe(
         {
           next: (resData: AuthResponseData) => {
@@ -172,9 +166,7 @@ export class AuthService implements OnDestroy {
               }
             }
           },
-          error: (error: any) => {
-            console.log(error);
-          },
+          error: (error: any) => {},
         }
       );
     }, expirationDuration);
@@ -211,12 +203,8 @@ export class AuthService implements OnDestroy {
         refreshToken.tokenExpiringDate - new Date().getTime();
       this.logOutSetTimeout = setTimeout(() => {
         this.logOut().subscribe({
-          next: (res) => {
-            console.log(res);
-          },
-          error: (error) => {
-            console.log(error);
-          },
+          next: (res) => {},
+          error: (error) => {},
         });
       }, remainingTime);
     } else {

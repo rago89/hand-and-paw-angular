@@ -149,8 +149,6 @@ export class EditUserComponent
     });
   }
   onSubmit() {
-    console.log(this.myForm);
-
     this.isFetching = true;
     const formData: FormData = new FormData();
     formData.append('id', this.userId);
