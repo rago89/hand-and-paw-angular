@@ -74,7 +74,7 @@ export class AuthService implements OnDestroy {
           if (refreshToken && refreshToken.tokenExpiringDate) {
             const tokenRefreshRemainingTime: number =
               refreshToken.tokenExpiringDate - new Date().getTime();
-            setTimeout(this.clearData, tokenRefreshRemainingTime);
+            setTimeout(this.logOut, tokenRefreshRemainingTime);
           }
         })
       );
@@ -197,7 +197,7 @@ export class AuthService implements OnDestroy {
     if (refreshToken && refreshToken.token) {
       const remainingTime: number =
         refreshToken.tokenExpiringDate - new Date().getTime();
-      this.logOutSetTimeout = setTimeout(this.clearData, remainingTime);
+      this.logOutSetTimeout = setTimeout(this.logOut, remainingTime);
     } else {
       this.clearData();
     }
