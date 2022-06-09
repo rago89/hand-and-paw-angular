@@ -1,5 +1,3 @@
-import { AuthService } from './../../../user/forms/auth.service';
-import { Router } from '@angular/router';
 import { ModalService } from './../../../shared/modal/modal.service';
 import {
   Component,
@@ -10,8 +8,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
+import { SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-hamburger',
   templateUrl: './hamburger.component.html',
@@ -35,11 +32,17 @@ export class HamburgerComponent implements OnInit, OnDestroy {
   openMenuToggle() {
     this.openMenu = !this.openMenu;
   }
-  onLoadLoginForm() {
+  onLoadLoginForm(checkboxToggle: HTMLInputElement) {
+    checkboxToggle.checked = false;
     this.modalService.loadLoginModal.next(true);
   }
-  logOutAccount() {
+  logOutAccount(checkboxToggle: HTMLInputElement) {
+    checkboxToggle.checked = false;
     this.userLogout.emit();
+  }
+
+  closeToggle(element: HTMLInputElement) {
+    element.checked = false;
   }
   ngOnDestroy(): void {}
 }
