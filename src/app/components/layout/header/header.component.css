@@ -4,6 +4,9 @@ nav {
   width: 80%;
   margin: auto;
 }
+.logo {
+  margin-top: 10px;
+}
 
 .avatar-image {
   margin-top: 2px;
@@ -96,6 +99,9 @@ nav {
 }
 
 @media screen and (max-width: 515px) {
+  .logo {
+    margin-top: 10px;
+  }
   .logo img {
     height: 60px;
   }
