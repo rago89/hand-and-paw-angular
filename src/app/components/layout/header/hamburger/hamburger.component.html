@@ -57,7 +57,11 @@
               <img class="profile-menu-image" [src]="dogIcon" alt="Animal" />
             </li>
             <li>
-              <a [routerLink]="['user', 'edit', userId]">Edit profile</a>
+              <a
+                (click)="closeToggle(toggle)"
+                [routerLink]="['/user', 'edit', userId]"
+                >Edit profile</a
+              >
               <img
                 class="profile-menu-image"
                 [src]="accountIcon"

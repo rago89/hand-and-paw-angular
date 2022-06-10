@@ -242,4 +242,15 @@ h1 {
     width: 50px;
     height: 50px;
   }
+
+  @media screen and (max-width: 280px) {
+    .outer-menu .hamburger {
+      width: 42px;
+      height: 42px;
+    }
+    .outer-menu .checkbox-toggle {
+      width: 40px;
+      height: 40px;
+    }
+  }
 }
