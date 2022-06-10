@@ -1,4 +1,85 @@
-<div class="pages-menu">
+<div class="outer-menu">
+  <input class="checkbox-toggle" type="checkbox" #toggle />
+  <div class="hamburger">
+    <div></div>
+  </div>
+  <div class="menu">
+    <div>
+      <div>
+        <ul>
+          <li>
+            <a
+              (click)="closeToggle(toggle)"
+              routerLink="/animal/find"
+              routerLinkActive="active"
+              >Find an Animal</a
+            >
+          </li>
+          <li>
+            <a
+              (click)="closeToggle(toggle)"
+              routerLink="about-adoption"
+              routerLinkActive="active"
+              >About adoption</a
+            >
+          </li>
+          <li>
+            <a
+              (click)="closeToggle(toggle)"
+              routerLink="/animal/register"
+              routerLinkActive="active"
+              >Register an animal</a
+            >
+          </li>
+          <li *ngIf="!isLogged"><hr class="dropdown-divider" /></li>
+          <li *ngIf="!isLogged">
+            <a (click)="onLoadLoginForm(toggle)">Login / Sing up</a>
+          </li>
+          <div *ngIf="isLogged">
+            <li>
+              <a
+                (click)="closeToggle(toggle)"
+                [routerLink]="['/user', 'favorites-animals', userId]"
+                >Favorites</a
+              >
+              <img
+                class="profile-menu-image"
+                [src]="heartIcon"
+                alt="Favorites"
+              />
+            </li>
+            <li>
+              <a
+                (click)="closeToggle(toggle)"
+                [routerLink]="['/user', 'my-animals', userId]"
+                >My animals</a
+              >
+              <img class="profile-menu-image" [src]="dogIcon" alt="Animal" />
+            </li>
+            <li>
+              <a
+                (click)="closeToggle(toggle)"
+                [routerLink]="['/user', 'edit', userId]"
+                >Edit profile</a
+              >
+              <img
+                class="profile-menu-image"
+                [src]="accountIcon"
+                alt="Avatar"
+              />
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a (click)="logOutAccount(toggle)">Logout</a>
+            </li>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="pages-menu">
   <div (click)="openMenuToggle()" class="dropdown" type="button">
     <button class="button-bars">
       <span *ngIf="!isLogged" class="dark-teal-text"
@@ -9,56 +90,25 @@
         [src]="userAvatar ? userAvatar : accountIcon"
         class="dropdown-toggle avatar-image"
       />
-    </button>
+    </button> -->
 
-    <!-- Collapsible content -->
-    <div
+<!-- Collapsible content -->
+<!-- <div
       [ngClass]="{ show: openMenu }"
       class="dropdown-menu menu-position"
       id="navbarSupportedContent8"
-    >
-      <!-- Links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="dropdown-item">
-          <a routerLink="/animal/find" routerLinkActive="active"
-            >Find an Animal</a
-          >
-        </li>
-        <li class="dropdown-item">
-          <a routerLink="/animal/register" routerLinkActive="active"
-            >Register an animal</a
-          >
-        </li>
+    > -->
+<!-- Links -->
+<!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="dropdown-item"></li>
 
-        <li class="dropdown-item">
-          <a routerLink="about-adoption" routerLinkActive="active"
-            >About adoption</a
-          >
-        </li>
-        <li><hr class="dropdown-divider" /></li>
-        <div class="dropdown-item" *ngIf="!isLogged">
-          <a (click)="onLoadLoginForm()">Login / Sing up</a>
-        </div>
         <div *ngIf="isLogged">
-          <div class="dropdown-item">
-            <img class="profile-menu-image" [src]="heartIcon" alt="Favorites" />
-            <a routerLink="user/favorites-animals">Favorites</a>
-          </div>
-          <div class="dropdown-item">
-            <img class="profile-menu-image" [src]="dogIcon" alt="Animal" />
-            <a routerLink="user/my-animals">My animals</a>
-          </div>
-          <div class="dropdown-item">
-            <img class="profile-menu-image" [src]="accountIcon" alt="Avatar" />
-            <a [routerLink]="['user', 'edit', userId]">Edit profile</a>
-          </div>
-          <li><hr class="dropdown-divider" /></li>
-          <div class="dropdown-item">
-            <a (click)="logOutAccount()">Logout</a>
-          </div>
+          <div class="dropdown-item"></div>
+          <div class="dropdown-item"></div>
+          <div class="dropdown-item"></div>
         </div>
-      </ul>
-      <!-- Links -->
-    </div>
+      </ul> -->
+<!-- Links -->
+<!-- </div>
   </div>
-</div>
+</div> -->

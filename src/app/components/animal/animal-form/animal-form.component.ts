@@ -1,4 +1,3 @@
-import { ActivatedRoute } from '@angular/router';
 import {
   Component,
   OnDestroy,

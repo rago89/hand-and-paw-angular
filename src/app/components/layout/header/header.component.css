@@ -4,6 +4,9 @@ nav {
   width: 80%;
   margin: auto;
 }
+.logo {
+  margin-top: 10px;
+}
 
 .avatar-image {
   margin-top: 2px;
@@ -71,6 +74,9 @@ nav {
 }
 
 @media screen and (max-width: 991px) {
+  .logo {
+    margin-top: 20px;
+  }
   .pages-menu {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -95,9 +101,51 @@ nav {
   }
 }
 
+@media screen and (max-width: 540px) {
+  .logo {
+    margin-top: 8px;
+  }
+}
+
 @media screen and (max-width: 515px) {
+  .logo {
+    margin-top: 10px;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .logo {
+    margin-top: 15px;
+  }
+  .logo img {
+    height: 73px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .logo {
+    margin-top: 10px;
+  }
+  .logo img {
+    height: 72px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .logo {
+    margin-top: 21px;
+  }
   .logo img {
     height: 60px;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .logo {
+    margin-top: 22px;
+  }
+  .logo img {
+    height: 50px;
   }
 }
 

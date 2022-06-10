@@ -335,7 +335,7 @@
           <div *ngIf="filePath">
             <img [src]="filePath" id="animal-preview" class="animal-preview" />
           </div>
-          <div *ngIf="pictureHex">
+          <div *ngIf="pictureHex && !filePath">
             <img
               [src]="pictureHex"
               id="animal-preview"

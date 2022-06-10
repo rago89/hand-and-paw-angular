@@ -11,7 +11,7 @@ export class CustomFormValidation {
         return null;
       }
 
-      if (control.value && control.value.length === 0) {
+      if (!control.value) {
         return null;
       }
 
@@ -29,11 +29,16 @@ export class CustomFormValidation {
 
   validUrl() {
     const urlRegExp =
-      /(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,63}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?/;
+      /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+
     return (
       control: AbstractControl | any
     ): { [key: string]: boolean } | null => {
       if (!control.parent) {
+        return null;
+      }
+
+      if (!control.value) {
         return null;
       }
 

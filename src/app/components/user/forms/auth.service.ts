@@ -71,10 +71,15 @@ export class AuthService implements OnDestroy {
           this.userService.user.next(resData.user);
           this.autoRefreshToken(tokenUserRemainingTime);
 
-          if (refreshToken && refreshToken.tokenExpiringDate) {
+          if (refreshToken && refreshToken.token) {
             const tokenRefreshRemainingTime: number =
               refreshToken.tokenExpiringDate - new Date().getTime();
-            setTimeout(this.clearData, tokenRefreshRemainingTime);
+            setTimeout(() => {
+              this.logOut().subscribe({
+                next: (res) => {},
+                error: (error) => {},
+              });
+            }, tokenRefreshRemainingTime);
           }
         })
       );
@@ -92,8 +97,7 @@ export class AuthService implements OnDestroy {
       typeof localStorageAccessToken === 'string'
         ? JSON.parse(localStorageAccessToken)
         : null;
-
-    const refreshToken = this.newRefreshToken();
+    const refreshToken = this.getRefreshTokenLocalStorage();
 
     const loadedAccessToken =
       accessTokenData &&
@@ -124,6 +128,7 @@ export class AuthService implements OnDestroy {
             const remainingTime: number =
               accessToken.tokenExpiringDate - new Date().getTime();
             this.isLogged.next(true);
+
             this.autoRefreshToken(remainingTime);
           }
         }
@@ -131,7 +136,7 @@ export class AuthService implements OnDestroy {
     }
 
     if (loadedAccessToken && loadedAccessToken.token) {
-      clearInterval(this.refreshTokenInterval);
+      // clearInterval(this.refreshTokenInterval);
       const remainingTime: number =
         loadedAccessToken.tokenExpiringDate - new Date().getTime();
       this.accessToken.next(loadedAccessToken);
@@ -161,6 +166,7 @@ export class AuthService implements OnDestroy {
               }
             }
           },
+          error: (error: any) => {},
         }
       );
     }, expirationDuration);
@@ -191,11 +197,16 @@ export class AuthService implements OnDestroy {
   };
 
   autoLogout() {
-    const refreshToken = this.newRefreshToken();
+    const refreshToken = this.getRefreshTokenLocalStorage();
     if (refreshToken && refreshToken.token) {
       const remainingTime: number =
         refreshToken.tokenExpiringDate - new Date().getTime();
-      this.logOutSetTimeout = setTimeout(this.clearData, remainingTime);
+      this.logOutSetTimeout = setTimeout(() => {
+        this.logOut().subscribe({
+          next: (res) => {},
+          error: (error) => {},
+        });
+      }, remainingTime);
     } else {
       this.clearData();
     }
@@ -204,10 +215,10 @@ export class AuthService implements OnDestroy {
   logOut() {
     return this.accessToken.pipe(
       take(1),
-      exhaustMap((user) => {
-        if (user) {
+      exhaustMap((token) => {
+        if (token?.userId) {
           return this.http
-            .get(`${this.urlService.logoutUser(user.userId)}`)
+            .get(`${this.urlService.logoutUser(token.userId)}`)
             .pipe(
               tap((response) => {
                 this.clearData();
@@ -217,6 +228,7 @@ export class AuthService implements OnDestroy {
         } else {
           return new Observable((subscriber) => {
             subscriber.next(null);
+            subscriber.error('there is no token');
           });
         }
       })
@@ -270,30 +282,34 @@ export class AuthService implements OnDestroy {
 
       return refreshToken;
     } else {
-      const localStorageRefreshTokenData = localStorage.getItem('rt');
+      return null;
+    }
+  };
 
-      const refreshTokenData: {
-        _token: string;
-        tokenExpiringDate: number;
-        userId: string;
-      } | null =
-        localStorageRefreshTokenData !== null &&
-        typeof localStorageRefreshTokenData === 'string'
-          ? JSON.parse(localStorageRefreshTokenData)
-          : null;
+  getRefreshTokenLocalStorage = () => {
+    const localStorageRefreshTokenData = localStorage.getItem('rt');
 
-      const refreshToken =
-        refreshTokenData &&
-        new RefreshToken(
-          refreshTokenData._token,
-          Number(refreshTokenData.tokenExpiringDate),
-          refreshTokenData.userId
-        );
-      if (refreshToken && refreshToken.token) {
-        return refreshToken;
-      } else {
-        return null;
-      }
+    const refreshTokenData: {
+      _token: string;
+      tokenExpiringDate: number;
+      userId: string;
+    } | null =
+      localStorageRefreshTokenData !== null &&
+      typeof localStorageRefreshTokenData === 'string'
+        ? JSON.parse(localStorageRefreshTokenData)
+        : null;
+
+    const refreshToken =
+      refreshTokenData &&
+      new RefreshToken(
+        refreshTokenData._token,
+        Number(refreshTokenData.tokenExpiringDate),
+        refreshTokenData.userId
+      );
+    if (refreshToken && refreshToken.token) {
+      return refreshToken;
+    } else {
+      return null;
     }
   };
 

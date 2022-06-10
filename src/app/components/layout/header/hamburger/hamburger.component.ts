@@ -1,5 +1,3 @@
-import { AuthService } from './../../../user/forms/auth.service';
-import { Router } from '@angular/router';
 import { ModalService } from './../../../shared/modal/modal.service';
 import {
   Component,
@@ -10,8 +8,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
+import { SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-hamburger',
   templateUrl: './hamburger.component.html',
@@ -26,24 +23,26 @@ export class HamburgerComponent implements OnInit, OnDestroy {
   dogIcon: string = '/assets/icons/dropdown menu/ph_dog.svg';
   accountIcon: string =
     '/assets/icons/dropdown menu/dropdownmenu_codicon_account.svg';
-  userId: string = '';
+  @Input() userId: string = '';
   @Input() userAvatar?: SafeResourceUrl;
 
-  constructor(
-    private modalService: ModalService,
-    private router: Router,
-    private authService: AuthService
-  ) {}
+  constructor(private modalService: ModalService) {}
 
   ngOnInit(): void {}
   openMenuToggle() {
     this.openMenu = !this.openMenu;
   }
-  onLoadLoginForm() {
+  onLoadLoginForm(checkboxToggle: HTMLInputElement) {
+    checkboxToggle.checked = false;
     this.modalService.loadLoginModal.next(true);
   }
-  logOutAccount() {
+  logOutAccount(checkboxToggle: HTMLInputElement) {
+    checkboxToggle.checked = false;
     this.userLogout.emit();
+  }
+
+  closeToggle(element: HTMLInputElement) {
+    element.checked = false;
   }
   ngOnDestroy(): void {}
 }
