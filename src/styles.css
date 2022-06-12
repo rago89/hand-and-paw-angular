@@ -86,7 +86,7 @@ h4 {
 }
 
 .loading-image img {
-  width: 350px;
+  width: 300px;
 }
 
 .ng-invalid input {
@@ -263,7 +263,7 @@ textarea:focus {
     background-size: 520px;
   }
   .loading-image img {
-    width: 250px;
+    width: 150px;
   }
 }
 
