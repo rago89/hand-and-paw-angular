@@ -267,16 +267,15 @@
 </div>
 <div *ngIf="error">
   <h3 class="error">An error has occurred try again later</h3>
-
-  <app-update-password
-    [userId]="userId"
-    *ngIf="loadUpdatePasswordForm"
-  ></app-update-password>
-  <app-update-email
-    [userId]="userId"
-    *ngIf="loadUpdateEmailForm"
-  ></app-update-email>
 </div>
+<app-update-password
+  [userId]="userId"
+  *ngIf="loadUpdatePasswordForm"
+></app-update-password>
+<app-update-email
+  [userId]="userId"
+  *ngIf="loadUpdateEmailForm"
+></app-update-email>
 <app-modal-message *ngIf="successUpdate">
   <h2>Account updated</h2>
 </app-modal-message>
