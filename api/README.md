@@ -12,6 +12,8 @@ Is an open API where you can use already to get animals and publish them in your
     - [Using the API](#using-the-api)
   - [The API Documentation](#the-api-documentation)
     - [Routes](#routes)
+  - [Auth](#auth)
+    - [Refresh Token](#refresh-token)
   - [Users](#users)
     - [Create new User](#create-new-user)
     - [Fetch users](#fetch-users)
@@ -64,6 +66,51 @@ Follow the steps explained by [mongodb](https://docs.mongodb.com/manual/administ
 
 - [users](#users)
 - [animals](#animals)
+
+## Auth
+
+### Refresh Token
+
+Receives the token refresher and creates a new access token.
+
+- **URL**
+
+  api/refresh-token
+
+- **Method:**
+
+  `POST`
+
+- **Body:**
+
+  ```js
+  {
+    "refreshToken": "bjnbap;udgf98ghsdfgudlgdfkjg...",
+    "id": "bjnbap;udgf98ghsdfgudl",
+  }
+  ```
+
+- **return:**
+
+  ```js
+  {
+   "user":{
+      "id": "62a6edfe121c520c76d88535",
+      "name": "Rafael 123",
+      "avatar": {},
+      "favorites": [],
+      "publicAccess": {},
+      "registeredAnimals": [],
+    },
+   "refreshToken": "bjnbap;udgf98ghsdfgudlgdfkjg...",
+   "expiresIn": "Mon Jun 13 2022 10:14:13 GMT+0200"
+   "refreshTokenExpiresIn": "Mon Jun 13 2022 2:14:13 GMT+0200",
+  }
+  ```
+
+  > [Back to index routes](#index)
+
+---
 
 ## Users
 
@@ -127,7 +174,7 @@ api/users
 
 ```js
 [
-        }
+  }
         "_id": "616ed72339ecbbf9b4c1c0b5",
         "name": "rafael ",
         "email": "lau@hyf.com",
@@ -139,7 +186,7 @@ api/users
         "avatar": "c0b692fc-1622-4e1b-9571-eec912b77f1c.png",
         "location": "location phote",
         "phone": "0471758204",
-    }
+  }
 ]
 ```
 
@@ -174,17 +221,12 @@ Get one user from the system.
   ```js
   [
     {
-      _id: "616ed72339ecbbf9b4c1c0b5",
-      name: "rafael ",
-      email: "lau@hyf.com",
-      password: "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d",
+      id: "62a6edfe121c520c76d88535",
+      name: "Rafael 123",
+      avatar: {},
       favorites: [],
-      publishPet: [],
-      registerDate: "2021-10-19T14:33:07.051Z",
-      __v: 0,
-      avatar: "c0b692fc-1622-4e1b-9571-eec912b77f1c.png",
-      location: "location phote",
-      phone: "0471758204",
+      publicAccess: {},
+      registeredAnimals: [],
     },
   ];
   ```
@@ -306,18 +348,13 @@ Multiform data
           access: on,
           hours: "9:00 to 18:00",
         },
-      },
-      _id: "616ed72339ecbbf9b4c1c0b5",
-      name: "rafael ",
-      email: "lau@hyf.com",
+    {
+      id: "62a6edfe121c520c76d88535",
+      name: "Rafael 123",
+      avatar: {},
       favorites: [],
-      publishPet: [],
-      registerDate: "2021-10-19T14:33:07.051Z",
-      __v: 0,
-      avatar: "c0b692fc-1622-4e1b-9571-eec912b77f1c.png",
-      location: "location phote",
-      phone: "0471758204",
-      updateDate: "2021-10-19T14:38:47.047Z",
+      publicAccess: {},
+      registeredAnimals: [],
     },
   ];
   ```
