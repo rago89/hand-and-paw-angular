@@ -1,10 +1,10 @@
 export interface User {
   id: string;
   name: string;
-  phone: string;
-  location: string;
-  website: string;
-  avatar: { data: string; contentType: string };
+  phone?: string;
+  location?: string;
+  website?: string;
+  avatar?: { data?: string; contentType?: string };
   favorites: string[];
   publicAccess?: {
     monday?: {

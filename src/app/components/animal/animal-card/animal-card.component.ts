@@ -26,7 +26,7 @@ export class AnimalCardComponent implements OnInit, OnDestroy {
   @Input() editOrRemove: boolean = false;
   @Output() animalToDelete = new EventEmitter<Animal>();
   user: User | null = null;
-  age: string = '';
+  age: string | number = '';
   isFavorite?: boolean;
   belongToUser?: boolean;
   accessToken: AccessToken | null = null;
@@ -57,18 +57,27 @@ export class AnimalCardComponent implements OnInit, OnDestroy {
       );
       this.isFavorite = user?.favorites.some((id) => id === this.animal._id);
     });
-    this.age =
-      JSON.parse(this.animal.age) === 0 ? 'less than 1 year' : this.animal?.age;
-    this.pictureHex = this._sanitizer.bypassSecurityTrustResourceUrl(
-      'data:image/jpg;base64,' + this.animal.pictures[0]?.picture.data
-    );
+
+    if (this.animal) {
+      this.age = !this.animal.age
+        ? 'Unknown'
+        : this.animal.age === 0
+        ? 'less than 1 year'
+        : this.animal?.age;
+      this.pictureHex = this._sanitizer.bypassSecurityTrustResourceUrl(
+        'data:image/jpg;base64,' + this.animal.pictures[0]?.picture.data
+      );
+    }
   }
   renderImage() {
-    const picture =
-      this.pictureHex.changingThisBreaksApplicationSecurity ===
-      'data:image/jpg;base64,undefined'
-        ? this.anonymousImage
-        : this.pictureHex;
+    let picture: string = '';
+    if (this.pictureHex) {
+      picture =
+        this.pictureHex.changingThisBreaksApplicationSecurity ===
+        'data:image/jpg;base64,undefined'
+          ? this.anonymousImage
+          : this.pictureHex;
+    }
     return picture;
   }
   goToAnimalDescription() {
