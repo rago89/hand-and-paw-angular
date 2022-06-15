@@ -7,7 +7,7 @@
 /bazel-out
 
 #api 
-/api/access.log
+api/access.log
 
 # Node
 /node_modules
