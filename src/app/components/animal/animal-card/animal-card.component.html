@@ -1,26 +1,26 @@
 <div id="{animal._id}" class="animal search-result-card">
   <div (click)="goToAnimalDescription()">
     <div class="card-photo">
-      <img [src]="renderImage()" />
+      <img [src]="renderImage() === '' ? anonymousImage : renderImage()" />
     </div>
     <div class="{infoClass}">
       <div class="animal-name">
-        <h3>{{ animal.name | pascalCase }}</h3>
+        <h3>{{ animal?.name | pascalCase }}</h3>
       </div>
       <br />
-      Type: <span>{{ animal.type }}</span> <br />
-      Breed: <span>{{ animal.breed }}</span> <br />
-      Gender: <span>{{ animal.gender }}</span>
+      Type: <span>{{ animal?.type }}</span> <br />
+      Breed: <span>{{ animal?.breed }}</span> <br />
+      Gender: <span>{{ animal?.gender }}</span>
       <br />
-      Character: <span>{{ animal.character }}</span>
+      Character: <span>{{ animal?.character }}</span>
       <br />
       Age:
-      <span>{{ age }}</span>
+      <span>{{ !age ? "unknown" : age }}</span>
       <br />
-      City: <span>{{ animal.location | pascalCase }}</span> <br />
+      City: <span>{{ animal?.location | pascalCase }}</span> <br />
       Province:
       <span>
-        {{ animal.province | pascalCase }}
+        {{ animal?.province | pascalCase }}
       </span>
       <br />
     </div>

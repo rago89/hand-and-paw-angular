@@ -1,7 +1,7 @@
 import { UserService } from 'src/app/components/user/user.service';
 import { RefreshToken } from './refresh-token.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   catchError,
@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements OnDestroy {
+export class AuthService {
   token = new ReplaySubject<string>();
   loadLoginForm = new Subject<boolean>();
   logToken = new Subject<string>();
@@ -238,11 +238,11 @@ export class AuthService implements OnDestroy {
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An error has occurred';
     if (!error.error || !error.error.message) {
-      return throwError(errorMessage);
+      return throwError(() => errorMessage);
     }
     if (error.error.message.includes('VE006')) {
       errorMessage = 'Cannot create user, email already exist!';
-      return throwError(errorMessage);
+      return throwError(() => errorMessage);
     }
     switch (error.error.message) {
       case 'password is required':
@@ -258,7 +258,7 @@ export class AuthService implements OnDestroy {
         errorMessage = 'Incorrect password';
         break;
     }
-    return throwError(errorMessage);
+    return throwError(() => errorMessage);
   }
   clearData = () => {
     clearInterval(this.refreshTokenInterval);
@@ -312,8 +312,4 @@ export class AuthService implements OnDestroy {
       return null;
     }
   };
-
-  ngOnDestroy(): void {
-    this.refreshTokenRequestObservable.unsubscribe();
-  }
 }

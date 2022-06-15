@@ -1,3 +1,7 @@
+import { ModalComponent } from './../../../shared/modal/modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginUserComponent } from './login-user.component';
@@ -8,9 +12,14 @@ describe('LoginUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginUserComponent ]
-    })
-    .compileComponents();
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+        FormsModule,
+      ],
+      declarations: [LoginUserComponent, ModalComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -8,9 +8,8 @@ describe('FindShelterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FindShelterComponent ]
-    })
-    .compileComponents();
+      declarations: [FindShelterComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

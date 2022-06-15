@@ -1,3 +1,8 @@
+import { ModalMessageComponent } from './../../../shared/modal-message/modal-message.component';
+import { ModalComponent } from './../../../shared/modal/modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UpdatePasswordComponent } from './update-password.component';
@@ -8,9 +13,18 @@ describe('UpdatePasswordComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UpdatePasswordComponent ]
-    })
-    .compileComponents();
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        ReactiveFormsModule,
+        FormsModule,
+      ],
+      declarations: [
+        UpdatePasswordComponent,
+        ModalComponent,
+        ModalMessageComponent,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

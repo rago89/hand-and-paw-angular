@@ -4,11 +4,11 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'pascalCase',
 })
 export class PascalCasePipe implements PipeTransform {
-  transform(value: string): any {
+  transform(value?: string): any {
     let newString: string = '';
     const valuePascal: string[] = [];
 
-    if (value.length !== 0) {
+    if (value && value.length !== 0) {
       const valueArray = value.split(' ');
       for (const word of valueArray) {
         let lowerCased = word.toLowerCase();

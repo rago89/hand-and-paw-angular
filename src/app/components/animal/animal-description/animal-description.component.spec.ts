@@ -1,4 +1,8 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ContactFormComponent } from './../../contact-form/contact-form.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { AnimalDescriptionComponent } from './animal-description.component';
 
@@ -8,9 +12,9 @@ describe('AnimalDescriptionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AnimalDescriptionComponent ]
-    })
-    .compileComponents();
+      imports: [RouterTestingModule, HttpClientTestingModule],
+      declarations: [AnimalDescriptionComponent, ContactFormComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

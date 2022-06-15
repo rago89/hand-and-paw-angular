@@ -1,4 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { HamburgerComponent } from './hamburger.component';
 
@@ -8,9 +10,9 @@ describe('HamburgerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HamburgerComponent ]
-    })
-    .compileComponents();
+      imports: [RouterTestingModule, HttpClientTestingModule],
+      declarations: [HamburgerComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
