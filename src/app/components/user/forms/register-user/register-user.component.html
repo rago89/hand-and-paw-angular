@@ -9,13 +9,13 @@
       <label for="name"> Name:</label><br />
       <input type="name" id="name" name="name" formControlName="name" />
       <div
-        *ngIf="myForm.get('name').valid && myForm.get('name').touched"
+        *ngIf="myForm.get('name')?.valid && myForm.get('name')?.touched"
         class="valid-input"
       >
         Looks good!
       </div>
       <div
-        *ngIf="!myForm.get('name').value && myForm.get('name').touched"
+        *ngIf="!myForm.get('name')?.value && myForm.get('name')?.touched"
         class="valid-input"
         class="invalid-input"
       >
@@ -23,9 +23,9 @@
       </div>
       <div
         *ngIf="
-          myForm.get('name').value &&
-          myForm.get('name').value.length < 3 &&
-          myForm.get('name').touched
+          myForm.get('name')?.value &&
+          myForm.get('name')?.value.length < 3 &&
+          myForm.get('name')?.touched
         "
         class="invalid-input"
       >
@@ -36,13 +36,13 @@
       <label for="email">Email:</label><br />
       <input type="email" id="email" name="email" formControlName="email" />
       <div
-        *ngIf="myForm.get('email').valid && myForm.get('email').touched"
+        *ngIf="myForm.get('email')?.valid && myForm.get('email')?.touched"
         class="valid-input"
       >
         Looks good!
       </div>
       <div
-        *ngIf="!myForm.get('email').value && myForm.get('email').touched"
+        *ngIf="!myForm.get('email')?.value && myForm.get('email')?.touched"
         class="valid-input"
         class="invalid-input"
       >
@@ -50,10 +50,10 @@
       </div>
       <div
         *ngIf="
-          myForm.get('email').value &&
-          myForm.get('email').value.length !== 0 &&
-          !myForm.get('email').valid &&
-          myForm.get('email').touched
+          myForm.get('email')?.value &&
+          myForm.get('email')?.value.length !== 0 &&
+          !myForm.get('email')?.valid &&
+          myForm.get('email')?.touched
         "
         class="invalid-input"
       >
@@ -70,8 +70,8 @@
       />
       <div
         *ngIf="
-          myForm.get('password').errors?.required &&
-          myForm.get('password').touched
+          myForm.get('password')?.errors?.['required'] &&
+          myForm.get('password')?.touched
         "
         class="invalid-input"
       >
@@ -79,9 +79,9 @@
       </div>
       <div
         *ngIf="
-          myForm.get('password').value &&
-          myForm.get('password').errors?.invalidInput &&
-          myForm.get('password').touched
+          myForm.get('password')?.value &&
+          myForm.get('password')?.errors?.['invalidInput'] &&
+          myForm.get('password')?.touched
         "
         class="invalid-input"
       >
@@ -100,8 +100,8 @@
       />
       <div
         *ngIf="
-          myForm.get('repeatPassword').valid &&
-          myForm.get('repeatPassword').touched
+          myForm.get('repeatPassword')?.valid &&
+          myForm.get('repeatPassword')?.touched
         "
         class="valid-input"
       >
@@ -109,8 +109,8 @@
       </div>
       <div
         *ngIf="
-          myForm.get('repeatPassword').errors?.required &&
-          myForm.get('repeatPassword').touched
+          myForm.get('repeatPassword')?.errors?.['required'] &&
+          myForm.get('repeatPassword')?.touched
         "
         class="invalid-input"
       >
@@ -118,9 +118,9 @@
       </div>
       <div
         *ngIf="
-          myForm.get('repeatPassword').value &&
-          myForm.get('repeatPassword').errors?.inputsNotMatch &&
-          myForm.get('repeatPassword').touched
+          myForm.get('repeatPassword')?.value &&
+          myForm.get('repeatPassword')?.errors?.['inputsNotMatch'] &&
+          myForm.get('repeatPassword')?.touched
         "
         class="invalid-input"
       >
@@ -128,9 +128,9 @@
       </div>
       <div
         *ngIf="
-          myForm.get('repeatPassword').value &&
-          myForm.get('repeatPassword').errors?.invalidInput &&
-          myForm.get('repeatPassword').touched
+          myForm.get('repeatPassword')?.value &&
+          myForm.get('repeatPassword')?.errors?.['invalidInput'] &&
+          myForm.get('repeatPassword')?.touched
         "
         class="invalid-input"
       >
