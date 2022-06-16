@@ -13,11 +13,14 @@ export class UserService {
 
   constructor(private http: HttpClient, private urlService: UrlService) {}
 
-  postUser(user: User) {
+  postUser = (user: { name: string; email: string; password: string }) => {
     return this.http
-      .post(`${this.urlService.registerUser}`, user)
+      .post<{
+        message: string;
+        user: { _id: string; name: string; email: string };
+      }>(`${this.urlService.registerUser}`, user)
       .pipe(catchError(handleUserError));
-  }
+  };
 
   updateUser = (updateValues: any, id: string) => {
     return this.http.put<User>(

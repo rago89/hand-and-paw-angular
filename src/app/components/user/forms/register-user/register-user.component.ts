@@ -13,7 +13,21 @@ export class RegisterUserComponent
   extends CustomFormValidation
   implements OnInit
 {
-  myForm: FormGroup | any;
+  myForm: FormGroup = new FormGroup({
+    name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    password: new FormControl(null, [
+      Validators.required,
+      this.passwordInputContentValidation(),
+    ]),
+    repeatPassword: new FormControl(null, [
+      Validators.required,
+      this.matchInputs('password'),
+      this.passwordInputContentValidation(),
+      this.passwordInputContentValidation,
+    ]),
+  });
+
   successRegistration: boolean = false;
   @Output() loadRegisterForm = new EventEmitter<boolean>();
   registrationError: string = '';
@@ -21,41 +35,31 @@ export class RegisterUserComponent
     super();
   }
 
-  ngOnInit(): void {
-    this.myForm = new FormGroup({
-      name: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [
-        Validators.required,
-        this.passwordInputContentValidation(),
-      ]),
-      repeatPassword: new FormControl(null, [
-        Validators.required,
-        this.matchInputs('password'),
-        this.passwordInputContentValidation(),
-        this.passwordInputContentValidation,
-      ]),
-    });
-  }
+  ngOnInit(): void {}
 
   onSubmit() {
-    if (!this.myForm.valid) return;
-    this.userService.postUser(this.myForm.value).subscribe({
-      next: (response) => {},
-      error: (errorMessage) => {
-        this.registrationError = errorMessage;
-      },
-      complete: () => {
-        this.successRegistration = true;
-        setTimeout(() => {
-          this.successRegistration = false;
-          this.loadRegisterForm.emit(false);
-        }, 2000);
-      },
-    });
+    if (this.myForm && !this.myForm.valid) return;
+
+    if (this.myForm && this.myForm.value) {
+      const newUser = {
+        name: this.myForm.value.name,
+        email: this.myForm.value.email,
+        password: this.myForm.value.password,
+      };
+      this.userService.postUser(this.myForm.value).subscribe({
+        next: (response) => {},
+        error: (errorMessage) => {
+          this.registrationError = errorMessage;
+        },
+        complete: () => {
+          this.successRegistration = true;
+          setTimeout(() => {
+            this.successRegistration = false;
+            this.loadRegisterForm.emit(false);
+          }, 2000);
+        },
+      });
+    }
   }
 
   onLoadLoginForm() {
