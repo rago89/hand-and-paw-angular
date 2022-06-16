@@ -2,6 +2,7 @@ import { AuthService } from './../auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-register-user',
@@ -16,7 +17,7 @@ export class RegisterUserComponent
   successRegistration: boolean = false;
   @Output() loadRegisterForm = new EventEmitter<boolean>();
   registrationError: string = '';
-  constructor(private authService: AuthService) {
+  constructor(private userService: UserService) {
     super();
   }
 
@@ -42,7 +43,7 @@ export class RegisterUserComponent
 
   onSubmit() {
     if (!this.myForm.valid) return;
-    this.authService.postUser(this.myForm.value).subscribe({
+    this.userService.postUser(this.myForm.value).subscribe({
       next: (response) => {},
       error: (errorMessage) => {
         this.registrationError = errorMessage;

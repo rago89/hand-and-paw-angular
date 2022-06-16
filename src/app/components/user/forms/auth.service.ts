@@ -1,6 +1,7 @@
+import { handleAuthError } from './../../../error-handling/auth-handling';
 import { UserService } from 'src/app/components/user/user.service';
 import { RefreshToken } from './refresh-token.model';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
@@ -8,7 +9,6 @@ import {
   ReplaySubject,
   Subject,
   tap,
-  throwError,
   take,
   exhaustMap,
   Subscription,
@@ -16,7 +16,6 @@ import {
 } from 'rxjs';
 import { UrlService } from 'src/app/url/url.service';
 import { AuthResponseData } from '../interface/Auth-response-data';
-import { User as userInterface } from '../interface/User';
 import { AccessToken } from './access-token.model';
 import { Router } from '@angular/router';
 
@@ -41,17 +40,11 @@ export class AuthService {
     private router: Router
   ) {}
 
-  postUser(user: userInterface) {
-    return this.http
-      .post(`${this.urlService.registerUser}`, user)
-      .pipe(catchError(this.handleError));
-  }
-
   loginRequest(user: { email: string; password: string }) {
     return this.http
       .post<AuthResponseData>(`${this.urlService.loginUser}`, user)
       .pipe(
-        catchError(this.handleError),
+        catchError(handleAuthError),
         tap((resData) => {
           const expiresInCasted = Number(resData.expiresIn);
 
@@ -235,31 +228,6 @@ export class AuthService {
     );
   }
 
-  private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'An error has occurred';
-    if (!error.error || !error.error.message) {
-      return throwError(() => errorMessage);
-    }
-    if (error.error.message.includes('VE006')) {
-      errorMessage = 'Cannot create user, email already exist!';
-      return throwError(() => errorMessage);
-    }
-    switch (error.error.message) {
-      case 'password is required':
-        errorMessage = 'password is required';
-        break;
-      case 'email is required':
-        errorMessage = 'email is required';
-        break;
-      case 'You need to register to login':
-        errorMessage = 'You need to register to login';
-        break;
-      case 'Incorrect password':
-        errorMessage = 'Incorrect password';
-        break;
-    }
-    return throwError(() => errorMessage);
-  }
   clearData = () => {
     clearInterval(this.refreshTokenInterval);
     this.isLogged.next(false);
