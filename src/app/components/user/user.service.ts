@@ -28,9 +28,11 @@ export class UserService {
       updateValues
     );
   };
+
   getUser = (id: string) => {
     return this.http.get<User>(`${this.urlService.getUser(id)}`);
   };
+
   setFavoriteAnimal = (animalId: string, userId?: string) => {
     if (userId) {
       return this.http.patch(this.urlService.addFavoriteAnimal(userId), {
@@ -41,6 +43,7 @@ export class UserService {
       subscriber.next(null);
     });
   };
+
   removeFavoriteAnimal = (animalId: string, userId?: string) => {
     if (userId) {
       return this.http.patch(this.urlService.removeFavoriteAnimal(userId), {
