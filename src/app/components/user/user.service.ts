@@ -23,10 +23,9 @@ export class UserService {
   };
 
   updateUser = (updateValues: any, id: string) => {
-    return this.http.put<User>(
-      `${this.urlService.updateUser(id)}`,
-      updateValues
-    );
+    return this.http
+      .put<User>(`${this.urlService.updateUser(id)}`, updateValues)
+      .pipe(catchError(handleUserError));
   };
 
   getUser = (id: string) => {

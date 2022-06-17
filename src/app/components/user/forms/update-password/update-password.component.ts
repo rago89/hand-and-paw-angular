@@ -60,7 +60,7 @@ export class UpdatePasswordComponent
     this.userService.updateUser(formData, this.userId).subscribe({
       next: (response) => {},
       error: (errorMessage) => {
-        this.registrationError = errorMessage.error;
+        this.registrationError = errorMessage;
         setTimeout(() => {
           this.registrationError = '';
         }, 2000);
