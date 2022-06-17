@@ -125,7 +125,7 @@ const userRegister = {
           "avatar-uploads"
         );
       }
-      res.status(401).json(error.message);
+      res.status(401).json({ message: `${error.message}` });
     }
   },
   deleteUser: async (req, res) => {
