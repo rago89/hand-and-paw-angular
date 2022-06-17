@@ -3,11 +3,9 @@ type Picture = {
     data: string;
     contentType: string;
   };
-  isPrincipal: {
-    type: string;
-    default: boolean;
-  };
+  isPrincipal: string;
   fieldname: string;
+  _id: string;
 };
 
 export interface Animal {
