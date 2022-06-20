@@ -1,10 +1,10 @@
-import { User } from './../interface/User';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { map, Subscription } from 'rxjs';
 import { AnimalService } from '../../animal/animal.service';
 import { Animal } from '../../animal/interface/animal';
 import { UserService } from '../user.service';
+import { AnimalDescriptionService } from '../../animal/animal-description/animal-description.service';
 
 @Component({
   selector: 'app-my-animals',
@@ -24,10 +24,12 @@ export class MyAnimalsComponent implements OnInit, OnDestroy {
     private animalService: AnimalService,
     private userService: UserService,
     private route: ActivatedRoute,
+    private animalDescriptionService: AnimalDescriptionService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.animalDescriptionService.previousPageButtonText.next(this.router.url);
     this.routeSubscription = this.route.params.subscribe((params) => {
       this.userId = params['id'];
     });
@@ -84,5 +86,6 @@ export class MyAnimalsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.userServiceSubscription.unsubscribe();
     this.removeAnimalSubscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
   }
 }

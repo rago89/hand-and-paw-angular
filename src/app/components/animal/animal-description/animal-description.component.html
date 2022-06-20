@@ -2,7 +2,8 @@
   <div class="animal animal-profile-page container">
     <div *ngIf="backToPage" class="to-search-results">
       <img class="arrow-back" src="/assets/icons/blue_back-arrow.svg" /><button
-        (click)="onNavigateTo($event)"
+        (click)="onNavigateTo(button)"
+        #button
         class="link-button"
       >
         {{ backToPage }}

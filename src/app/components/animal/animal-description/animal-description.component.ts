@@ -1,6 +1,6 @@
 import { UrlService } from 'src/app/url/url.service';
 import { AnimalDescriptionService } from './animal-description.service';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, DoCheck } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -25,7 +25,6 @@ export class AnimalDescriptionComponent implements OnInit, OnDestroy {
   anonymousImage: string =
     '../../../../assets/images/ui/animal-card/raw-images/default-no-image-1.png';
   private userSubscription?: Subscription;
-  private routeEventSubscription?: Subscription;
   private animalSubscription?: Subscription;
   private modalSubscription?: Subscription;
   private setFavoriteSubscription?: Subscription;
@@ -33,7 +32,6 @@ export class AnimalDescriptionComponent implements OnInit, OnDestroy {
   previousUrl: any;
   backToPage: string = '';
   loadContactOwner: boolean = false;
-
   contactFormArgs: {
     formTitle: string;
     url: string;
@@ -53,27 +51,25 @@ export class AnimalDescriptionComponent implements OnInit, OnDestroy {
     private animalDescriptionService: AnimalDescriptionService,
     private urlService: UrlService,
     private modalService: ModalService
-  ) {
-    this.router.events
-      .pipe(
-        filter((e) => e instanceof NavigationEnd),
-        pairwise()
-      )
-      .subscribe((x: NavigationEnd | any) => {
-        this.previousUrl = x[0].url;
-        this.animalDescriptionService.previousPageButtonText.next(
-          this.previousUrl.includes('/animal/find')
-            ? 'Back to find animal'
-            : this.previousUrl.includes('/user/favorites-animals')
-            ? 'Back to favorites'
-            : this.previousUrl.includes('/user/my-animals')
-            ? 'Back to my animals'
-            : 'z'
-        );
-      });
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.animalDescriptionService.previousPageButtonText.subscribe(
+      (previousUrl) => {
+        this.backToPage = previousUrl.includes('/animal/find')
+          ? 'Back to find animal'
+          : previousUrl.includes('/user/favorites-animals')
+          ? 'Back to favorites'
+          : previousUrl.includes('/user/my-animals')
+          ? 'Back to my animals'
+          : previousUrl.includes('/animal/register')
+          ? 'Back to my animals'
+          : previousUrl.includes('/animal/update')
+          ? 'Update animal'
+          : '';
+      }
+    );
+
     this.currentRoute.params.subscribe((params: Params) => {
       this.animalService.getAnimal(params['id']).subscribe((animal) => {
         this.animal = animal[0];
@@ -95,12 +91,6 @@ export class AnimalDescriptionComponent implements OnInit, OnDestroy {
         });
       });
     });
-    this.animalSubscription =
-      this.animalDescriptionService.previousPageButtonText.subscribe(
-        (value) => {
-          this.backToPage = value;
-        }
-      );
 
     this.modalSubscription = this.modalService.loadContactOwner.subscribe(
       (value) => {
@@ -153,23 +143,26 @@ export class AnimalDescriptionComponent implements OnInit, OnDestroy {
         },
       });
   }
-  onNavigateTo = ($event: Event) => {
-    const target: HTMLButtonElement | any = event?.target;
-
-    if (target.innerText.includes('Back to find animal')) {
-      this.router.navigate(['/animal', 'find']);
-    }
-    if (target.innerText.includes('Back to favorites')) {
-      this.router.navigate(['/user', 'favorites-animals', this.user?.id]);
-    }
-    if (target.innerText.includes('Back to my animals')) {
-      this.router.navigate(['/user', 'my-animals', this.user?.id]);
+  onNavigateTo = (element: HTMLButtonElement) => {
+    const button: HTMLButtonElement = element;
+    switch (button.innerText) {
+      case 'Back to find animal':
+        this.router.navigate(['/animal', 'find']);
+        break;
+      case 'Back to favorites':
+        this.router.navigate(['/user', 'favorites-animals', this.user?.id]);
+        break;
+      case 'Back to my animals':
+        this.router.navigate(['/user', 'my-animals', this.user?.id]);
+        break;
+      case 'Update animal':
+        this.router.navigate(['/animal', 'update', this.animal._id]);
+        break;
     }
   };
 
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
-    this.routeEventSubscription?.unsubscribe();
     this.animalSubscription?.unsubscribe();
     this.modalSubscription?.unsubscribe();
     this.setFavoriteSubscription?.unsubscribe();

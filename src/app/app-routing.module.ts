@@ -8,45 +8,56 @@ import { AnimalDescriptionComponent } from './components/animal/animal-descripti
 import { MyAnimalsComponent } from './components/user/my-animals/my-animals.component';
 import { EditUserComponent } from './components/user/forms/edit-user/edit-user.component';
 import { FavoriteAnimalComponent } from './components/user/favorite-animal/favorite-animal.component';
-import { LoginUserComponent } from './components/user/forms/login-user/login-user.component';
 import { FindAnimalComponent } from './components/animal/find-animal/find-animal.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { RegisterAnimalComponent } from './components/animal/register-animal/register-animal.component';
 import { AboutAdoptionComponent } from './components/about-adoption/about-adoption.component';
-import { RegisterUserComponent } from './components/user/forms/register-user/register-user.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomePageComponent },
   {
-    path: 'user/favorites-animals/:id',
-    component: FavoriteAnimalComponent,
-    canActivate: [AuthGuard],
+    path: 'user',
+    children: [
+      {
+        path: 'favorites-animals/:id',
+        component: FavoriteAnimalComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'edit/:id',
+        component: EditUserComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'my-animals/:id',
+        component: MyAnimalsComponent,
+        canActivate: [AuthGuard],
+      },
+    ],
   },
   {
-    path: 'user/edit/:id',
-    component: EditUserComponent,
-    canActivate: [AuthGuard],
+    path: 'animal',
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'find' },
+      { path: 'find', component: FindAnimalComponent },
+      {
+        path: 'register',
+        component: RegisterAnimalComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'update/:id',
+        component: UpdateAnimalComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'description/:id',
+        component: AnimalDescriptionComponent,
+      },
+    ],
   },
-  {
-    path: 'user/my-animals/:id',
-    component: MyAnimalsComponent,
-    canActivate: [AuthGuard],
-  },
-  { path: 'animal/find', component: FindAnimalComponent },
-  {
-    path: 'animal/register',
-    component: RegisterAnimalComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'animal/update/:id',
-    component: UpdateAnimalComponent,
-    canActivate: [AuthGuard],
-  },
-  { path: 'animal/description/:id', component: AnimalDescriptionComponent },
   { path: 'about-adoption', component: AboutAdoptionComponent },
-  { path: 'login', component: LoginUserComponent },
-  { path: 'register', component: RegisterUserComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 
