@@ -1,8 +1,9 @@
 import { tap } from 'rxjs';
 import { AnimalService } from './../animal.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Animal } from '../interface/animal';
+import { AnimalDescriptionService } from '../animal-description/animal-description.service';
 
 @Component({
   selector: 'app-update-animal',
@@ -21,9 +22,12 @@ export class UpdateAnimalComponent implements OnInit {
   };
   constructor(
     private route: ActivatedRoute,
-    private animalService: AnimalService
+    private animalService: AnimalService,
+    private router: Router,
+    private animalDescriptionService: AnimalDescriptionService
   ) {}
   ngOnInit(): void {
+    this.animalDescriptionService.previousPageButtonText.next(this.router.url);
     this.route.params
       .pipe(
         tap((params) => {

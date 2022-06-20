@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { map, Subscription } from 'rxjs';
+import { AnimalDescriptionService } from '../../animal/animal-description/animal-description.service';
 import { AnimalService } from '../../animal/animal.service';
 import { Animal } from '../../animal/interface/animal';
 import { UserService } from '../user.service';
@@ -16,10 +18,13 @@ export class FavoriteAnimalComponent implements OnInit {
   private userServiceSubscription: Subscription | any;
   constructor(
     private animalService: AnimalService,
-    private userService: UserService
+    private userService: UserService,
+    private animalDescriptionService: AnimalDescriptionService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.animalDescriptionService.previousPageButtonText.next(this.router.url);
     this.isFetching = true;
     this.userServiceSubscription = this.userService.user
       .pipe(

@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { AnimalService } from './../animal.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Animal } from '../interface/animal';
+import { Router } from '@angular/router';
+import { AnimalDescriptionService } from '../animal-description/animal-description.service';
 
 @Component({
   selector: 'app-find-animal',
@@ -22,8 +24,13 @@ export class FindAnimalComponent implements OnInit, OnDestroy {
   private animalSubscription?: Subscription;
   @ViewChild('f', { static: false }) myForm: NgForm | any;
 
-  constructor(private animalService: AnimalService) {}
+  constructor(
+    private animalService: AnimalService,
+    private animalDescriptionService: AnimalDescriptionService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
+    this.animalDescriptionService.previousPageButtonText.next(this.router.url);
     this.isFetching = true;
     this.animalService.fetchAnimals().subscribe({
       next: (animals) => {
