@@ -8,10 +8,10 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { ModalService } from 'src/app/components/shared/modal/modal.service';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
 import { UserService } from '../../user.service';
-import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-update-email',

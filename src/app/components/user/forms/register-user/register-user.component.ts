@@ -1,4 +1,3 @@
-import { AuthService } from './../auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CustomFormValidation } from 'src/app/form/custom-validators';

@@ -1,10 +1,10 @@
-import { AuthService } from './../auth.service';
 import { Subscription } from 'rxjs';
 import { ModalService } from './../../../shared/modal/modal.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
 import { UserService } from '../../user.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-update-password',
