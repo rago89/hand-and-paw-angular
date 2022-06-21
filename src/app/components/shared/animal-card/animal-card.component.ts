@@ -12,9 +12,9 @@ import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/components/user/user.service';
-import { AuthService } from '../../user/forms/auth.service';
 import { User } from '../../user/interface/User';
 import { Animal } from '../../animal/interface/animal';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-animal-card',

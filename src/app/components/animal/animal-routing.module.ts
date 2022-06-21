@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '../user/forms/auth-guard.service';
+import { AuthGuard } from 'src/app/auth/auth-guard.service';
 import { AnimalDescriptionComponent } from './animal-description/animal-description.component';
 import { FindAnimalComponent } from './find-animal/find-animal.component';
 import { RegisterAnimalComponent } from './register-animal/register-animal.component';

@@ -1,8 +1,8 @@
-import { AuthService } from './../auth.service';
 import { ModalService } from './../../../shared/modal/modal.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EMPTY, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-login-user',

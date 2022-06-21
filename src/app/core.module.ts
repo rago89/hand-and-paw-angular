@@ -1,8 +1,8 @@
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { AuthGuard } from './components/user/forms/auth-guard.service';
-import { AuthInterceptorService } from './components/user/forms/auth-interceptor.service';
+import { AuthGuard } from './auth/auth-guard.service';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 @NgModule({
   providers: [

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from 'src/app/auth/auth-guard.service';
 import { FavoriteAnimalComponent } from './favorite-animal/favorite-animal.component';
-import { AuthGuard } from './forms/auth-guard.service';
 import { EditUserComponent } from './forms/edit-user/edit-user.component';
 import { MyAnimalsComponent } from './my-animals/my-animals.component';
 

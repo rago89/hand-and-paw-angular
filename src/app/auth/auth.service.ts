@@ -1,8 +1,8 @@
-import { handleAuthError } from './../../../error-handling/auth-handling';
-import { UserService } from 'src/app/components/user/user.service';
-import { RefreshToken } from './refresh-token.model';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { handleAuthError } from './../error-handling/auth-handling';
+import { UserService } from 'src/app/components/user/user.service';
 import {
   BehaviorSubject,
   catchError,
@@ -15,9 +15,9 @@ import {
   Observable,
 } from 'rxjs';
 import { UrlService } from 'src/app/url/url.service';
-import { AuthResponseData } from '../interface/Auth-response-data';
-import { AccessToken } from './access-token.model';
-import { Router } from '@angular/router';
+import { AccessToken } from '../components/user/forms/access-token.model';
+import { RefreshToken } from '../components/user/forms/refresh-token.model';
+import { AuthResponseData } from '../components/user/interface/Auth-response-data';
 
 @Injectable({
   providedIn: 'root',

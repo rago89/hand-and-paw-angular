@@ -1,7 +1,4 @@
-import { AccessToken } from './access-token.model';
-import { RefreshToken } from './refresh-token.model';
 import { Injectable } from '@angular/core';
-import { ModalService } from './../../shared/modal/modal.service';
 import { AuthService } from './auth.service';
 import {
   ActivatedRouteSnapshot,
@@ -10,6 +7,9 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AccessToken } from '../components/user/forms/access-token.model';
+import { RefreshToken } from '../components/user/forms/refresh-token.model';
+import { ModalService } from '../components/shared/modal/modal.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

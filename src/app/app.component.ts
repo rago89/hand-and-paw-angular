@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { ModalService } from './components/shared/modal/modal.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from './components/user/forms/auth.service';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
