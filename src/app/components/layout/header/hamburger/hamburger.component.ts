@@ -1,12 +1,5 @@
 import { ModalService } from './../../../shared/modal/modal.service';
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { SafeResourceUrl } from '@angular/platform-browser';
 @Component({
@@ -14,7 +7,7 @@ import { SafeResourceUrl } from '@angular/platform-browser';
   templateUrl: './hamburger.component.html',
   styleUrls: ['./hamburger.component.css'],
 })
-export class HamburgerComponent implements OnInit, OnDestroy {
+export class HamburgerComponent {
   @Input() isLogged: boolean = false;
   barIcons = faBars;
   @Output() userLogout = new EventEmitter();
@@ -28,7 +21,6 @@ export class HamburgerComponent implements OnInit, OnDestroy {
 
   constructor(private modalService: ModalService) {}
 
-  ngOnInit(): void {}
   openMenuToggle() {
     this.openMenu = !this.openMenu;
   }
@@ -44,5 +36,4 @@ export class HamburgerComponent implements OnInit, OnDestroy {
   closeToggle(element: HTMLInputElement) {
     element.checked = false;
   }
-  ngOnDestroy(): void {}
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalService } from './modal.service';
 
 @Component({
@@ -6,11 +6,9 @@ import { ModalService } from './modal.service';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent {
   crossImage: string = '../../../../assets/icons/cross.svg';
   constructor(private modalService: ModalService) {}
-
-  ngOnInit(): void {}
 
   closeModal() {
     this.modalService.loadContactUsModal.next(false);

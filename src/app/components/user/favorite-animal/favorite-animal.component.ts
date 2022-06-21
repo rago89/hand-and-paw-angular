@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, Subscription } from 'rxjs';
 import { AnimalDescriptionService } from '../../animal/animal-description/animal-description.service';
@@ -11,7 +11,7 @@ import { UserService } from '../user.service';
   templateUrl: './favorite-animal.component.html',
   styleUrls: ['./favorite-animal.component.css'],
 })
-export class FavoriteAnimalComponent implements OnInit {
+export class FavoriteAnimalComponent implements OnInit, OnDestroy {
   animalsList: Animal[] = [];
   isFetching: boolean = false;
   error: boolean = false;
