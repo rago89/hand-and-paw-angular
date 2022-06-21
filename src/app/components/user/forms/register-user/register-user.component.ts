@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
 import { UserService } from '../../user.service';
 
@@ -8,10 +8,7 @@ import { UserService } from '../../user.service';
   templateUrl: './register-user.component.html',
   styleUrls: ['./register-user.component.css'],
 })
-export class RegisterUserComponent
-  extends CustomFormValidation
-  implements OnInit
-{
+export class RegisterUserComponent extends CustomFormValidation {
   myForm: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -33,8 +30,6 @@ export class RegisterUserComponent
   constructor(private userService: UserService) {
     super();
   }
-
-  ngOnInit(): void {}
 
   onSubmit() {
     if (this.myForm && !this.myForm.valid) return;

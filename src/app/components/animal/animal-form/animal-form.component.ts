@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  Input,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription, tap } from 'rxjs';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
@@ -20,7 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class AnimalFormComponent
   extends CustomFormValidation
-  implements OnInit, OnDestroy, AfterViewInit
+  implements OnInit, OnDestroy
 {
   userId: string = '';
   newAnimalId: string = '';
@@ -137,7 +131,6 @@ export class AnimalFormComponent
           : new FormControl(null),
     });
   }
-  ngAfterViewInit(): void {}
 
   onFileSelect(event: any) {
     if (event.target.files) {

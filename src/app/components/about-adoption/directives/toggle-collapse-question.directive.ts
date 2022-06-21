@@ -1,18 +1,11 @@
-import {
-  Directive,
-  ElementRef,
-  HostListener,
-  OnInit,
-  Renderer2,
-} from '@angular/core';
+import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appToggleCollapseQuestion]',
 })
-export class ToggleCollapseQuestionDirective implements OnInit {
+export class ToggleCollapseQuestionDirective {
   showAnswer: boolean = false;
   constructor(private element: ElementRef, private renderer: Renderer2) {}
-  ngOnInit(): void {}
 
   @HostListener('click') onToggleShowAnswer() {
     const answerContainer = this.element.nativeElement.nextElementSibling;

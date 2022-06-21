@@ -1,6 +1,6 @@
 import { UrlService } from 'src/app/url/url.service';
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,7 @@ import { NgForm } from '@angular/forms';
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.css'],
 })
-export class ContactFormComponent implements OnInit {
+export class ContactFormComponent {
   @ViewChild('form', { static: false }) myForm: NgForm | any;
   errorMessage: string = '';
   sendingMessage: string = '';
@@ -25,7 +25,6 @@ export class ContactFormComponent implements OnInit {
 
   constructor(private http: HttpClient, private urlService: UrlService) {}
 
-  ngOnInit(): void {}
   onSubmit() {
     this.sendingMessage = 'Sending message';
     this.http.post(this.formProps?.url, this.myForm?.value).subscribe({
