@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { ModalService } from './../../../shared/modal/modal.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
 import { UserService } from '../../user.service';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -15,7 +15,7 @@ export class UpdatePasswordComponent
   extends CustomFormValidation
   implements OnInit, OnDestroy
 {
-  myForm: FormGroup | any;
+  myForm: UntypedFormGroup | any;
   @Input() userId: string = '';
   successRegistration: boolean = false;
   loadLoginForm: boolean = false;
@@ -35,13 +35,13 @@ export class UpdatePasswordComponent
         this.loadLoginForm = value;
       }
     );
-    this.myForm = new FormGroup({
-      currentPassword: new FormControl(null, [Validators.required]),
-      newPassword: new FormControl(null, [
+    this.myForm = new UntypedFormGroup({
+      currentPassword: new UntypedFormControl(null, [Validators.required]),
+      newPassword: new UntypedFormControl(null, [
         Validators.required,
         this.passwordInputContentValidation(),
       ]),
-      repeatPassword: new FormControl(null, [
+      repeatPassword: new UntypedFormControl(null, [
         Validators.required,
         this.matchInputs('newPassword'),
         this.passwordInputContentValidation(),

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subscription, tap } from 'rxjs';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
 import { UserService } from '../../user/user.service';
@@ -21,7 +21,7 @@ export class AnimalFormComponent
   successRegistration: boolean = false;
   successUpdate: boolean = false;
   filePath: string = '';
-  myForm: FormGroup | any;
+  myForm: UntypedFormGroup | any;
   pictureHex: any;
   isFetching: boolean = false;
   errorMessage: string = '';
@@ -59,76 +59,76 @@ export class AnimalFormComponent
       this.userId = user ? user.id : '';
     });
 
-    this.myForm = new FormGroup({
-      name: new FormControl(
+    this.myForm = new UntypedFormGroup({
+      name: new UntypedFormControl(
         this.formProps.typeRequest === 'put'
           ? this.formProps.animal?.name
           : null,
         [Validators.required, Validators.minLength(3)]
       ),
-      type: new FormControl(
+      type: new UntypedFormControl(
         this.formProps.typeRequest === 'put'
           ? this.formProps.animal?.type
           : null,
         [Validators.required, Validators.minLength(3)]
       ),
-      breed: new FormControl(
+      breed: new UntypedFormControl(
         this.formProps.typeRequest === 'put'
           ? this.formProps.animal?.breed
           : null,
         [Validators.required, Validators.minLength(3)]
       ),
-      gender: new FormControl(
+      gender: new UntypedFormControl(
         this.formProps.typeRequest === 'put'
           ? this.formProps.animal?.gender
           : null,
         [Validators.required]
       ),
-      character: new FormControl(
+      character: new UntypedFormControl(
         this.formProps.typeRequest === 'put'
           ? this.formProps.animal?.character
           : null,
         [Validators.required]
       ),
-      age: new FormControl(
+      age: new UntypedFormControl(
         this.formProps.typeRequest === 'put'
           ? this.formProps.animal?.age
           : null,
         [Validators.required]
       ),
-      location: new FormControl(
+      location: new UntypedFormControl(
         this.formProps.typeRequest === 'put'
           ? this.formProps.animal?.location
           : null,
         [Validators.required]
       ),
-      province: new FormControl(
+      province: new UntypedFormControl(
         this.formProps.typeRequest === 'put'
           ? this.formProps.animal?.province
           : 'brussels',
         [Validators.required]
       ),
-      phone: new FormControl(
+      phone: new UntypedFormControl(
         this.formProps.typeRequest === 'put'
           ? this.formProps.animal?.phone
           : null,
         [Validators.required, this.validPhone()]
       ),
-      describeAnimal: new FormControl(
+      describeAnimal: new UntypedFormControl(
         this.formProps.typeRequest === 'put'
           ? this.formProps.animal?.describeAnimal
           : null,
         [Validators.required, Validators.minLength(100)]
       ),
-      webSite: new FormControl(
+      webSite: new UntypedFormControl(
         this.formProps.typeRequest === 'put'
           ? this.formProps.animal?.webSite
           : ''
       ),
       picture1:
         this.formProps.typeRequest === 'post'
-          ? new FormControl(null, [Validators.required])
-          : new FormControl(null),
+          ? new UntypedFormControl(null, [Validators.required])
+          : new UntypedFormControl(null),
     });
   }
 

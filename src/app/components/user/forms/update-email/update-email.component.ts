@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ModalService } from 'src/app/components/shared/modal/modal.service';
@@ -22,7 +22,7 @@ export class UpdateEmailComponent
   extends CustomFormValidation
   implements OnInit, OnDestroy
 {
-  myForm: FormGroup | any;
+  myForm: UntypedFormGroup | any;
   @Input() userId: string = '';
   successRegistration: boolean = false;
   loadLoginForm: boolean = false;
@@ -37,13 +37,13 @@ export class UpdateEmailComponent
   }
 
   ngOnInit(): void {
-    this.myForm = new FormGroup({
-      currentEmail: new FormControl(null, [
+    this.myForm = new UntypedFormGroup({
+      currentEmail: new UntypedFormControl(null, [
         Validators.required,
         Validators.email,
       ]),
-      newEmail: new FormControl(null, [Validators.required, Validators.email]),
-      repeatEmail: new FormControl(null, [
+      newEmail: new UntypedFormControl(null, [Validators.required, Validators.email]),
+      repeatEmail: new UntypedFormControl(null, [
         Validators.required,
         Validators.email,
         this.matchInputs('newEmail'),

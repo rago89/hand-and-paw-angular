@@ -1,5 +1,5 @@
 import { ModalService } from './../../../shared/modal/modal.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EMPTY, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class LoginUserComponent implements OnInit, OnDestroy {
   loadRegisterForm: boolean = false;
-  myForm: FormGroup | any;
+  myForm: UntypedFormGroup | any;
   isFetching: boolean = false;
   successLogin: boolean = false;
   userName: string = '';
@@ -24,9 +24,9 @@ export class LoginUserComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.myForm = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required]),
+    this.myForm = new UntypedFormGroup({
+      email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+      password: new UntypedFormControl(null, [Validators.required]),
     });
   }
   onSubmit() {

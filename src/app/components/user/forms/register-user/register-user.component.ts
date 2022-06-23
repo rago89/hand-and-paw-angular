@@ -1,4 +1,4 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
 import { UserService } from '../../user.service';
@@ -9,14 +9,14 @@ import { UserService } from '../../user.service';
   styleUrls: ['./register-user.component.css'],
 })
 export class RegisterUserComponent extends CustomFormValidation {
-  myForm: FormGroup = new FormGroup({
-    name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [
+  myForm: UntypedFormGroup = new UntypedFormGroup({
+    name: new UntypedFormControl(null, [Validators.required, Validators.minLength(3)]),
+    email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+    password: new UntypedFormControl(null, [
       Validators.required,
       this.passwordInputContentValidation(),
     ]),
-    repeatPassword: new FormControl(null, [
+    repeatPassword: new UntypedFormControl(null, [
       Validators.required,
       this.matchInputs('password'),
       this.passwordInputContentValidation(),

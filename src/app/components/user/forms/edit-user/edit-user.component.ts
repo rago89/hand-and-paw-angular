@@ -1,7 +1,7 @@
 import { ModalService } from './../../../shared/modal/modal.service';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/components/user/user.service';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
@@ -16,7 +16,7 @@ export class EditUserComponent
   extends CustomFormValidation
   implements OnInit, OnDestroy
 {
-  myForm: FormGroup | any;
+  myForm: UntypedFormGroup | any;
   error: boolean = false;
   successUpdate: boolean = false;
   showDayAccessFields: boolean = false;
@@ -60,87 +60,87 @@ export class EditUserComponent
         this.showDayAccessFields = !!user?.publicAccess;
       }
     });
-    this.myForm = new FormGroup({
-      name: new FormControl(!this.user?.name ? '' : this.user.name, [
+    this.myForm = new UntypedFormGroup({
+      name: new UntypedFormControl(!this.user?.name ? '' : this.user.name, [
         Validators.minLength(3),
         Validators.maxLength(40),
       ]),
-      phone: new FormControl(!this.user?.phone ? '' : this.user.phone, [
+      phone: new UntypedFormControl(!this.user?.phone ? '' : this.user.phone, [
         this.validPhone(),
       ]),
-      location: new FormControl(
+      location: new UntypedFormControl(
         !this.user?.location ? '' : this.user.location,
         [Validators.minLength(3), Validators.maxLength(25)]
       ),
-      website: new FormControl(!this.user?.website ? '' : this.user.website, [
+      website: new UntypedFormControl(!this.user?.website ? '' : this.user.website, [
         this.validUrl(),
       ]),
-      avatar: new FormControl(!this.user?.avatar ? null : this.user.avatar),
-      mondayCheck: new FormControl(
+      avatar: new UntypedFormControl(!this.user?.avatar ? null : this.user.avatar),
+      mondayCheck: new UntypedFormControl(
         !this.user?.publicAccess?.monday?.access ? false : true,
         []
       ),
-      mondayHours: new FormControl(
+      mondayHours: new UntypedFormControl(
         !this.user?.publicAccess?.monday?.access
           ? null
           : this.user.publicAccess.monday.hours,
         []
       ),
-      tuesdayCheck: new FormControl(
+      tuesdayCheck: new UntypedFormControl(
         !this.user?.publicAccess?.tuesday?.access ? false : true,
         []
       ),
-      tuesdayHours: new FormControl(
+      tuesdayHours: new UntypedFormControl(
         !this.user?.publicAccess?.tuesday?.access
           ? null
           : this.user.publicAccess.tuesday.hours,
         []
       ),
-      wednesdayCheck: new FormControl(
+      wednesdayCheck: new UntypedFormControl(
         !this.user?.publicAccess?.wednesday?.access ? false : true,
         []
       ),
-      wednesdayHours: new FormControl(
+      wednesdayHours: new UntypedFormControl(
         !this.user?.publicAccess?.wednesday?.access
           ? null
           : this.user.publicAccess.wednesday.hours,
         []
       ),
-      thursdayCheck: new FormControl(
+      thursdayCheck: new UntypedFormControl(
         !this.user?.publicAccess?.thursday?.access ? false : true,
         []
       ),
-      thursdayHours: new FormControl(
+      thursdayHours: new UntypedFormControl(
         !this.user?.publicAccess?.thursday?.access
           ? null
           : this.user.publicAccess.thursday.hours,
         []
       ),
-      fridayCheck: new FormControl(
+      fridayCheck: new UntypedFormControl(
         !this.user?.publicAccess?.friday?.access ? false : true,
         []
       ),
-      fridayHours: new FormControl(
+      fridayHours: new UntypedFormControl(
         !this.user?.publicAccess?.friday?.access
           ? null
           : this.user.publicAccess.friday.hours,
         []
       ),
-      saturdayCheck: new FormControl(
+      saturdayCheck: new UntypedFormControl(
         !this.user?.publicAccess?.saturday?.access ? false : true,
         []
       ),
-      saturdayHours: new FormControl(
+      saturdayHours: new UntypedFormControl(
         !this.user?.publicAccess?.saturday?.access
           ? null
           : this.user.publicAccess.saturday.hours,
         []
       ),
-      sundayCheck: new FormControl(
+      sundayCheck: new UntypedFormControl(
         !this.user?.publicAccess?.sunday?.access ? false : true,
         []
       ),
-      sundayHours: new FormControl(
+      sundayHours: new UntypedFormControl(
         !this.user?.publicAccess?.sunday?.access
           ? null
           : this.user.publicAccess.sunday.hours,
