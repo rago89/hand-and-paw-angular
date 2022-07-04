@@ -28,6 +28,7 @@
     "@fortawesome/angular-fontawesome": "^0.10.2",
     "@fortawesome/fontawesome-svg-core": "^6.1.0",
     "@fortawesome/free-solid-svg-icons": "^6.1.0",
+    "@ngrx/effects": "^14.0.0",
     "@ngrx/store": "^14.0.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^5.1.3",

@@ -189,11 +189,15 @@
   </section>
 </div>
 
-<div *ngIf="!isFetching && animalsList.length !== 0 && !showFilteredAnimals">
+<div
+  *ngIf="
+    !isFetching && (animalsList | async)?.length !== 0 && !showFilteredAnimals
+  "
+>
   <section id="animals-list" class="animal-search-results">
     <div class="container search-results">
       <app-animal-card
-        *ngFor="let animalEl of animalsList"
+        *ngFor="let animalEl of animalsList | async"
         [animal]="animalEl"
       ></app-animal-card>
     </div>

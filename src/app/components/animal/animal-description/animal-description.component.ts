@@ -1,15 +1,17 @@
+import { AppState } from './../../../store/app.reducer';
 import { UrlService } from 'src/app/url/url.service';
 import { AnimalDescriptionService } from './animal-description.service';
 import { Component, Input, OnInit, OnDestroy, DoCheck } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { filter, pairwise } from 'rxjs/operators';
 import { User } from '../../user/interface/User';
 import { UserService } from '../../user/user.service';
 import { AnimalService } from '../animal.service';
 import { Animal } from '../interface/animal';
 import { ModalService } from '../../shared/modal/modal.service';
+import { Store } from '@ngrx/store';
+import * as animalSelectors from '../store/animal.selectors';
 
 @Component({
   selector: 'app-animal-description',
@@ -50,7 +52,8 @@ export class AnimalDescriptionComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private animalDescriptionService: AnimalDescriptionService,
     private urlService: UrlService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
@@ -71,25 +74,27 @@ export class AnimalDescriptionComponent implements OnInit, OnDestroy {
     );
 
     this.currentRoute.params.subscribe((params: Params) => {
-      this.animalService.getAnimal(params['id']).subscribe((animal) => {
-        this.animal = animal[0];
-        this.pictureHex = this._sanitizer.bypassSecurityTrustResourceUrl(
-          'data:image/jpg;base64,' + this.animal?.pictures[0]?.picture.data
-        );
-        this.contactFormArgs.aboutSubjectToContactName = animal[0].name;
-        this.contactFormArgs.aboutSubjectToContactPicture =
-          this.pictureHex || this.anonymousImage;
-
-        this.userSubscription = this.userService.user.subscribe((user) => {
-          this.user = user;
-          this.belongToUser = user?.registeredAnimals.some(
-            (id) => id === this.animal._id
+      this.store
+        .select(animalSelectors.selectAnimal(params['id']))
+        .subscribe((animalStored) => {
+          this.animal = animalStored;
+          this.pictureHex = this._sanitizer.bypassSecurityTrustResourceUrl(
+            'data:image/jpg;base64,' + this.animal?.pictures[0]?.picture.data
           );
-          this.isFavorite = user?.favorites.some(
-            (id) => id === this.animal._id
-          );
+          if (animalStored) {
+            this.contactFormArgs.aboutSubjectToContactName = animalStored.name;
+          }
+          this.contactFormArgs.aboutSubjectToContactPicture =
+            this.pictureHex || this.anonymousImage;
         });
-      });
+    });
+
+    this.userSubscription = this.userService.user.subscribe((user) => {
+      this.user = user;
+      this.belongToUser = user?.registeredAnimals.some(
+        (id) => id === this.animal._id
+      );
+      this.isFavorite = user?.favorites.some((id) => id === this.animal._id);
     });
 
     this.modalSubscription = this.modalService.loadContactOwner.subscribe(

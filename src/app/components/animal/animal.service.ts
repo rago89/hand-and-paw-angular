@@ -14,16 +14,19 @@ export class AnimalService {
 
   constructor(private http: HttpClient, private urlService: UrlService) {}
 
-  fetchAnimals() {
+  getAnimals() {
     return this.http.get<Animal[]>(`${this.urlService.getAnimals}`);
-  }
-
-  postAnimal(animal: any) {
-    return this.http.post(`${this.urlService.registerAnimal}`, animal);
   }
 
   getAnimal(id: string) {
     return this.http.get<Animal[]>(`${this.urlService.getAnimal(id)}`);
+  }
+
+  postAnimal(animal: any) {
+    return this.http.post<{ newPublication: Animal }>(
+      `${this.urlService.registerAnimal}`,
+      animal
+    );
   }
 
   filterAnimals(filterOptions: any) {

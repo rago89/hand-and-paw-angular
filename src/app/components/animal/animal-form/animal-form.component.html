@@ -385,6 +385,7 @@
     *ngIf="newAnimalId; else animalUpdated"
     [routerLink]="['/animal', 'description', newAnimalId]"
     class="link-button"
+    (click)="onNavigate()"
   >
     Go to animal Card
   </a>
@@ -392,12 +393,18 @@
     <a
       [routerLink]="['/animal', 'description', formProps.animal?._id]"
       class="link-button"
+      (click)="onNavigate()"
     >
       Go to animal Card
     </a>
   </ng-template>
   <br />
-  <a routerLink="/animal/find" id="open-register-form" class="link-button">
+  <a
+    routerLink="/animal/find"
+    id="open-register-form"
+    class="link-button"
+    (click)="onNavigate()"
+  >
     Go to find animal
   </a>
   <br />
@@ -405,6 +412,7 @@
     [routerLink]="['/user', 'my-animals', userId]"
     id="open-register-form"
     class="link-button"
+    (click)="onNavigate()"
   >
     Go to my animals
   </a>

@@ -1,11 +1,18 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Subscription, tap } from 'rxjs';
 import { CustomFormValidation } from 'src/app/form/custom-validators';
 import { UserService } from '../../user/user.service';
 import { AnimalService } from '../animal.service';
 import { Animal } from '../interface/animal';
 import { DomSanitizer } from '@angular/platform-browser';
+import * as appStore from '../../../store/app.reducer';
+import * as AnimalActions from '../store/animal.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-animal-form',
@@ -17,16 +24,17 @@ export class AnimalFormComponent
   implements OnInit, OnDestroy
 {
   userId: string = '';
-  newAnimalId: string = '';
+  newAnimalId?: string;
   successRegistration: boolean = false;
   successUpdate: boolean = false;
   filePath: string = '';
   myForm: UntypedFormGroup | any;
   pictureHex: any;
   isFetching: boolean = false;
-  errorMessage: string = '';
+  errorMessage: string | null = null;
   private userSubscription?: Subscription;
   private animalSubscription?: Subscription;
+  private storeSubscription?: Subscription;
 
   @Input() formProps: {
     title: string;
@@ -41,12 +49,25 @@ export class AnimalFormComponent
   constructor(
     private animalService: AnimalService,
     private userService: UserService,
-    private _sanitizer: DomSanitizer
+    private _sanitizer: DomSanitizer,
+    private store: Store<appStore.AppState>
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.storeSubscription = this.store
+      .select('animal')
+      .subscribe((animalStore) => {
+        this.errorMessage = animalStore.error;
+        this.isFetching = animalStore.isFetching;
+        this.newAnimalId = animalStore.newAnimal?._id;
+        this.filePath = '';
+        console.log(animalStore);
+
+        this.successRegistration = animalStore.successRegistration;
+      });
+
     this.pictureHex =
       this.formProps.typeRequest === 'put'
         ? this._sanitizer.bypassSecurityTrustResourceUrl(
@@ -172,26 +193,10 @@ export class AnimalFormComponent
 
     switch (this.formProps?.typeRequest) {
       case 'post':
-        this.animalSubscription = this.animalService
-          .postAnimal(formData)
-          .subscribe({
-            next: (res: any) => {
-              this.newAnimalId = res.newPublication._id;
-            },
-            error: (error) => {
-              this.errorMessage = 'An error has occurred try again later';
-              this.isFetching = false;
-            },
-            complete: () => {
-              this.userService.getUser(this.userId).subscribe((user) => {
-                this.userService.user.next(user);
-              });
-              this.myForm.reset();
-              this.filePath = '';
-              this.isFetching = false;
-              this.successRegistration = true;
-            },
-          });
+        this.store.dispatch(
+          AnimalActions.postAnimalStart({ newAnimalData: formData })
+        );
+        this.myForm.reset();
         break;
 
       case 'put':
@@ -215,8 +220,13 @@ export class AnimalFormComponent
         break;
     }
   }
+  onNavigate = () => {
+    this.store.dispatch(AnimalActions.leaveModalSuccess());
+  };
+
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
     this.animalSubscription?.unsubscribe();
+    this.storeSubscription?.unsubscribe();
   }
 }

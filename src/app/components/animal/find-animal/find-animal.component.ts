@@ -1,10 +1,14 @@
-import { Subscription } from 'rxjs';
+import { AppState } from './../../../store/app.reducer';
+import { Observable, Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { AnimalService } from './../animal.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Animal } from '../interface/animal';
 import { Router } from '@angular/router';
 import { AnimalDescriptionService } from '../animal-description/animal-description.service';
+import { Store } from '@ngrx/store';
+import * as animalSelectors from '../store/animal.selectors';
+import * as animalsActions from '../store/animal.actions';
 
 @Component({
   selector: 'app-find-animal',
@@ -12,7 +16,7 @@ import { AnimalDescriptionService } from '../animal-description/animal-descripti
   styleUrls: ['./find-animal.component.css'],
 })
 export class FindAnimalComponent implements OnInit, OnDestroy {
-  animalsList: Animal[] = [];
+  animalsList?: Observable<Animal[]>;
   filteredAnimalsList: Animal[] = [];
   isFetching: boolean = false;
   error: boolean = false;
@@ -27,21 +31,28 @@ export class FindAnimalComponent implements OnInit, OnDestroy {
   constructor(
     private animalService: AnimalService,
     private animalDescriptionService: AnimalDescriptionService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {}
   ngOnInit(): void {
     this.animalDescriptionService.previousPageButtonText.next(this.router.url);
-    this.isFetching = true;
-    this.animalService.fetchAnimals().subscribe({
-      next: (animals) => {
-        this.isFetching = false;
-        this.animalsList = animals;
-      },
-      error: (error) => {
-        this.isFetching = false;
-        this.error = true;
-      },
+    this.store.dispatch(animalsActions.getAnimalsStart());
+    this.store.select('animal').subscribe((animalStoreData) => {
+      this.isFetching = animalStoreData.isFetching;
+      this.error = !!animalStoreData.error;
     });
+    this.animalsList = this.store.select(animalSelectors.selectAnimals());
+
+    // this.animalService.fetchAnimals().subscribe({
+    //   next: (animals) => {
+    //     this.isFetching = false;
+    //     this.animalsList = animals;
+    //   },
+    //   error: (error) => {
+    //     this.isFetching = false;
+    //     this.error = true;
+    //   },
+    // });
   }
   onSubmit() {
     this.isFetching = true;

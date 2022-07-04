@@ -1,3 +1,4 @@
+import { AppState } from './../../../store/app.reducer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { map, Subscription } from 'rxjs';
@@ -5,6 +6,7 @@ import { AnimalService } from '../../animal/animal.service';
 import { Animal } from '../../animal/interface/animal';
 import { UserService } from '../user.service';
 import { AnimalDescriptionService } from '../../animal/animal-description/animal-description.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-my-animals',
@@ -25,7 +27,8 @@ export class MyAnimalsComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private route: ActivatedRoute,
     private animalDescriptionService: AnimalDescriptionService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
