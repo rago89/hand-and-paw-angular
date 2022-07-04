@@ -36,23 +36,17 @@ export class FindAnimalComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit(): void {
     this.animalDescriptionService.previousPageButtonText.next(this.router.url);
-    this.store.dispatch(animalsActions.getAnimalsStart());
+
     this.store.select('animal').subscribe((animalStoreData) => {
       this.isFetching = animalStoreData.isFetching;
       this.error = !!animalStoreData.error;
     });
-    this.animalsList = this.store.select(animalSelectors.selectAnimals());
-
-    // this.animalService.fetchAnimals().subscribe({
-    //   next: (animals) => {
-    //     this.isFetching = false;
-    //     this.animalsList = animals;
-    //   },
-    //   error: (error) => {
-    //     this.isFetching = false;
-    //     this.error = true;
-    //   },
-    // });
+    this.store.select(animalSelectors.selectAnimals()).subscribe((animals) => {
+      if (animals.length === 0) {
+        this.store.dispatch(animalsActions.getAnimalsStart());
+      }
+      this.animalsList = this.store.select(animalSelectors.selectAnimals());
+    });
   }
   onSubmit() {
     this.isFetching = true;
