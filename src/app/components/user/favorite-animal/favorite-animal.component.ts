@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { map, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { AppState } from 'src/app/store/app.reducer';
 import { AnimalDescriptionService } from '../../animal/animal-description/animal-description.service';
-import { AnimalService } from '../../animal/animal.service';
 import { Animal } from '../../animal/interface/animal';
 import { UserService } from '../user.service';
+import * as animalSelectors from '../../animal/store/animal.selectors';
+import * as animalActions from '../../animal/store/animal.actions';
 
 @Component({
   selector: 'app-favorite-animal',
@@ -13,47 +16,46 @@ import { UserService } from '../user.service';
 })
 export class FavoriteAnimalComponent implements OnInit, OnDestroy {
   animalsList: Animal[] = [];
+  animalsId: string[] = [];
   isFetching: boolean = false;
   error: boolean = false;
   private userServiceSubscription: Subscription | any;
   constructor(
-    private animalService: AnimalService,
     private userService: UserService,
     private animalDescriptionService: AnimalDescriptionService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
     this.animalDescriptionService.previousPageButtonText.next(this.router.url);
-    this.isFetching = true;
-    this.userServiceSubscription = this.userService.user
-      .pipe(
-        map(async (user) => {
-          const animalsList: Animal[] = [];
-          if (user && user.id && user.favorites.length !== 0) {
-            for await (const id of user.favorites) {
-              if (user.id && user.favorites.length !== 0) {
-                this.animalService.getAnimal(id).subscribe({
-                  next: (animal) => {
-                    animalsList.push(animal[0]);
-                  },
-                  error: (error) => {
-                    this.isFetching = false;
-                    this.error = true;
-                  },
-                });
-              }
-            }
-          }
+    this.store.select('animal').subscribe((animalStoreData) => {
+      this.isFetching = animalStoreData.isFetching;
+      this.error = !!animalStoreData.error;
+    });
+    this.userServiceSubscription = this.userService.user.subscribe((user) => {
+      this.animalsId = user ? user.favorites : [];
+    });
 
-          return animalsList;
-        })
-      )
-      .subscribe((animalList) => {
-        animalList.then((animals) => {
-          this.animalsList = animals;
-          this.isFetching = false;
-        });
+    this.store
+      .select(animalSelectors.selectMyFavorites())
+      .subscribe((myFavorites) => {
+        console.log(myFavorites);
+
+        if (!myFavorites.length && this.animalsId.length !== 0) {
+          for (const id of this.animalsId) {
+            this.store.dispatch(
+              animalActions.getMyFavoritesAnimalsStart({
+                animalId: id,
+              })
+            );
+          }
+        }
+        this.store
+          .select(animalSelectors.selectMyFavorites())
+          .subscribe((animals) => {
+            this.animalsList = animals;
+          });
       });
   }
 

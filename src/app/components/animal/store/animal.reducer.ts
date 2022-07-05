@@ -6,6 +6,7 @@ export interface State {
   animals: Animal[];
   newAnimal: Animal | null;
   myAnimals: Animal[];
+  myFavorites: Animal[];
   error: string | null;
   isFetching: boolean;
   successRegistration: boolean;
@@ -15,6 +16,7 @@ let initialState: State = {
   animals: [],
   newAnimal: null,
   myAnimals: [],
+  myFavorites: [],
   error: null,
   isFetching: false,
   successRegistration: false,
@@ -29,6 +31,7 @@ export const animalReducer = createReducer(
       successRegistration: false,
     };
   }),
+  /*---------------------------Create------------------------------*/
   on(AnimalActions.postAnimalSuccess, (state, { newAnimal }) => {
     return {
       ...state,
@@ -48,12 +51,14 @@ export const animalReducer = createReducer(
       successRegistration: false,
     };
   }),
+  /*---------------------------Modal------------------------------*/
   on(AnimalActions.leaveModalSuccess, (state) => {
     return {
       ...state,
       successRegistration: false,
     };
   }),
+  /*-------------------------Get Animals--------------------------*/
   on(AnimalActions.getAnimalsStart, (state) => {
     return {
       ...state,
@@ -75,6 +80,7 @@ export const animalReducer = createReducer(
       isFetching: false,
     };
   }),
+  /*-----------------------Get my Animals-------------------------*/
   on(AnimalActions.getMyAnimalsStart, (state) => {
     return {
       ...state,
@@ -90,6 +96,28 @@ export const animalReducer = createReducer(
     };
   }),
   on(AnimalActions.getMyAnimalsError, (state, { error }) => {
+    return {
+      ...state,
+      error: error,
+      isFetching: false,
+    };
+  }),
+  /*-----------------------Get my Favorite Animals-------------------------*/
+  on(AnimalActions.getMyFavoritesAnimalsStart, (state) => {
+    return {
+      ...state,
+      isFetching: true,
+    };
+  }),
+  on(AnimalActions.getMyFavoritesAnimalsSuccess, (state, { animal }) => {
+    return {
+      ...state,
+      myFavorites: [...state.myFavorites, animal],
+      isFetching: false,
+      postAnimalError: null,
+    };
+  }),
+  on(AnimalActions.getMyFavoritesAnimalsError, (state, { error }) => {
     return {
       ...state,
       error: error,

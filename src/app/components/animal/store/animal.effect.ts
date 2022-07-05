@@ -63,7 +63,51 @@ export class AnimalEffects {
           ),
           catchError((error) =>
             of(
-              AnimalActions.getAnimalsError({
+              AnimalActions.getMyAnimalsError({
+                error: 'An error has occurred, try again later',
+              })
+            )
+          )
+        );
+      })
+    )
+  );
+
+  getMyFavoritesAnimals$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AnimalActions.getMyFavoritesAnimalsStart),
+      mergeMap((action) => {
+        return this.animalService.getAnimal(action.animalId).pipe(
+          map((animal) =>
+            AnimalActions.getMyFavoritesAnimalsSuccess({
+              animal: animal[0],
+            })
+          ),
+          catchError((error) =>
+            of(
+              AnimalActions.getMyFavoritesAnimalsError({
+                error: 'An error has occurred, try again later',
+              })
+            )
+          )
+        );
+      })
+    )
+  );
+
+  addFavoriteAnimal$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AnimalActions.AddFavoriteAnimalsStart),
+      mergeMap((action) => {
+        return this.animalService.getAnimal(action.animalId).pipe(
+          map((animal) =>
+            AnimalActions.getMyFavoritesAnimalsSuccess({
+              animal: animal[0],
+            })
+          ),
+          catchError((error) =>
+            of(
+              AnimalActions.getMyFavoritesAnimalsError({
                 error: 'An error has occurred, try again later',
               })
             )
