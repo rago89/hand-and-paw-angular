@@ -1,7 +1,7 @@
 import { AppState } from './../../../store/app.reducer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { map, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AnimalService } from '../../animal/animal.service';
 import { Animal } from '../../animal/interface/animal';
 import { UserService } from '../user.service';
@@ -45,7 +45,7 @@ export class MyAnimalsComponent implements OnInit, OnDestroy {
       this.error = !!animalStoreData.error;
     });
     this.userServiceSubscription = this.userService.user.subscribe((user) => {
-      this.animalsId = user ? user?.registeredAnimals : [];
+      this.animalsId = user ? user.registeredAnimals : [];
     });
 
     this.store
