@@ -38,16 +38,17 @@ export const getAnimalsSuccess = createAction(
 
 /*------------------------------------------------*/
 
-export const getAnimalStart = createAction(
-  '[Find animal page] Get Animals Start'
+export const getMyAnimalsStart = createAction(
+  '[My animals page] Get Animal start',
+  props<{ animalId: string }>()
 );
 
-export const getAnimalError = createAction(
-  '[Find animal page] Get Animals Error',
+export const getMyAnimalsSuccess = createAction(
+  '[My animals page] Get Animals Success',
+  props<{ animal: Animal }>()
+);
+
+export const getMyAnimalsError = createAction(
+  '[My animals page] Get Animals Error',
   props<{ error: string }>()
-);
-
-export const getAnimalSuccess = createAction(
-  '[Find animal page] Get Animals Success',
-  props<{ animals: Animal[] }>()
 );

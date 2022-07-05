@@ -21,3 +21,8 @@ export const selectAnimals = () =>
   createSelector(getAnimalFromStore, (state: animalStore.State) => {
     return state.animals;
   });
+
+export const selectMyAnimals = () =>
+  createSelector(getAnimalFromStore, (state: animalStore.State) => {
+    return state.myAnimals;
+  });

@@ -34,6 +34,7 @@ export const animalReducer = createReducer(
       ...state,
       newAnimal: newAnimal,
       animals: [...state.animals, newAnimal],
+      myAnimals: [...state.myAnimals, newAnimal],
       isFetching: false,
       successRegistration: true,
       postAnimalError: null,
@@ -57,7 +58,6 @@ export const animalReducer = createReducer(
     return {
       ...state,
       isFetching: true,
-      successRegistration: false,
     };
   }),
   on(AnimalActions.getAnimalsSuccess, (state, { animals }) => {
@@ -69,6 +69,27 @@ export const animalReducer = createReducer(
     };
   }),
   on(AnimalActions.getAnimalsError, (state, { error }) => {
+    return {
+      ...state,
+      error: error,
+      isFetching: false,
+    };
+  }),
+  on(AnimalActions.getMyAnimalsStart, (state) => {
+    return {
+      ...state,
+      isFetching: true,
+    };
+  }),
+  on(AnimalActions.getMyAnimalsSuccess, (state, { animal }) => {
+    return {
+      ...state,
+      myAnimals: [...state.myAnimals, animal],
+      isFetching: false,
+      postAnimalError: null,
+    };
+  }),
+  on(AnimalActions.getMyAnimalsError, (state, { error }) => {
     return {
       ...state,
       error: error,

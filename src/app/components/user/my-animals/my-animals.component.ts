@@ -7,6 +7,8 @@ import { Animal } from '../../animal/interface/animal';
 import { UserService } from '../user.service';
 import { AnimalDescriptionService } from '../../animal/animal-description/animal-description.service';
 import { Store } from '@ngrx/store';
+import * as animalActions from '../../animal/store/animal.actions';
+import * as animalSelectors from '../../animal/store/animal.selectors';
 
 @Component({
   selector: 'app-my-animals',
@@ -15,6 +17,7 @@ import { Store } from '@ngrx/store';
 })
 export class MyAnimalsComponent implements OnInit, OnDestroy {
   animalsList: Animal[] = [];
+  animalsId: string[] = [];
   isFetching: boolean = false;
   error: boolean = false;
   userId: string = '';
@@ -37,37 +40,34 @@ export class MyAnimalsComponent implements OnInit, OnDestroy {
       this.userId = params['id'];
     });
 
-    this.isFetching = true;
-    this.userServiceSubscription = this.userService.user
-      .pipe(
-        map(async (user) => {
-          const animalsList: Animal[] = [];
-          if (user && user.id && user.registeredAnimals.length !== 0) {
-            for await (const id of user.registeredAnimals) {
-              if (user.id && user.registeredAnimals.length !== 0) {
-                this.animalService.getAnimal(id).subscribe({
-                  next: (animal) => {
-                    animalsList.push(animal[0]);
-                  },
-                  error: (error) => {
-                    this.isFetching = false;
-                    this.error = true;
-                  },
-                });
-              }
-            }
-          }
+    this.store.select('animal').subscribe((animalStoreData) => {
+      this.isFetching = animalStoreData.isFetching;
+      this.error = !!animalStoreData.error;
+    });
+    this.userServiceSubscription = this.userService.user.subscribe((user) => {
+      this.animalsId = user ? user?.registeredAnimals : [];
+    });
 
-          return animalsList;
-        })
-      )
-      .subscribe((animalList) => {
-        animalList.then((animals) => {
-          this.animalsList = animals;
-          this.isFetching = false;
-        });
+    this.store
+      .select(animalSelectors.selectMyAnimals())
+      .subscribe((myAnimals) => {
+        if (!myAnimals.length && this.animalsId.length !== 0) {
+          for (const id of this.animalsId) {
+            this.store.dispatch(
+              animalActions.getMyAnimalsStart({
+                animalId: id,
+              })
+            );
+          }
+        }
+        this.store
+          .select(animalSelectors.selectMyAnimals())
+          .subscribe((animals) => {
+            this.animalsList = animals;
+          });
       });
   }
+
   onDeleteAnimal(animal: Animal) {
     this.removeAnimalSubscription = this.animalService
       .deleteAnimal(animal._id || '', this.userId)
