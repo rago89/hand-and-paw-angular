@@ -47,7 +47,6 @@ export class AnimalFormComponent
   };
 
   constructor(
-    private animalService: AnimalService,
     private userService: UserService,
     private _sanitizer: DomSanitizer,
     private store: Store<appStore.AppState>
@@ -59,13 +58,15 @@ export class AnimalFormComponent
     this.storeSubscription = this.store
       .select('animal')
       .subscribe((animalStore) => {
-        this.errorMessage = animalStore.error;
-        this.isFetching = animalStore.isFetching;
         this.newAnimalId = animalStore.newAnimal?._id;
-        this.filePath = '';
-        console.log(animalStore);
-
+        this.isFetching = animalStore.isFetching;
+        this.successUpdate = animalStore.successUpdate;
         this.successRegistration = animalStore.successRegistration;
+        this.filePath = '';
+        this.errorMessage = animalStore.error;
+        if (animalStore.animalUpdated) {
+          this.formProps.animal = animalStore.animalUpdated;
+        }
       });
 
     this.pictureHex =
@@ -200,23 +201,15 @@ export class AnimalFormComponent
         break;
 
       case 'put':
-        this.animalSubscription = this.animalService
-          .updateAnimal(this.formProps.animal?._id || '', formData)
-          .subscribe({
-            next: (animal) => {
-              this.formProps.animal = animal[0];
-            },
-            error: (error) => {
-              this.errorMessage = 'An error has occurred try again later';
-              this.isFetching = false;
-            },
-            complete: () => {
-              this.myForm.reset();
-              this.filePath = '';
-              this.isFetching = false;
-              this.successUpdate = true;
-            },
-          });
+        if (this.formProps.animal?._id) {
+          this.store.dispatch(
+            AnimalActions.updateAnimalStart({
+              animalId: this.formProps.animal?._id,
+              newAnimalData: formData,
+            })
+          );
+          this.myForm.reset();
+        }
         break;
     }
   }

@@ -29,6 +29,33 @@ export class AnimalEffects {
     )
   );
 
+  updateAnimal$ = createEffect(() => {
+    let animalId: string = '';
+    return this.actions$.pipe(
+      ofType(AnimalActions.updateAnimalStart),
+      switchMap((action) => {
+        animalId = action.animalId;
+        return this.animalService
+          .updateAnimal(action.animalId, action.newAnimalData)
+          .pipe(
+            map((animalUpdated) =>
+              AnimalActions.updateAnimalSuccess({
+                animalUpdated: animalUpdated[0],
+                animalId,
+              })
+            ),
+            catchError((error) =>
+              of(
+                AnimalActions.updateAnimalError({
+                  error: 'An error has occurred, try again later',
+                })
+              )
+            )
+          );
+      })
+    );
+  });
+
   getAnimals$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AnimalActions.getAnimalsStart),
@@ -101,13 +128,13 @@ export class AnimalEffects {
       mergeMap((action) => {
         return this.animalService.getAnimal(action.animalId).pipe(
           map((animal) =>
-            AnimalActions.getMyFavoritesAnimalsSuccess({
+            AnimalActions.AddFavoriteAnimalsSuccess({
               animal: animal[0],
             })
           ),
           catchError((error) =>
             of(
-              AnimalActions.getMyFavoritesAnimalsError({
+              AnimalActions.AddFavoriteAnimalError({
                 error: 'An error has occurred, try again later',
               })
             )

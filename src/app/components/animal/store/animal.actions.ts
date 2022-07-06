@@ -18,6 +18,23 @@ export const postAnimalSuccess = createAction(
   props<{ newAnimal: Animal }>()
 );
 
+/*---------------------------Update------------------------------*/
+
+export const updateAnimalStart = createAction(
+  '[Update animal page] Update Animal Start',
+  props<{ animalId: string; newAnimalData: any }>()
+);
+
+export const updateAnimalSuccess = createAction(
+  '[Update animal page] Update Animal Success',
+  props<{ animalUpdated: Animal; animalId: string }>()
+);
+
+export const updateAnimalError = createAction(
+  '[Update animal page] Update Animal Error',
+  props<{ error: string }>()
+);
+
 /*---------------------------Modal------------------------------*/
 
 export const leaveModalSuccess = createAction(

@@ -65,6 +65,7 @@ export class MyAnimalsComponent implements OnInit, OnDestroy {
           .subscribe((animals) => {
             this.animalsList = animals;
           });
+        console.log('my animals');
       });
   }
 

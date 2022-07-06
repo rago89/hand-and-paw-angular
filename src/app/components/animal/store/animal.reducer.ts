@@ -5,25 +5,30 @@ import * as AnimalActions from './animal.actions';
 export interface State {
   animals: Animal[];
   newAnimal: Animal | null;
+  animalUpdated: Animal | null;
   myAnimals: Animal[];
   myFavorites: Animal[];
   error: string | null;
   isFetching: boolean;
   successRegistration: boolean;
+  successUpdate: boolean;
 }
 
 let initialState: State = {
   animals: [],
   newAnimal: null,
+  animalUpdated: null,
   myAnimals: [],
   myFavorites: [],
   error: null,
   isFetching: false,
   successRegistration: false,
+  successUpdate: false,
 };
 
 export const animalReducer = createReducer(
   initialState,
+  /*---------------------------Create------------------------------*/
   on(AnimalActions.postAnimalStart, (state) => {
     return {
       ...state,
@@ -31,7 +36,6 @@ export const animalReducer = createReducer(
       successRegistration: false,
     };
   }),
-  /*---------------------------Create------------------------------*/
   on(AnimalActions.postAnimalSuccess, (state, { newAnimal }) => {
     return {
       ...state,
@@ -51,6 +55,52 @@ export const animalReducer = createReducer(
       successRegistration: false,
     };
   }),
+  /*---------------------------Update-----------------------------*/
+  on(AnimalActions.updateAnimalStart, (state) => {
+    return {
+      ...state,
+      isFetching: true,
+      successRegistration: false,
+    };
+  }),
+  on(
+    AnimalActions.updateAnimalSuccess,
+    (state, { animalUpdated, animalId }) => {
+      const animalIndexInMyAnimals = state.myAnimals.findIndex(
+        (animalEl) => animalEl._id === animalId
+      );
+      const animalWithNewData = {
+        ...state.myAnimals[animalIndexInMyAnimals],
+        ...animalUpdated,
+      };
+      const myAnimalsUpdated = [...state.myAnimals];
+      myAnimalsUpdated[animalIndexInMyAnimals] = animalWithNewData;
+      const animalsUpdated = [...state.animals];
+      if (state.animals.length) {
+        const animalIndexInAnimals = state.animals.findIndex(
+          (animalEl) => animalEl._id === animalId
+        );
+        animalsUpdated[animalIndexInAnimals] = animalWithNewData;
+      }
+      return {
+        ...state,
+        animals: animalsUpdated,
+        myAnimals: myAnimalsUpdated,
+        animalUpdated: animalUpdated,
+        isFetching: false,
+        successUpdate: true,
+        postAnimalError: null,
+      };
+    }
+  ),
+  on(AnimalActions.updateAnimalError, (state, { error }) => {
+    return {
+      ...state,
+      error: error,
+      isFetching: false,
+      successUpdate: false,
+    };
+  }),
   /*---------------------------Modal------------------------------*/
   on(AnimalActions.leaveModalSuccess, (state) => {
     return {
@@ -66,12 +116,38 @@ export const animalReducer = createReducer(
     };
   }),
   on(AnimalActions.getAnimalsSuccess, (state, { animals }) => {
-    return {
-      ...state,
-      animals: animals,
-      isFetching: false,
-      postAnimalError: null,
-    };
+    if (state.animalUpdated && state.animals.length) {
+      const animals = [...state.animals];
+      const animalIndexInAnimals = state.animals.findIndex(
+        (animalEl) => animalEl._id === state.animalUpdated?._id
+      );
+      animals[animalIndexInAnimals] = state.animalUpdated;
+      return {
+        ...state,
+        animals: animals,
+        isFetching: false,
+        postAnimalError: null,
+      };
+    } else if (state.animalUpdated && !state.animals.length) {
+      const animalsList = [...animals];
+      const animalIndexInAnimals = animalsList.findIndex(
+        (animalEl) => animalEl._id === state.animalUpdated?._id
+      );
+      animalsList[animalIndexInAnimals] = state.animalUpdated;
+      return {
+        ...state,
+        animals: animalsList,
+        isFetching: false,
+        postAnimalError: null,
+      };
+    } else {
+      return {
+        ...state,
+        animals: animals,
+        isFetching: false,
+        postAnimalError: null,
+      };
+    }
   }),
   on(AnimalActions.getAnimalsError, (state, { error }) => {
     return {

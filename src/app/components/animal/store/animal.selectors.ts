@@ -27,6 +27,12 @@ export const selectMyAnimals = () =>
     return state.myAnimals;
   });
 
+export const selectAnimalFromMyAnimals = (id: string) =>
+  createSelector(getAnimalFromStore, (state: animalStore.State) => {
+    const animalFound = state.myAnimals.find((animal) => animal._id === id);
+    return animalFound;
+  });
+
 export const selectMyFavorites = () =>
   createSelector(getAnimalFromStore, (state: animalStore.State) => {
     return state.myFavorites;
